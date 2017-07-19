@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:validator="http://www.devefx.org/schema/validator-web"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-3.0.xsd
+       http://www.devefx.org/schema/validator-web
+       http://www.devefx.org/schema/validator-web/spring-validator-1.0.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+    
+    <!-- 创建Validator配置 -->
+    <bean id="validatorConfig" class="org.devefx.validator.ValidatorConfig">
+        <property name="invalidHandler">
+            <bean class="org.devefx.validator.internal.engine.DefaultInvalidHandler">
+                <property name="outputStyle" value="XML"/>
+            </bean>
+        </property>
+    </bean>
+    
+    <!-- 验证器工厂 -->
+    <bean id="validatorFactory" class="org.devefx.validator.internal.engine.ValidatorFactoryImpl" init-method="init">
+        <!-- Validator配置 -->
+        <property name="validatorConfig" ref="validatorConfig"/>
+        <!-- Validation对象Spring容器获取 -->
+        <property name="validationFactory">
+            <bean class="org.devefx.validator.external.spring.SpringValidationFactory"/>
+        </property>
+    </bean>
+    
+    <!-- 验证器 -->
+    <bean id="validator" factory-bean="validatorFactory" factory-method="buildValidator"/>
+    
+    <!-- 相当于调用ValidatorUtils.setValidator(validator) -->
+    <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="staticMethod" value="org.devefx.validator.ValidatorUtils.setValidator"/>
+        <property name="arguments" ref="validator"/>
+    </bean>
+    
+    <!-- 验证拦截 -->
+    <mvc:interceptors>
+        <bean class="org.devefx.validator.external.spring.mvc.SpringValidatorInterceptor"/>
+    </mvc:interceptors>
+    
+    <!-- 以下配置用于脚本生成和前端验证 -->
+    
+    <!-- 扫描验证组件 -->
+    <context:component-scan base-package="org.devefx.example.validation">
+        <context:include-filter type="custom" expression="org.devefx.validator.spring.filter.ValidationScriptMappingTypeFilter"/>
+    </context:component-scan>
+    
+    <!-- validator自动配置 -->
+    <bean class="org.devefx.validator.spring.ConfigPostProcessor"/>
+    <!-- 
+    <validator:config/>
+     -->
+</beans>

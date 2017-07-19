@@ -31,10 +31,10 @@ public class ValidElement {
 	private ValidationContext.Accessor validationContext;
 	
 	public static ValidElement by(AnnotatedElement annotatedElement) {
-		if (!annotatedElement.isAnnotationPresent(Valid.class)) {
+		Valid valid = annotatedElement.getAnnotation(Valid.class);
+		if (valid == null) {
 			return new ValidElement();
 		}
-		Valid valid = annotatedElement.getAnnotation(Valid.class);
 		return new ValidElement(valid.value(), valid.groups(), valid.requestType());
 	}
 	

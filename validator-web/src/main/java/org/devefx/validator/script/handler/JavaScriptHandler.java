@@ -19,6 +19,7 @@ package org.devefx.validator.script.handler;
 import java.io.IOException;
 
 import org.devefx.validator.beans.factory.annotation.Inject;
+import org.devefx.validator.beans.factory.annotation.Value;
 import org.devefx.validator.script.Compressor;
 
 public abstract class JavaScriptHandler extends CachingHandler {
@@ -34,6 +35,7 @@ public abstract class JavaScriptHandler extends CachingHandler {
 		this.compressor = compressor;
 	}
 	
+	@Value("${debug}")
 	public void setDebug(boolean debug) {
 		this.debug = debug;
 	}

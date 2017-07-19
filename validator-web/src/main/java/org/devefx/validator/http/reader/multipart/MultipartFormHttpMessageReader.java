@@ -31,8 +31,8 @@ import org.apache.commons.logging.LogFactory;
 import org.devefx.validator.http.MediaType;
 import org.devefx.validator.http.reader.FormHttpMessageReader;
 import org.devefx.validator.http.reader.HttpMessageNotReadableException;
-import org.devefx.validator.util.LinkedMultiValueMap;
 import org.devefx.validator.util.MultiValueMap;
+import org.devefx.validator.util.ServletUtils;
 
 public class MultipartFormHttpMessageReader extends FormHttpMessageReader {
 	
@@ -55,8 +55,8 @@ public class MultipartFormHttpMessageReader extends FormHttpMessageReader {
 	public MultiValueMap<String, ?> read(Class<? extends MultiValueMap<String, ?>> clazz,
 			HttpServletRequest request) throws IOException, HttpMessageNotReadableException {
 		
-		MultiValueMap<String, Object> result = new LinkedMultiValueMap<>();
-		extractUrlParams(result, request);
+		@SuppressWarnings("unchecked")
+		MultiValueMap<String, Object> result = ServletUtils.extractUrlParams(request);
 		
 		if (ServletFileUpload.isMultipartContent(request)) {
 			DiskFileItemFactory factory = new DiskFileItemFactory();

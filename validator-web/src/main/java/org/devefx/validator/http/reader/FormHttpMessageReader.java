@@ -22,13 +22,13 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.devefx.validator.http.MediaType;
 import org.devefx.validator.util.LinkedMultiValueMap;
 import org.devefx.validator.util.MultiValueMap;
+import org.devefx.validator.util.ServletUtils;
 import org.devefx.validator.util.StreamUtils;
 import org.devefx.validator.util.StringUtils;
 
@@ -88,7 +88,7 @@ public class FormHttpMessageReader implements HttpMessageReader<MultiValueMap<St
 		String[] pairs = StringUtils.tokenizeToStringArray(body, "&");
 		
 		MultiValueMap<String, String> result = new LinkedMultiValueMap<>(pairs.length);
-		extractUrlParams(result, request);
+		ServletUtils.extractUrlParams(result, request);
 		
 		for (String pair : pairs) {
 			int idx = pair.indexOf('=');
@@ -102,17 +102,5 @@ public class FormHttpMessageReader implements HttpMessageReader<MultiValueMap<St
 			}
 		}
 		return result;
-	}
-	
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    protected void extractUrlParams(MultiValueMap multiValueMap, HttpServletRequest request) {
-		Map<String, String[]> parameterMap = request.getParameterMap();
-        for (Map.Entry<String, String[]> entry: parameterMap.entrySet()) {
-        	String key = entry.getKey();
-        	String[] values = entry.getValue();
-        	for (String value : values) {
-        		multiValueMap.add(key, value);
-			}
-        }
 	}
 }

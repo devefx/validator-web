@@ -82,6 +82,9 @@
 						var ajaxsubmit = validator.settings.ajaxsubmit;
 						if (ajaxsubmit) {
 							var options = $(ajaxsubmit);
+							options.data = $.extend(options.data || {}, {
+								_validator_ajaxsubmit: 'true'
+							});
 							options.success = function (res) {
 								if (res && res.status == 101) {
 									for (var name in res.contents) {
@@ -864,6 +867,13 @@ $.extend($.validator, {
 					$(element).attr("aria-describedby", describedBy);
 				}
 			}
+			if (message && this.settings.error) {
+				if (typeof this.settings.error === "string") {
+					error.addClass(this.settings.error);
+				} else {
+					this.settings.error(error, element);
+				}
+			}
 			if (!message && this.settings.success) {
 				error.text("");
 				if (typeof this.settings.success === "string") {
@@ -939,11 +949,15 @@ $.extend($.validator, {
 			}
 		},
 
-		previousValue: function (element) {
-			return $.data(element, "previousValue") || $.data(element, "previousValue", {
-				old: null,
-				valid: true
-			});
+		previousValue: function (element, url) {
+			var previous = $.data(element, "previousValue") || $.data(element, "previousValue", {});
+			if (!previous[url]) {
+				previous[url] = {
+					old: null,
+					valid: false
+				}
+			}
+			return previous[url];
 		},
 
 		// cleans up all forms and elements, removes validator-specific events
@@ -1318,7 +1332,7 @@ $.validator.constraints = {
 			if (arguments.length < 3) 
 				return false;
 
-			var previous = validator.previousValue(element),
+			var previous = validator.previousValue(element, url),
 				data;
 			
 			if (previous.old === value) {
@@ -1339,7 +1353,8 @@ $.validator.constraints = {
 				success: function(response) {
 					var valid = response === true || response === "true",
 						errors, message, submitted;
-
+					
+					previous.valid = valid;
 					if (valid) {
 						validator.element(element);
 					} else {
@@ -1348,7 +1363,6 @@ $.validator.constraints = {
 						validator.invalid[element.name] = true;
 						validator.showErrors(errors);
 					}
-					previous.valid = valid;
 					validator.stopRequest(element, valid);
 				}
 			});

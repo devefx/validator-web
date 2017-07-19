@@ -28,7 +28,9 @@ import org.apache.commons.logging.LogFactory;
 import org.devefx.validator.http.HttpServletRequestWrapper;
 import org.devefx.validator.http.MediaType;
 import org.devefx.validator.http.reader.HttpMessageReader;
-import org.devefx.validator.util.LinkedMultiValueMap;
+import org.devefx.validator.util.ClassUtils;
+import org.devefx.validator.util.MultiValueMap;
+import org.devefx.validator.util.ServletUtils;
 
 public class HttpMessageReaderExtractor implements RequestExtractor {
 	
@@ -36,7 +38,7 @@ public class HttpMessageReaderExtractor implements RequestExtractor {
 
 	private final List<HttpMessageReader<?>> messageReaders;
 	
-	private final Map<Class<?>, Object> defaultData = new HashMap<Class<?>, Object>(4);
+	private final Map<Class<?>, Object> instances = new HashMap<Class<?>, Object>(4);
 	
 	public HttpMessageReaderExtractor(List<HttpMessageReader<?>> messageReaders) {
 		this.messageReaders = messageReaders;
@@ -48,12 +50,10 @@ public class HttpMessageReaderExtractor implements RequestExtractor {
 			throws IOException {
 		HttpServletRequestWrapper requestWrapper = new HttpServletRequestWrapper(request);
 		if (!requestWrapper.hasMessageBody() || requestWrapper.hasEmptyMessageBody()) {
-			Object data = defaultData.get(requiredClass);
-			if (data == null) {
-				data = newInstance(requiredClass);
-				defaultData.put(requiredClass, data);
+			if (requiredClass.isAssignableFrom(MultiValueMap.class)) {
+				return (T) ServletUtils.extractUrlParams(requestWrapper);
 			}
-			return (T) data;
+			return getInstance(requiredClass);
 		}
 		MediaType contentType = getContentType(requestWrapper);
 		for (HttpMessageReader<?> messageReader : messageReaders) {
@@ -71,7 +71,7 @@ public class HttpMessageReaderExtractor implements RequestExtractor {
                 "Could not extract response: no suitable HttpMessageReader found for response type [" +
                         requiredClass + "] and content type [" + contentType + "]");
 	}
-
+	
 	private MediaType getContentType(HttpServletRequest request) {
 		String contentType = request.getContentType();
 		if (contentType == null) {
@@ -84,14 +84,16 @@ public class HttpMessageReaderExtractor implements RequestExtractor {
 	}
 	
 	@SuppressWarnings("unchecked")
-	private <T> T newInstance(Class<T> clazz){
-		if (clazz.isAssignableFrom(LinkedMultiValueMap.class)) {
-			return (T) new LinkedMultiValueMap<>();
+	private <T> T getInstance(Class<T> clazz) {
+		Object instance = instances.get(clazz);
+		if (instance == null) {
+			try {
+				instance = ClassUtils.newInstance(clazz);
+				instances.put(clazz, instance);
+			} catch (Exception e) {
+				throw new IllegalArgumentException(clazz.getName() + " cannot be instantiated");
+			}
 		}
-		try {
-			return clazz.newInstance();
-		} catch (Exception e) {
-			throw new IllegalArgumentException(clazz.getName() + " cannot be instantiated");
-		}
+		return (T) instance;
 	}
 }

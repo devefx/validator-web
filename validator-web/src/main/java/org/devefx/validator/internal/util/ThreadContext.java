@@ -32,6 +32,8 @@ public abstract class ThreadContext {
     private static final Log log = LogFactory.getLog(ThreadContext.class);
     
     public static final String VALIDATOR_KEY = ThreadContext.class.getName() + "_VALIDATOR_KEY";
+    
+    public static final String MODEL_KEY = ThreadContext.class.getName() + "_MODEL_KEY";
 
 	private static final ThreadLocal<Map<Object, Object>> resources = new InheritableThreadLocalMap<>();
 	
@@ -214,6 +216,20 @@ public abstract class ThreadContext {
      */
     public static Validator unbindValidator() {
         return (Validator) remove(VALIDATOR_KEY);
+    }
+    
+    public static Object getModel() {
+    	return get(MODEL_KEY);
+    }
+    
+    public static void bindModel(Object model) {
+    	if (model != null) {
+    		put(MODEL_KEY, model);
+    	}
+    }
+    
+    public static Object unbindModel() {
+    	return remove(MODEL_KEY);
     }
     
     private static final class InheritableThreadLocalMap<T extends Map<Object, Object>> extends InheritableThreadLocal<Map<Object, Object>> {

@@ -36,11 +36,18 @@ import org.devefx.validator.ValidatorFactory;
 import org.devefx.validator.ValueContext;
 import org.devefx.validator.http.extract.HttpMessageReaderExtractor;
 import org.devefx.validator.http.extract.RequestExtractor;
+import org.devefx.validator.internal.util.ThreadContext;
 import org.devefx.validator.util.Assert;
 import org.devefx.validator.web.View;
 
 public class ValidatorImpl implements Validator {
 	
+	/**
+	 * The validator ajax submit tags
+	 */
+	public static final String VALIDATOR_AJAXSUBMIT = "_validator_ajaxsubmit";
+	
+	private final InvalidHandler defaultInvalidHandler = new DefaultInvalidHandler();
 	private final RequestExtractor requestExtractor;
 	private final Map<AnnotatedElement, ValidElement> validElementCache;
 	private final ValidatorContext validatorContext;
@@ -60,18 +67,23 @@ public class ValidatorImpl implements Validator {
 	public boolean validate(AnnotatedElement validElement,
 			HttpServletRequest request, HttpServletResponse response) {
 		Assert.notNull(validElement, "validElement must not be null.");
-		
-		ValidElement element = getOrCreateValidElement(validElement);
-		if (!element.isConstrained()) {
-			return true;
+		try {
+			ThreadContext.bind(this);
+			
+			ValidElement element = getOrCreateValidElement(validElement);
+			if (!element.isConstrained()) {
+				return true;
+			}
+			
+			ValidationContext.Accessor validationContext = validatorContext.getOrCreateValidationContext(element.getValidationClass());
+			ValueContext valueContext = createValueContext(
+					request,
+					element.getRequestType());
+			
+			return validateInContext(validationContext, valueContext, element.getGroups(), request, response);
+		} finally {
+			ThreadContext.unbindValidator();
 		}
-		
-		ValidationContext.Accessor validationContext = validatorContext.getOrCreateValidationContext(element.getValidationClass());
-		ValueContext valueContext = createValueContext(
-				request,
-				element.getRequestType());
-		
-		return validateInContext(validationContext, valueContext, element.getGroups(), request, response);
 	}
 	
 	private boolean validateInContext(ValidationContext.Accessor context, ValueContext valueContext, Class<?>[] groups,
@@ -90,8 +102,11 @@ public class ValidatorImpl implements Validator {
 	private void validateInvalidProcessing(ValidationContext.Accessor context,
 			List<ConstraintViolation> constraintViolations,
 			HttpServletRequest request, HttpServletResponse response) {
-		InvalidHandler invalidHandler = context.getInvalidHandler();
 		
+		InvalidHandler invalidHandler = defaultInvalidHandler;
+		if (request.getParameter(VALIDATOR_AJAXSUBMIT) == null) {
+			invalidHandler = context.getInvalidHandler();
+		}
 		View view = invalidHandler.renderInvalid(constraintViolations);
 		if (view != null) {
 			try {
@@ -114,6 +129,8 @@ public class ValidatorImpl implements Validator {
 	private ValueContext createValueContext(HttpServletRequest request, Class<?> requiredClass) {
 		try {
 			Object bean = requestExtractor.extractData(requiredClass, request);
+			// set up the thread context
+			ThreadContext.bindModel(bean);
 			return new ValueContext(bean, requiredClass);
 		} catch (IOException e) {
 			throw new ValidationException("I/O error, can't extract " + requiredClass

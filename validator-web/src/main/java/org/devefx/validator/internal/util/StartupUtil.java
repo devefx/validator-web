@@ -104,7 +104,8 @@ public class StartupUtil {
 		}
 		
 		for (String className : value.split(CHOOSE_TOKEN)) {
-			if (!StringUtils.hasText(className)) {
+			className = StringUtils.clean(className);
+			if (className == null) {
 				continue;
 			}
 			try {
@@ -114,7 +115,7 @@ public class StartupUtil {
 					container.addBean(askFor, instance);
 					return;
 				}
-			} catch (Exception e) {
+			} catch (Throwable e) {
 				if (log.isDebugEnabled()) {
 					log.debug("Unable to instantiate class [" + className + "] for object named '" + askFor + "'.  ", e);
 				}

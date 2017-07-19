@@ -60,5 +60,4 @@ public class UriUtils {
 		}
 		return bos.toByteArray();
 	}
-	
 }

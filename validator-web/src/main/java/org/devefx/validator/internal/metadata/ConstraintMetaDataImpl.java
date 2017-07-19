@@ -55,15 +55,15 @@ public class ConstraintMetaDataImpl implements ConstraintMetaData {
     }
     
     private void parserScriptAnnotation() {
-    	if (this.constraintClass.isAnnotationPresent(Script.class)) {
-        	Script script = this.constraintClass.getAnnotation(Script.class);
-        	this.hasScriptAnnotation = true;
+    	Script script = this.constraintClass.getAnnotation(Script.class);
+    	if (script != null) {
+    		this.hasScriptAnnotation = true;
         	this.scriptId = script.id();
         	this.scriptRemote = script.remote();
         	if (!StringUtils.hasText(this.scriptId)) {
         		this.scriptId = this.constraintClass.getSimpleName();
         	}
-        }
+    	}
     }
 
     @Override

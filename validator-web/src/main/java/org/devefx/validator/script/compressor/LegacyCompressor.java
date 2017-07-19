@@ -127,7 +127,7 @@ public class LegacyCompressor implements Compressor {
     /**
      * How much do we compression javascript by?
      */
-    protected int compressionLevel = LEVEL_DEBUGGABLE;
+    protected int compressionLevel = LEVEL_DEBUGGABLE | COMPRESS_STRIP_BLANKLINES | COMPRESS_REMOVE_NEWLINES;
     
 	@Override
 	public String compressJavaScript(String script) throws Exception {

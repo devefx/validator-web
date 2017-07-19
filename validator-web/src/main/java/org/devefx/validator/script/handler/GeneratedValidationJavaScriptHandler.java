@@ -117,6 +117,10 @@ public class GeneratedValidationJavaScriptHandler extends BaseValidationHandler 
 					context.getResourceBundleLocator()
 				);
 			
+			if (message != null) {
+				message = message.replaceAll("\"", "\\\\\"");
+			}
+			
 			ConstraintValidator validator = descriptor.getConstraintValidator();
 			
 			buffer

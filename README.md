@@ -67,7 +67,7 @@ public class LoginValidation implements Validation {
 }
 ```
 
-### 使用验证模型
+### Java中使用验证模型
 
 SpringMVC 示例（需要配置SpringValidatorInterceptor拦截器）
 
@@ -103,6 +103,43 @@ public class LoginServlet extends AbstractValidatorHttpServlet {
         // ...
     }
 }
+```
+### HTML中使用验证模型
+
+如果要在HTML中使用，需要在web.xml中进行配置。 `scan-package`：扫描包里面的 Validation 类，映射出JavaScript验证模型（使用@ScriptMapping注解的Validation才会进行映射）
+
+（springmvc可以简写配置，请参考[SpringMVC Documentation](https://github.com/devefx/validator-web/blob/master/docs/springmvc/getting-started.md)）
+
+```xml
+<servlet>
+    <servlet-name>scriptSupport</servlet-name>
+    <servlet-class>org.devefx.validator.web.servlet.ScriptSupportServlet</servlet-class>
+    <init-param>
+        <param-name>scan-package</param-name>
+        <param-value>org.my.validation</param-value>
+    </init-param>
+</servlet>
+<servlet-mapping>
+    <servlet-name>scriptSupport</servlet-name>
+    <url-pattern>/va/*</url-pattern>
+</servlet-mapping>
+```
+
+在HTML代码中加入以下代码，form在提交时若不满足验证模型的约束将会阻止提交并自动提示错误
+
+```html
+<!-- 依赖库 -->
+<script type="text/javascript" src="/va/lib/jquery.js"></script>
+<script type="text/javascript" src="/va/lib/jquery.form.js"></script>
+<!-- 核心库 -->
+<script type="text/javascript" src="/va/validator.js"></script>
+<!-- 验证器 -->
+<script type="text/javascript" src="/va/validation-js/login.js"></script>
+<script type="text/javascript">
+    $(function() {
+    	$("form").validate();
+    });
+</script>
 ```
 
 ### 文档

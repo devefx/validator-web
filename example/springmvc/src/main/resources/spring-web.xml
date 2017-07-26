@@ -23,6 +23,11 @@
         <property name="suffix" value=".jsp"/>
     </bean>
     
+    <!-- 验证拦截 -->
+    <mvc:interceptors>
+        <bean class="org.devefx.validator.external.spring.mvc.SpringValidatorInterceptor"/>
+    </mvc:interceptors>
+    
     <!-- 静态资源映射 -->
     <mvc:resources location="/resources/" mapping="/resources/**"/>
     

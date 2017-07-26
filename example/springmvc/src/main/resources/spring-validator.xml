@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:validator="http://www.devefx.org/schema/validator-web"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
@@ -9,9 +8,7 @@
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context-3.0.xsd
        http://www.devefx.org/schema/validator-web
-       http://www.devefx.org/schema/validator-web/spring-validator-1.0.xsd
-       http://www.springframework.org/schema/mvc
-       http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+       http://www.devefx.org/schema/validator-web/spring-validator-1.0.xsd">
     
     <!-- 创建Validator配置 -->
     <bean id="validatorConfig" class="org.devefx.validator.ValidatorConfig">
@@ -40,11 +37,6 @@
         <property name="staticMethod" value="org.devefx.validator.ValidatorUtils.setValidator"/>
         <property name="arguments" ref="validator"/>
     </bean>
-    
-    <!-- 验证拦截 -->
-    <mvc:interceptors>
-        <bean class="org.devefx.validator.external.spring.mvc.SpringValidatorInterceptor"/>
-    </mvc:interceptors>
     
     <!-- 以下配置用于脚本生成和前端验证 -->
     

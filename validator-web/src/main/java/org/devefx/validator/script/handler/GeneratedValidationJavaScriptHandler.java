@@ -94,7 +94,7 @@ public class GeneratedValidationJavaScriptHandler extends BaseValidationHandler 
 		buffer
 			.append("(function(" + VALIDATOR_NAMESPACE + ") {\n")
 			.append("  $.extend($.validator.validations, {\n")
-			.append("    " + scriptName + ": function (context) {\n")
+			.append("    '" + scriptName + "': function (context) {\n")
 			.append("      context.setFailFast(" + context.isFailFast() + ");\n")
 			.append("      context.setThrowException(" + context.isThrowException() + ");\n")
 			.append(this.generateConstraintDescriptor(vars, context))

@@ -144,7 +144,11 @@ public class LoginServlet extends AbstractValidatorHttpServlet {
 </script>
 ```
 
-<video width="399px" height="298px" controls="controls" autoplay="autoplay"><source src="http://apprcncom.qiniudn.com/Apprcn.webm" type="video/webm"></video>
+### 演示效果
+
+（以下为 [SpringMVC Example](https://github.com/devefx/validator-web/tree/master/example/springmvc) 的运行效果）
+
+![example](example/example.gif)
 
 ### 文档
 

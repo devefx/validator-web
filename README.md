@@ -4,7 +4,7 @@
 
 - 前后端验证框架，设计精巧、使用简单
 - 支持SpringMVC、Struts2、Servlet
-- 自动生成JavaScript前端验证代码
+- Java验证代码自动生成JavaScript前端验证代码
 - 统一前后端验证规范
 - 支持自定义验证规则
 - 支持对自定义数据验证，默认支持：form、json、xml

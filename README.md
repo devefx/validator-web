@@ -127,6 +127,8 @@ public class LoginServlet extends AbstractValidatorHttpServlet {
 
 在HTML代码中加入以下代码，form在提交时若不满足验证模型的约束将会阻止提交并自动提示错误
 
+ （`validate`的使用方法，请参考[JavaScript Documentation](https://github.com/devefx/validator-web/blob/master/docs/validator-js.md)）
+
 ```html
 <!-- 依赖库 -->
 <script type="text/javascript" src="/va/lib/jquery.js"></script>
@@ -142,11 +144,14 @@ public class LoginServlet extends AbstractValidatorHttpServlet {
 </script>
 ```
 
+<video width="399px" height="298px" controls="controls" autoplay="autoplay"><source src="http://apprcncom.qiniudn.com/Apprcn.webm" type="video/webm"></video>
+
 ### 文档
 
 - [Servlet Documentation](https://github.com/devefx/validator-web/blob/master/docs/servlet/getting-started.md)
 - [SpringMVC Documentation](https://github.com/devefx/validator-web/blob/master/docs/springmvc/getting-started.md)
 - [Struts Documentation](https://github.com/devefx/validator-web/blob/master/docs/struts/getting-started.md)
+- [JavaScript Documentation](https://github.com/devefx/validator-web/blob/master/docs/validator-js.md)
 
 ### 示例
 

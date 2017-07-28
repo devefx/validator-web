@@ -150,11 +150,14 @@ public class LoginServlet extends AbstractValidatorHttpServlet {
 
 ![example](example/example.gif)
 
+### 配置说明
+
+- [Servlet Configuration](https://github.com/devefx/validator-web/blob/master/docs/servlet/getting-started.md)
+- [SpringMVC Configuration](https://github.com/devefx/validator-web/blob/master/docs/springmvc/getting-started.md)
+- [Struts Configuration](https://github.com/devefx/validator-web/blob/master/docs/struts/getting-started.md)
+
 ### 文档
 
-- [Servlet Documentation](https://github.com/devefx/validator-web/blob/master/docs/servlet/getting-started.md)
-- [SpringMVC Documentation](https://github.com/devefx/validator-web/blob/master/docs/springmvc/getting-started.md)
-- [Struts Documentation](https://github.com/devefx/validator-web/blob/master/docs/struts/getting-started.md)
 - [JavaScript Documentation](https://github.com/devefx/validator-web/blob/master/docs/validator-js.md)
 
 ### 示例

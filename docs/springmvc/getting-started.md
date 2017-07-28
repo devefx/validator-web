@@ -1,4 +1,4 @@
-# Spring MVC Documents
+# Spring MVC Configuration
 
 ### 基本配置 - 创建 Validator
 

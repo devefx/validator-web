@@ -74,11 +74,11 @@ SpringMVC 示例（需要配置SpringValidatorInterceptor拦截器）
 ```java
 @Controller
 public class LoginController {
-   @Valid(value=LoginValidation.class)
-   @RequestMapping("/login")
-   public void login() {
-      // ...
-   }
+    @Valid(value=LoginValidation.class)
+    @RequestMapping("/login")
+    public void login() {
+        // ...
+    }
 }
 ```
 
@@ -108,7 +108,7 @@ public class LoginServlet extends AbstractValidatorHttpServlet {
 
 如果要在HTML中使用，需要在web.xml中进行配置。 `scan-package`：扫描包里面的 Validation 类，映射出JavaScript验证模型（使用@ScriptMapping注解的Validation才会进行映射）
 
-（springmvc可以简写配置，请参考[SpringMVC Documentation](https://github.com/devefx/validator-web/blob/master/docs/springmvc/getting-started.md)）
+（springmvc可以简写配置，请参考[SpringMVC Configuration](https://github.com/devefx/validator-web/blob/master/docs/springmvc/getting-started.md)）
 
 ```xml
 <servlet>

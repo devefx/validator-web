@@ -22,12 +22,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class MappingJackson2HttpMessageReader extends AbstractJackson2HttpMessageReader {
 
-	public MappingJackson2HttpMessageReader() {
-		this(new ObjectMapper());
-	}
+    public MappingJackson2HttpMessageReader() {
+        this(new ObjectMapper());
+    }
 
-	public MappingJackson2HttpMessageReader(ObjectMapper objectMapper) {
-		super(objectMapper, new MediaType("application", "json", DEFAULT_CHARSET),
-				new MediaType("application", "*+json", DEFAULT_CHARSET));
-	}
+    public MappingJackson2HttpMessageReader(ObjectMapper objectMapper) {
+        super(objectMapper, new MediaType("application", "json", DEFAULT_CHARSET),
+                new MediaType("application", "*+json", DEFAULT_CHARSET));
+    }
 }

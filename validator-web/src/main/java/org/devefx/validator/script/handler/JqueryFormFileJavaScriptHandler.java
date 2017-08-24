@@ -20,13 +20,13 @@ import org.devefx.validator.beans.factory.annotation.Value;
 
 public class JqueryFormFileJavaScriptHandler extends FileJavaScriptHandler {
 
-	public JqueryFormFileJavaScriptHandler() {
-		super(PATH_RESOURCE + "/lib/jquery.form.js");
-	}
-	
-	@Value("${JqueryFormFileJavaScriptHandler.path}")
-	@Override
-	public void setPath(String path) {
-		super.setPath(path);
-	}
+    public JqueryFormFileJavaScriptHandler() {
+        super(PATH_RESOURCE + "/lib/jquery.form.js");
+    }
+    
+    @Value("${JqueryFormFileJavaScriptHandler.path}")
+    @Override
+    public void setPath(String path) {
+        super.setPath(path);
+    }
 }

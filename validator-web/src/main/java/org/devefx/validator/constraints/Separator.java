@@ -25,44 +25,44 @@ import org.devefx.validator.util.StringUtils;
 @Script
 public class Separator implements ConstraintValidator {
 
-	@InitParam
-	private ConstraintValidator validator;
-	@InitParam
-	private String separator;
-	@InitParam
-	private boolean ignoreLastBlank;
-	
-	public Separator(ConstraintValidator validator, String separator) {
-		this(validator, separator, true);
-	}
-	
-	public Separator(ConstraintValidator validator, String separator, boolean ignoreLastBlank) {
-		Assert.notNull(validator, "validator cannot be null.");
-		Assert.hasLength(separator, "separator cannot be empty.");
-		this.validator = validator;
-		this.separator = separator;
-		this.ignoreLastBlank = ignoreLastBlank;
-	}
-	
-	@Override
-	public boolean isValid(Object value) {
-		if (value == null) {
-			return true;
-		}
-		String stringValue = value.toString();
-		if (ignoreLastBlank) {
-			int pos = stringValue.lastIndexOf(separator);
-			String lastString = stringValue.substring(pos + 1);
-			if (!StringUtils.hasText(lastString)) {
-				stringValue = stringValue.substring(0, pos);
-			}
-		}
-		String[] subTexts = stringValue.split(separator);
-		for (String subText : subTexts) {
-			if (!validator.isValid(subText)) {
-				return false;
-			}
-		}
-		return true;
-	}
+    @InitParam
+    private ConstraintValidator validator;
+    @InitParam
+    private String separator;
+    @InitParam
+    private boolean ignoreLastBlank;
+    
+    public Separator(ConstraintValidator validator, String separator) {
+        this(validator, separator, true);
+    }
+    
+    public Separator(ConstraintValidator validator, String separator, boolean ignoreLastBlank) {
+        Assert.notNull(validator, "validator cannot be null.");
+        Assert.hasLength(separator, "separator cannot be empty.");
+        this.validator = validator;
+        this.separator = separator;
+        this.ignoreLastBlank = ignoreLastBlank;
+    }
+    
+    @Override
+    public boolean isValid(Object value) {
+        if (value == null) {
+            return true;
+        }
+        String stringValue = value.toString();
+        if (ignoreLastBlank) {
+            int pos = stringValue.lastIndexOf(separator);
+            String lastString = stringValue.substring(pos + 1);
+            if (!StringUtils.hasText(lastString)) {
+                stringValue = stringValue.substring(0, pos);
+            }
+        }
+        String[] subTexts = stringValue.split(separator);
+        for (String subText : subTexts) {
+            if (!validator.isValid(subText)) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

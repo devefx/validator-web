@@ -19,22 +19,22 @@ package org.devefx.validator.internal.engine.scanner.filter;
 import org.devefx.validator.internal.engine.scanner.TypeFilter;
 
 public class AssignableTypeFilter implements TypeFilter {
-	
-	private final Class<?> targetType;
-	
-	public AssignableTypeFilter(Class<?> targetType) {
-		this.targetType = targetType;
-	}
+    
+    private final Class<?> targetType;
+    
+    public AssignableTypeFilter(Class<?> targetType) {
+        this.targetType = targetType;
+    }
 
-	@Override
-	public boolean match(Class<?> type) {
-		if (Object.class.getName().equals(type.getName())) {
-			return false;
-		}
-		if (targetType.isAssignableFrom(type)) {
-			return true;
-		}
-		return false;
-	}
+    @Override
+    public boolean match(Class<?> type) {
+        if (Object.class.getName().equals(type.getName())) {
+            return false;
+        }
+        if (targetType.isAssignableFrom(type)) {
+            return true;
+        }
+        return false;
+    }
 
 }

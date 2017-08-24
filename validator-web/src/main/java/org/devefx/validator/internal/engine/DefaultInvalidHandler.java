@@ -30,17 +30,17 @@ import org.devefx.validator.web.view.xml.NestedXmlView;
 
 public class DefaultInvalidHandler implements InvalidHandler {
 
-	/** output style */
-	public enum OutputStyle {
-		JSON, XML
-	}
-	
-	private OutputStyle outputStyle = OutputStyle.JSON;
-	
-	public void setOutputStyle(OutputStyle outputStyle) {
-		this.outputStyle = outputStyle;
-	}
-	
+    /** output style */
+    public enum OutputStyle {
+        JSON, XML
+    }
+    
+    private OutputStyle outputStyle = OutputStyle.JSON;
+    
+    public void setOutputStyle(OutputStyle outputStyle) {
+        this.outputStyle = outputStyle;
+    }
+    
     @Override
     public View renderInvalid(List<ConstraintViolation> violations) {
         if (violations == null || violations.isEmpty()) {
@@ -48,9 +48,9 @@ public class DefaultInvalidHandler implements InvalidHandler {
         }
         AbstractNestedView view = null;
         if (this.outputStyle == OutputStyle.JSON) {
-        	view = new NestedJsonView();
+            view = new NestedJsonView();
         } else if (this.outputStyle == OutputStyle.XML) {
-        	view = new NestedXmlView();
+            view = new NestedXmlView();
         }
         
         Map<String, String> errorMap = new HashMap<>(violations.size());

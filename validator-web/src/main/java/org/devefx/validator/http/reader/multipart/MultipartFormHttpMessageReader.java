@@ -35,62 +35,62 @@ import org.devefx.validator.util.MultiValueMap;
 import org.devefx.validator.util.ServletUtils;
 
 public class MultipartFormHttpMessageReader extends FormHttpMessageReader {
-	
-	private static final Log logger = LogFactory.getLog(MultipartFormHttpMessageReader.class);
-	
-	private static List<MediaType> imageMediaTypes;
-	
-	static {
-		imageMediaTypes = new ArrayList<MediaType>(3);
-		imageMediaTypes.add(MediaType.IMAGE_GIF);
-		imageMediaTypes.add(MediaType.IMAGE_JPEG);
-		imageMediaTypes.add(MediaType.IMAGE_PNG);
-	}
-	
-	public MultipartFormHttpMessageReader() {
-		this.supportedMediaTypes.add(MediaType.MULTIPART_FORM_DATA);
-	}
-	
-	@Override
-	public MultiValueMap<String, ?> read(Class<? extends MultiValueMap<String, ?>> clazz,
-			HttpServletRequest request) throws IOException, HttpMessageNotReadableException {
-		
-		@SuppressWarnings("unchecked")
-		MultiValueMap<String, Object> result = ServletUtils.extractUrlParams(request);
-		
-		if (ServletFileUpload.isMultipartContent(request)) {
-			DiskFileItemFactory factory = new DiskFileItemFactory();
-			ServletFileUpload fileUpload = new ServletFileUpload(factory);
-			try {
-				List<FileItem> fileItems = fileUpload.parseRequest(request);
-				for (FileItem fileItem : fileItems) {
-					if (fileItem.isFormField()) {
-						result.add(fileItem.getFieldName(), fileItem.getString(this.charset.name()));
-					} else {
-						if (isImageMediaType(fileItem.getContentType())) {
-							result.add(fileItem.getFieldName(), new CommonsImageMultipartFile(fileItem));
-						} else {
-							result.add(fileItem.getFieldName(), new CommonsMultipartFile(fileItem));
-						}
-					}
-				}
-			} catch (FileUploadException e) {
-				logger.error("File upload failed", e);
-			}
-		}
-		return result;
-	}
-	
-	private boolean isImageMediaType(String contentType) {
-		if (contentType == null) {
-			return false;
-		}
-		MediaType type = MediaType.parseMediaType(contentType);
-		for (MediaType mediaType : imageMediaTypes) {
-			if (mediaType.includes(type)) {
-				return true;
-			}
-		}
-		return false;
-	}
+    
+    private static final Log logger = LogFactory.getLog(MultipartFormHttpMessageReader.class);
+    
+    private static List<MediaType> imageMediaTypes;
+    
+    static {
+        imageMediaTypes = new ArrayList<MediaType>(3);
+        imageMediaTypes.add(MediaType.IMAGE_GIF);
+        imageMediaTypes.add(MediaType.IMAGE_JPEG);
+        imageMediaTypes.add(MediaType.IMAGE_PNG);
+    }
+    
+    public MultipartFormHttpMessageReader() {
+        this.supportedMediaTypes.add(MediaType.MULTIPART_FORM_DATA);
+    }
+    
+    @Override
+    public MultiValueMap<String, ?> read(Class<? extends MultiValueMap<String, ?>> clazz,
+            HttpServletRequest request) throws IOException, HttpMessageNotReadableException {
+        
+        @SuppressWarnings("unchecked")
+        MultiValueMap<String, Object> result = ServletUtils.extractUrlParams(request);
+        
+        if (ServletFileUpload.isMultipartContent(request)) {
+            DiskFileItemFactory factory = new DiskFileItemFactory();
+            ServletFileUpload fileUpload = new ServletFileUpload(factory);
+            try {
+                List<FileItem> fileItems = fileUpload.parseRequest(request);
+                for (FileItem fileItem : fileItems) {
+                    if (fileItem.isFormField()) {
+                        result.add(fileItem.getFieldName(), fileItem.getString(this.charset.name()));
+                    } else {
+                        if (isImageMediaType(fileItem.getContentType())) {
+                            result.add(fileItem.getFieldName(), new CommonsImageMultipartFile(fileItem));
+                        } else {
+                            result.add(fileItem.getFieldName(), new CommonsMultipartFile(fileItem));
+                        }
+                    }
+                }
+            } catch (FileUploadException e) {
+                logger.error("File upload failed", e);
+            }
+        }
+        return result;
+    }
+    
+    private boolean isImageMediaType(String contentType) {
+        if (contentType == null) {
+            return false;
+        }
+        MediaType type = MediaType.parseMediaType(contentType);
+        for (MediaType mediaType : imageMediaTypes) {
+            if (mediaType.includes(type)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

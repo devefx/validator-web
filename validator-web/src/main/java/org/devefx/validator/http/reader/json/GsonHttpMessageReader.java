@@ -15,27 +15,27 @@ import com.google.gson.GsonBuilder;
 
 public class GsonHttpMessageReader extends AbstractHttpMessageReader<Object> {
 
-	protected Gson gson;
-	
-	public GsonHttpMessageReader() {
-		this(new GsonBuilder());
-	}
-	
-    public GsonHttpMessageReader(GsonBuilder builder) {
-    	super(MediaType.ALL);
-    	this.gson = builder.create();
-	}
+    protected Gson gson;
     
-	@Override
-	protected boolean supports(Class<?> clazz) {
-		return true;
-	}
+    public GsonHttpMessageReader() {
+        this(new GsonBuilder());
+    }
+    
+    public GsonHttpMessageReader(GsonBuilder builder) {
+        super(MediaType.ALL);
+        this.gson = builder.create();
+    }
+    
+    @Override
+    protected boolean supports(Class<?> clazz) {
+        return true;
+    }
 
-	@Override
-	protected Object readInternal(Class<? extends Object> clazz, HttpServletRequest request)
-			throws IOException, HttpMessageNotReadableException {
-		
-		InputStream in = request.getInputStream();
-		return gson.fromJson(new InputStreamReader(in), clazz);
-	}
+    @Override
+    protected Object readInternal(Class<? extends Object> clazz, HttpServletRequest request)
+            throws IOException, HttpMessageNotReadableException {
+        
+        InputStream in = request.getInputStream();
+        return gson.fromJson(new InputStreamReader(in), clazz);
+    }
 }

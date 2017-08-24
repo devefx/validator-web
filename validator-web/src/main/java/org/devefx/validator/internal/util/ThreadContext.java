@@ -25,7 +25,7 @@ import org.apache.commons.logging.LogFactory;
 import org.devefx.validator.Validator;
 
 public abstract class ThreadContext {
-	
+    
     /**
      * Private internal log instance.
      */
@@ -35,8 +35,8 @@ public abstract class ThreadContext {
     
     public static final String MODEL_KEY = ThreadContext.class.getName() + "_MODEL_KEY";
 
-	private static final ThreadLocal<Map<Object, Object>> resources = new InheritableThreadLocalMap<>();
-	
+    private static final ThreadLocal<Map<Object, Object>> resources = new InheritableThreadLocalMap<>();
+    
     /**
      * Default no-argument constructor.
      */
@@ -56,7 +56,7 @@ public abstract class ThreadContext {
             return new HashMap<Object, Object>(resources.get());
         }
     }
-	
+    
     /**
      * Allows a caller to explicitly set the entire resource map.  This operation overwrites everything that existed
      * previously in the ThreadContext - if you need to retain what was on the thread prior to calling this method,
@@ -88,7 +88,7 @@ public abstract class ThreadContext {
     
     private static void ensureResourcesInitialized(){
         if (resources.get() == null) {
-        	resources.set(new HashMap<Object, Object>());
+            resources.set(new HashMap<Object, Object>());
         }
     }
     
@@ -117,10 +117,8 @@ public abstract class ThreadContext {
     
     /**
      * Binds <tt>value</tt> for the given <code>key</code> to the current thread.
-     * <p/>
      * <p>A <tt>null</tt> <tt>value</tt> has the same effect as if <tt>remove</tt> was called for the given
      * <tt>key</tt>, i.e.:
-     * <p/>
      * <pre>
      * if ( value == null ) {
      *     remove( key );
@@ -173,7 +171,7 @@ public abstract class ThreadContext {
     
     /**
      * {@link ThreadLocal#remove Remove}s the underlying {@link ThreadLocal ThreadLocal} from the thread.
-     * <p/>
+     * <p>
      * This method is meant to be the final 'clean up' operation that is called at the end of thread execution to
      * prevent thread corruption in pooled thread environments.
      *
@@ -186,18 +184,18 @@ public abstract class ThreadContext {
      * Convenience method that simplifies retrieval of the application's Validator instance from the current
      * thread. If there is no Validator bound to the thread (probably because framework code did not bind it
      * to the thread), this method returns <tt>null</tt>.
-     * <p/>
+     * <p>
      * It is merely a convenient wrapper for the following:
-     * <p/>
+     * <p>
      * <code>return (Validator)get( VALIDATOR_KEY );</code>
-     * <p/>
+     * <p>
      * This method only returns the bound value if it exists - it does not remove it
      * from the thread.  To remove it, one must call {@link #unbindValidator() unbindValidator()} instead.
      * 
      * @return
      */
     public static Validator getValidator() {
-    	return (Validator) get(VALIDATOR_KEY);
+        return (Validator) get(VALIDATOR_KEY);
     }
     
     /**
@@ -219,17 +217,17 @@ public abstract class ThreadContext {
     }
     
     public static Object getModel() {
-    	return get(MODEL_KEY);
+        return get(MODEL_KEY);
     }
     
     public static void bindModel(Object model) {
-    	if (model != null) {
-    		put(MODEL_KEY, model);
-    	}
+        if (model != null) {
+            put(MODEL_KEY, model);
+        }
     }
     
     public static Object unbindModel() {
-    	return remove(MODEL_KEY);
+        return remove(MODEL_KEY);
     }
     
     private static final class InheritableThreadLocalMap<T extends Map<Object, Object>> extends InheritableThreadLocal<Map<Object, Object>> {

@@ -26,9 +26,9 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ScriptMapping {
-	
-	/**
-	 * Assign a identifier to this mapping.
-	 */
-	String value() default "";
+    
+    /**
+     * Assign a identifier to this mapping.
+     */
+    String value() default "";
 }

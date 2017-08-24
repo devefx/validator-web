@@ -24,40 +24,40 @@ import javax.servlet.ServletInputStream;
 
 public class PushbackServletInputStream extends ServletInputStream {
 
-	private final PushbackInputStream pushbackInputStream;
-	
-	public PushbackServletInputStream(InputStream in) {
-		this(in, 1);
-	}
-	
-	public PushbackServletInputStream(InputStream in, int size) {
-		this.pushbackInputStream = new PushbackInputStream(in, size);
-	}
-	
-	@Override
-	public int available() throws IOException {
-		return this.pushbackInputStream.available();
-	}
-	
-	@Override
-	public int read() throws IOException {
-		return this.pushbackInputStream.read();
-	}
+    private final PushbackInputStream pushbackInputStream;
+    
+    public PushbackServletInputStream(InputStream in) {
+        this(in, 1);
+    }
+    
+    public PushbackServletInputStream(InputStream in, int size) {
+        this.pushbackInputStream = new PushbackInputStream(in, size);
+    }
+    
+    @Override
+    public int available() throws IOException {
+        return this.pushbackInputStream.available();
+    }
+    
+    @Override
+    public int read() throws IOException {
+        return this.pushbackInputStream.read();
+    }
 
-	@Override
-	public int read(byte[] b, int off, int len) throws IOException {
-		return this.pushbackInputStream.read(b, off, len);
-	}
-	
-	public void unread(int b) throws IOException {
-		this.pushbackInputStream.unread(b);
-	}
-	
-	public void unread(byte[] b, int off, int len) throws IOException {
-		this.pushbackInputStream.unread(b, off, len);
-	}
-	
-	public void unread(byte[] b) throws IOException {
-		this.pushbackInputStream.unread(b);
-	}
+    @Override
+    public int read(byte[] b, int off, int len) throws IOException {
+        return this.pushbackInputStream.read(b, off, len);
+    }
+    
+    public void unread(int b) throws IOException {
+        this.pushbackInputStream.unread(b);
+    }
+    
+    public void unread(byte[] b, int off, int len) throws IOException {
+        this.pushbackInputStream.unread(b, off, len);
+    }
+    
+    public void unread(byte[] b) throws IOException {
+        this.pushbackInputStream.unread(b);
+    }
 }

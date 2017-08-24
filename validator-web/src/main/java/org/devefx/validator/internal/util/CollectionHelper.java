@@ -31,7 +31,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * Provides some methods for simplified collection instantiation.
  *
  * @author Gunnar Morling
- * @author Kevin Pollet <kevin.pollet@serli.com> (C) 2011 SERLI
+ * @author Kevin Pollet &lt;kevin.pollet@serli.com&gt; (C) 2011 SERLI
  * @author Hardy Ferentschik
  */
 public final class CollectionHelper {
@@ -90,7 +90,7 @@ public final class CollectionHelper {
     }
 
     @SuppressWarnings("unchecked")
-	public static <T> ArrayList<T> newArrayList(Iterable<T>... iterables) {
+    public static <T> ArrayList<T> newArrayList(Iterable<T>... iterables) {
         ArrayList<T> resultList = newArrayList();
         for ( Iterable<T> oneIterable : iterables ) {
             for ( T oneElement : oneIterable ) {
@@ -101,7 +101,7 @@ public final class CollectionHelper {
     }
 
     @SuppressWarnings("unchecked")
-	public static <T> Set<T> asSet(T... ts) {
+    public static <T> Set<T> asSet(T... ts) {
         return new HashSet<T>(Arrays.asList(ts));
     }
 

@@ -25,6 +25,6 @@ public class DefaultValidationFactory implements ValidationFactory {
     @Override
     public Validation getValidation(Class<? extends Validation> validationClass) throws Exception {
         return validationClass == null ? null : 
-        	(Validation) ClassUtils.newInstance(validationClass);
+            (Validation) ClassUtils.newInstance(validationClass);
     }
 }

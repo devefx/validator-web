@@ -20,8 +20,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public interface View {
-	
-	String getContentType();
+    
+    String getContentType();
 
-	void render(HttpServletRequest request, HttpServletResponse response) throws Exception;
+    void render(HttpServletRequest request, HttpServletResponse response) throws Exception;
 }

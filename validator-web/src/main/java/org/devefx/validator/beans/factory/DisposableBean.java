@@ -18,6 +18,6 @@ package org.devefx.validator.beans.factory;
 
 public interface DisposableBean {
 
-	void destroy() throws Exception;
-	
+    void destroy() throws Exception;
+    
 }

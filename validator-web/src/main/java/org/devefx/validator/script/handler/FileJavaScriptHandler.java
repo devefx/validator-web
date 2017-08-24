@@ -25,9 +25,9 @@ import java.net.URL;
 import org.devefx.validator.util.ResourceUtils;
 
 public class FileJavaScriptHandler extends JavaScriptHandler {
-	
-	public static final String PATH_RESOURCE = "META-INF/resources/validatorjs";
-	
+    
+    public static final String PATH_RESOURCE = "META-INF/resources/validatorjs";
+    
     /** The name of the resource in the classpath that we read our contents from */
     private final String resource;
 
@@ -35,40 +35,40 @@ public class FileJavaScriptHandler extends JavaScriptHandler {
     private final String copyright;
 
     public FileJavaScriptHandler(String resource) {
-    	this(resource, null);
-	}
+        this(resource, null);
+    }
     
     public FileJavaScriptHandler(String resource, String copyright) {
-    	this.resource = resource;
-    	this.copyright = copyright;
-	}
+        this.resource = resource;
+        this.copyright = copyright;
+    }
     
-	@Override
-	protected String generateJavaScript(String contextPath, String servletPath,
-			String pathInfo) throws IOException {
-		
-		String javascript = ResourceUtils.getResourceAsString(resource);
-		
-		if (!debug && copyright != null) {
-			javascript = ResourceUtils.getResourceAsString(copyright) + javascript;
-		}
-		return javascript;
-	}
+    @Override
+    protected String generateJavaScript(String contextPath, String servletPath,
+            String pathInfo) throws IOException {
+        
+        String javascript = ResourceUtils.getResourceAsString(resource);
+        
+        if (!debug && copyright != null) {
+            javascript = ResourceUtils.getResourceAsString(copyright) + javascript;
+        }
+        return javascript;
+    }
 
-	@Override
-	protected long getLastModifiedTime() {
-		try {
-			URL url = ResourceUtils.getResourceAsUrl(resource);
-			if ("file".equals(url.getProtocol())) {
-				File file = new File(url.getFile());
-				return file.lastModified();
-			}
-		} catch (IOException ex) {
-			// ignore
-		}
-		RuntimeMXBean runtimeMXBean = ManagementFactory.getRuntimeMXBean();
-		long startTime = runtimeMXBean.getStartTime();
-		// Container start time (browsers are only accurate to the second)
-		return startTime - (startTime % 1000);
-	}
+    @Override
+    protected long getLastModifiedTime() {
+        try {
+            URL url = ResourceUtils.getResourceAsUrl(resource);
+            if ("file".equals(url.getProtocol())) {
+                File file = new File(url.getFile());
+                return file.lastModified();
+            }
+        } catch (IOException ex) {
+            // ignore
+        }
+        RuntimeMXBean runtimeMXBean = ManagementFactory.getRuntimeMXBean();
+        long startTime = runtimeMXBean.getStartTime();
+        // Container start time (browsers are only accurate to the second)
+        return startTime - (startTime % 1000);
+    }
 }

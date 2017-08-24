@@ -20,18 +20,18 @@ import java.util.Map;
 
 public interface Container {
 
-	Object getBean(String name) throws BeansException;
-	
-	<T> T getBean(String name, Class<T> requiredType) throws BeansException;
-	
-	<T> T getBean(Class<T> requiredType) throws BeansException;
-	
-	String[] getBeanNamesForType(Class<?> type);
-	
-	<T> Map<String, T> getBeansOfType(Class<T> type);
-	
-	boolean containsBean(String name);
-	
-	String getProperty(String name);
-	
+    Object getBean(String name) throws BeansException;
+    
+    <T> T getBean(String name, Class<T> requiredType) throws BeansException;
+    
+    <T> T getBean(Class<T> requiredType) throws BeansException;
+    
+    String[] getBeanNamesForType(Class<?> type);
+    
+    <T> Map<String, T> getBeansOfType(Class<T> type);
+    
+    boolean containsBean(String name);
+    
+    String getProperty(String name);
+    
 }

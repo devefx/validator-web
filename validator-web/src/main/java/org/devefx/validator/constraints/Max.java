@@ -26,52 +26,52 @@ import java.math.BigInteger;
 @Script
 public class Max implements ConstraintValidator {
 
-	@InitParam
-	private long maxValue;
-	
-	public Max(long maxValue) {
-		this.maxValue = maxValue;
-	}
-	
-	@Override
-	public boolean isValid(Object value) {
-		// null values are valid
-		if (value == null) {
-			return true;
-		}
+    @InitParam
+    private long maxValue;
+    
+    public Max(long maxValue) {
+        this.maxValue = maxValue;
+    }
+    
+    @Override
+    public boolean isValid(Object value) {
+        // null values are valid
+        if (value == null) {
+            return true;
+        }
 
-		// converter type
-		Number numValue;
-		if (value instanceof Number) {
-			numValue = (Number)value;
-		} else if (value instanceof String) {
-			numValue = new BigDecimal((String)value);
-		} else {
-			throw new IllegalArgumentException("Unsupported of type [" + value.getClass().getName() + "]");
-		}
-		
-		// handling of NaN, positive infinity and negative infinity
-		if (numValue instanceof Double) {
-			if ((Double) numValue == Double.NEGATIVE_INFINITY) {
-				return true;
-			} else if (Double.isNaN((Double) numValue) || (Double) numValue == Double.POSITIVE_INFINITY) {
-				return false;
-			}
-		} else if (numValue instanceof Float) {
-			if ((Float) numValue == Float.NEGATIVE_INFINITY) {
-				return true;
-			} else if (Float.isNaN((Float) numValue) || (Float) numValue == Float.POSITIVE_INFINITY) {
-				return false;
-			}
-		}
-		if (numValue instanceof BigDecimal) {
-			return ((BigDecimal) numValue).compareTo(BigDecimal.valueOf( maxValue)) != 1;
-		} else if (numValue instanceof BigInteger) {
-			return ((BigInteger) numValue).compareTo(BigInteger.valueOf( maxValue)) != 1;
-		} else {
-			long longValue = numValue.longValue();
-			return longValue <= maxValue;
-		}
-	}
+        // converter type
+        Number numValue;
+        if (value instanceof Number) {
+            numValue = (Number)value;
+        } else if (value instanceof String) {
+            numValue = new BigDecimal((String)value);
+        } else {
+            throw new IllegalArgumentException("Unsupported of type [" + value.getClass().getName() + "]");
+        }
+        
+        // handling of NaN, positive infinity and negative infinity
+        if (numValue instanceof Double) {
+            if ((Double) numValue == Double.NEGATIVE_INFINITY) {
+                return true;
+            } else if (Double.isNaN((Double) numValue) || (Double) numValue == Double.POSITIVE_INFINITY) {
+                return false;
+            }
+        } else if (numValue instanceof Float) {
+            if ((Float) numValue == Float.NEGATIVE_INFINITY) {
+                return true;
+            } else if (Float.isNaN((Float) numValue) || (Float) numValue == Float.POSITIVE_INFINITY) {
+                return false;
+            }
+        }
+        if (numValue instanceof BigDecimal) {
+            return ((BigDecimal) numValue).compareTo(BigDecimal.valueOf( maxValue)) != 1;
+        } else if (numValue instanceof BigInteger) {
+            return ((BigInteger) numValue).compareTo(BigInteger.valueOf( maxValue)) != 1;
+        } else {
+            long longValue = numValue.longValue();
+            return longValue <= maxValue;
+        }
+    }
 
 }

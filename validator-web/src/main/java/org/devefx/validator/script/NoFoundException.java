@@ -19,14 +19,14 @@ package org.devefx.validator.script;
 import org.devefx.validator.ValidationException;
 
 public class NoFoundException extends ValidationException {
-	
-	private static final long serialVersionUID = -7468238397030495230L;
+    
+    private static final long serialVersionUID = -7468238397030495230L;
 
-	public NoFoundException(String message) {
-		super(message);
-	}
-	
-	public NoFoundException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    public NoFoundException(String message) {
+        super(message);
+    }
+    
+    public NoFoundException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

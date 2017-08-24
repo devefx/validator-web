@@ -27,16 +27,16 @@ public class ValidatorUtils {
     }
 
     public static Validator getValidator() throws UnavailableValidatorException {
-    	Validator validator = ThreadContext.getValidator();
-    	if (validator == null) {
-    		validator = ValidatorUtils.validator;
-    	}
-    	if (validator == null) {
-    		String msg = "No Validator accessible to the calling code, either bound to the " +
-    				WebContext.class.getName() + " or as a vm static singleton.  This is an invalid application " +
+        Validator validator = ThreadContext.getValidator();
+        if (validator == null) {
+            validator = ValidatorUtils.validator;
+        }
+        if (validator == null) {
+            String msg = "No Validator accessible to the calling code, either bound to the " +
+                    WebContext.class.getName() + " or as a vm static singleton.  This is an invalid application " +
                     "configuration.";
-    		throw new UnavailableValidatorException(msg);
-    	}
+            throw new UnavailableValidatorException(msg);
+        }
         return validator;
     }
 }

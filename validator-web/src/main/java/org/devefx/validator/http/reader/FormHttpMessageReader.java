@@ -34,73 +34,73 @@ import org.devefx.validator.util.StringUtils;
 
 public class FormHttpMessageReader implements HttpMessageReader<MultiValueMap<String, ?>> {
 
-	protected Charset charset = Charset.forName("UTF-8");
-	
-	protected List<MediaType> supportedMediaTypes = new ArrayList<MediaType>();
-	
-	public FormHttpMessageReader() {
-		this.supportedMediaTypes.add(MediaType.APPLICATION_FORM_URLENCODED);
-	}
-	
-	/**
-	 * Sets the character set used for reading form data.
-	 */
-	public void setCharset(Charset charset) {
-		this.charset = charset;
-	}
-	
-	@Override
-	public boolean canRead(Class<?> clazz, MediaType mediaType) {
-		if (!MultiValueMap.class.isAssignableFrom(clazz)) {
-			return false;
-		}
-		if (mediaType == null) {
-			return true;
-		}
-		for (MediaType supportedMediaType : getSupportedMediaTypes()) {
-			if (supportedMediaType.includes(mediaType)) {
-				return true;
-			}
-		}
-		return false;
-	}
+    protected Charset charset = Charset.forName("UTF-8");
+    
+    protected List<MediaType> supportedMediaTypes = new ArrayList<MediaType>();
+    
+    public FormHttpMessageReader() {
+        this.supportedMediaTypes.add(MediaType.APPLICATION_FORM_URLENCODED);
+    }
+    
+    /**
+     * Sets the character set used for reading form data.
+     */
+    public void setCharset(Charset charset) {
+        this.charset = charset;
+    }
+    
+    @Override
+    public boolean canRead(Class<?> clazz, MediaType mediaType) {
+        if (!MultiValueMap.class.isAssignableFrom(clazz)) {
+            return false;
+        }
+        if (mediaType == null) {
+            return true;
+        }
+        for (MediaType supportedMediaType : getSupportedMediaTypes()) {
+            if (supportedMediaType.includes(mediaType)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-	/**
-	 * Set the list of {@link MediaType} objects supported by this converter.
-	 */
-	public void setSupportedMediaTypes(List<MediaType> supportedMediaTypes) {
-		this.supportedMediaTypes = supportedMediaTypes;
-	}
-	
-	@Override
-	public List<MediaType> getSupportedMediaTypes() {
-		return Collections.unmodifiableList(this.supportedMediaTypes);
-	}
+    /**
+     * Set the list of {@link MediaType} objects supported by this converter.
+     */
+    public void setSupportedMediaTypes(List<MediaType> supportedMediaTypes) {
+        this.supportedMediaTypes = supportedMediaTypes;
+    }
+    
+    @Override
+    public List<MediaType> getSupportedMediaTypes() {
+        return Collections.unmodifiableList(this.supportedMediaTypes);
+    }
 
-	@Override
-	public MultiValueMap<String, ?> read(Class<? extends MultiValueMap<String, ?>> clazz,
-			HttpServletRequest request) throws IOException, HttpMessageNotReadableException {
-		
-		MediaType contentType = MediaType.parseMediaType(request.getContentType());
-		Charset charset = contentType.getCharSet() != null ? contentType.getCharSet() : this.charset;
-		String body = StreamUtils.copyToString(request.getInputStream(), charset);
-		
-		String[] pairs = StringUtils.tokenizeToStringArray(body, "&");
-		
-		MultiValueMap<String, String> result = new LinkedMultiValueMap<>(pairs.length);
-		ServletUtils.extractUrlParams(result, request);
-		
-		for (String pair : pairs) {
-			int idx = pair.indexOf('=');
-			if (idx == -1) {
-				result.add(URLDecoder.decode(pair, charset.name()), null);
-			}
-			else {
-				String name = URLDecoder.decode(pair.substring(0, idx), charset.name());
-				String value = URLDecoder.decode(pair.substring(idx + 1), charset.name());
-				result.add(name, value);
-			}
-		}
-		return result;
-	}
+    @Override
+    public MultiValueMap<String, ?> read(Class<? extends MultiValueMap<String, ?>> clazz,
+            HttpServletRequest request) throws IOException, HttpMessageNotReadableException {
+        
+        MediaType contentType = MediaType.parseMediaType(request.getContentType());
+        Charset charset = contentType.getCharSet() != null ? contentType.getCharSet() : this.charset;
+        String body = StreamUtils.copyToString(request.getInputStream(), charset);
+        
+        String[] pairs = StringUtils.tokenizeToStringArray(body, "&");
+        
+        MultiValueMap<String, String> result = new LinkedMultiValueMap<>(pairs.length);
+        ServletUtils.extractUrlParams(result, request);
+        
+        for (String pair : pairs) {
+            int idx = pair.indexOf('=');
+            if (idx == -1) {
+                result.add(URLDecoder.decode(pair, charset.name()), null);
+            }
+            else {
+                String name = URLDecoder.decode(pair.substring(0, idx), charset.name());
+                String value = URLDecoder.decode(pair.substring(idx + 1), charset.name());
+                result.add(name, value);
+            }
+        }
+        return result;
+    }
 }

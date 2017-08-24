@@ -19,13 +19,13 @@ package org.devefx.validator.beans.factory;
 import org.devefx.validator.beans.BeansException;
 
 public class InjectBeanException extends BeansException {
-	private static final long serialVersionUID = 7190107543567718130L;
+    private static final long serialVersionUID = 7190107543567718130L;
 
-	public InjectBeanException(String msg) {
-		super(msg);
-	}
-	
-	public InjectBeanException(String msg, Throwable cause) {
-		super(msg, cause);
-	}
+    public InjectBeanException(String msg) {
+        super(msg);
+    }
+    
+    public InjectBeanException(String msg, Throwable cause) {
+        super(msg, cause);
+    }
 }

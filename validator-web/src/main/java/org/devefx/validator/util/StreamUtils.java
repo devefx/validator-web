@@ -23,24 +23,24 @@ import java.nio.charset.Charset;
 
 public class StreamUtils {
 
-	public static final int BUFFER_SIZE = 4096;
-	
-	/**
-	 * Copy the contents of the given InputStream into a String.
-	 * Leaves the stream open when done.
-	 * @param in the InputStream to copy from
-	 * @return the String that has been copied to
-	 * @throws IOException in case of I/O errors
-	 */
-	public static String copyToString(InputStream in, Charset charset) throws IOException {
-		Assert.notNull(in, "No InputStream specified");
-		StringBuilder out = new StringBuilder();
-		InputStreamReader reader = new InputStreamReader(in, charset);
-		char[] buffer = new char[BUFFER_SIZE];
-		int bytesRead = -1;
-		while ((bytesRead = reader.read(buffer)) != -1) {
-			out.append(buffer, 0, bytesRead);
-		}
-		return out.toString();
-	}
+    public static final int BUFFER_SIZE = 4096;
+    
+    /**
+     * Copy the contents of the given InputStream into a String.
+     * Leaves the stream open when done.
+     * @param in the InputStream to copy from
+     * @return the String that has been copied to
+     * @throws IOException in case of I/O errors
+     */
+    public static String copyToString(InputStream in, Charset charset) throws IOException {
+        Assert.notNull(in, "No InputStream specified");
+        StringBuilder out = new StringBuilder();
+        InputStreamReader reader = new InputStreamReader(in, charset);
+        char[] buffer = new char[BUFFER_SIZE];
+        int bytesRead = -1;
+        while ((bytesRead = reader.read(buffer)) != -1) {
+            out.append(buffer, 0, bytesRead);
+        }
+        return out.toString();
+    }
 }

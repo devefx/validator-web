@@ -23,14 +23,14 @@ import org.springframework.util.Assert;
 import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
 
 public class ValidatorHandlerMapping extends SimpleUrlHandlerMapping {
-	
-	@Override
-	public void initApplicationContext() throws BeansException {
-		Collection<ValidatorController> validatorControllers = getApplicationContext()
-				.getBeansOfType(ValidatorController.class).values();
-		Assert.notEmpty(validatorControllers, "No Validator Controller bean definition found.");
-		ValidatorController validatorController = validatorControllers.iterator().next();
-		validatorController.setupUrlMapping(this);
-		super.initApplicationContext();
-	}
+    
+    @Override
+    public void initApplicationContext() throws BeansException {
+        Collection<ValidatorController> validatorControllers = getApplicationContext()
+                .getBeansOfType(ValidatorController.class).values();
+        Assert.notEmpty(validatorControllers, "No Validator Controller bean definition found.");
+        ValidatorController validatorController = validatorControllers.iterator().next();
+        validatorController.setupUrlMapping(this);
+        super.initApplicationContext();
+    }
 }

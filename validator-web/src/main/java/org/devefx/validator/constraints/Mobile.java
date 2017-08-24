@@ -25,8 +25,8 @@ import org.devefx.validator.script.annotation.Script;
 @Script
 public class Mobile implements ConstraintValidator {
 
-	private static final Pattern mobilePattern = Pattern.compile("^(0|86|17951)?(13[0-9]|15[012356789]|17[3678]|18[0-9]|14[57])[0-9]{8}$");
-	
+    private static final Pattern mobilePattern = Pattern.compile("^(0|86|17951)?(13[0-9]|15[012356789]|17[3678]|18[0-9]|14[57])[0-9]{8}$");
+    
     @Override
     public boolean isValid(Object value) {
         if (value == null) {

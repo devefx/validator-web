@@ -29,29 +29,29 @@ import java.io.IOException;
 
 public abstract class AbstractValidatorHttpServlet extends HttpServlet {
 
-	private static final long serialVersionUID = -3075517295438877891L;
+    private static final long serialVersionUID = -3075517295438877891L;
 
-	private ServletConfig servletConfig;
-	
-	@Override
-	public void init(ServletConfig servletConfig) throws ServletException {
-		super.init(servletConfig);
-		this.servletConfig = servletConfig;
-	}
-	
-	@Override
+    private ServletConfig servletConfig;
+    
+    @Override
+    public void init(ServletConfig servletConfig) throws ServletException {
+        super.init(servletConfig);
+        this.servletConfig = servletConfig;
+    }
+    
+    @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-		try {
-			WebContextThreadStack.engageThread(servletConfig, req, resp);
-			
-			Validator validator = ValidatorUtils.getValidator();
-	        if (!validator.validate(getClass(), req, resp)) {
-	            return;
-	        }
-	        super.service(req, resp);
-		} finally {
-			WebContextThreadStack.disengageThread();
-		}
+        try {
+            WebContextThreadStack.engageThread(servletConfig, req, resp);
+            
+            Validator validator = ValidatorUtils.getValidator();
+            if (!validator.validate(getClass(), req, resp)) {
+                return;
+            }
+            super.service(req, resp);
+        } finally {
+            WebContextThreadStack.disengageThread();
+        }
     }
 }

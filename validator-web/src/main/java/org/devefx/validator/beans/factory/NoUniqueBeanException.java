@@ -24,56 +24,56 @@ import org.devefx.validator.util.StringUtils;
 
 public class NoUniqueBeanException extends BeansException {
 
-	private static final long serialVersionUID = -7811666048083937858L;
+    private static final long serialVersionUID = -7811666048083937858L;
 
-	private Class<?> beanType;
-	
-	private int numberOfBeansFound;
+    private Class<?> beanType;
+    
+    private int numberOfBeansFound;
 
-	/**
-	 * Create a new {@code NoUniqueBeanException}.
-	 * @param type required type of the non-unique bean
-	 * @param numberOfBeansFound the number of matching beans
-	 * @param message detailed message describing the problem
-	 */
-	public NoUniqueBeanException(Class<?> type, int numberOfBeansFound, String message) {
-		super("No bean named '" + type.getName() + "' is defined");
-		this.beanType = type;
-		this.numberOfBeansFound = numberOfBeansFound;
-	}
+    /**
+     * Create a new {@code NoUniqueBeanException}.
+     * @param type required type of the non-unique bean
+     * @param numberOfBeansFound the number of matching beans
+     * @param message detailed message describing the problem
+     */
+    public NoUniqueBeanException(Class<?> type, int numberOfBeansFound, String message) {
+        super("No bean named '" + type.getName() + "' is defined");
+        this.beanType = type;
+        this.numberOfBeansFound = numberOfBeansFound;
+    }
 
-	/**
-	 * Create a new {@code NoUniqueBeanException}.
-	 * @param type required type of the non-unique bean
-	 * @param beanNamesFound the names of all matching beans (as a Collection)
-	 */
-	public NoUniqueBeanException(Class<?> type, Collection<String> beanNamesFound) {
-		this(type, beanNamesFound.size(), "expected single matching bean but found " + beanNamesFound.size() + ": " +
-				StringUtils.collectionToCommaDelimitedString(beanNamesFound));
-	}
+    /**
+     * Create a new {@code NoUniqueBeanException}.
+     * @param type required type of the non-unique bean
+     * @param beanNamesFound the names of all matching beans (as a Collection)
+     */
+    public NoUniqueBeanException(Class<?> type, Collection<String> beanNamesFound) {
+        this(type, beanNamesFound.size(), "expected single matching bean but found " + beanNamesFound.size() + ": " +
+                StringUtils.collectionToCommaDelimitedString(beanNamesFound));
+    }
 
-	/**
-	 * Create a new {@code NoUniqueBeanException}.
-	 * @param type required type of the non-unique bean
-	 * @param beanNamesFound the names of all matching beans (as an array)
-	 */
-	public NoUniqueBeanException(Class<?> type, String... beanNamesFound) {
-		this(type, Arrays.asList(beanNamesFound));
-	}
+    /**
+     * Create a new {@code NoUniqueBeanException}.
+     * @param type required type of the non-unique bean
+     * @param beanNamesFound the names of all matching beans (as an array)
+     */
+    public NoUniqueBeanException(Class<?> type, String... beanNamesFound) {
+        this(type, Arrays.asList(beanNamesFound));
+    }
 
-	/**
-	 * Return the required type of the missing bean, if it was a lookup <em>by type</em> that failed.
-	 */
-	public Class<?> getBeanType() {
-		return this.beanType;
-	}
-	
-	/**
-	 * Return the number of beans found when only one matching bean was expected.
-	 * For a NoUniqueBeanException, this will usually be higher than 1.
-	 * @see #getBeanType()
-	 */
-	public int getNumberOfBeansFound() {
-		return this.numberOfBeansFound;
-	}
+    /**
+     * Return the required type of the missing bean, if it was a lookup <em>by type</em> that failed.
+     */
+    public Class<?> getBeanType() {
+        return this.beanType;
+    }
+    
+    /**
+     * Return the number of beans found when only one matching bean was expected.
+     * For a NoUniqueBeanException, this will usually be higher than 1.
+     * @see #getBeanType()
+     */
+    public int getNumberOfBeansFound() {
+        return this.numberOfBeansFound;
+    }
 }

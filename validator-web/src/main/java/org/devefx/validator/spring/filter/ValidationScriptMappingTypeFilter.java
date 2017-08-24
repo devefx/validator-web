@@ -28,13 +28,13 @@ import org.springframework.core.type.filter.TypeFilter;
 
 public class ValidationScriptMappingTypeFilter implements TypeFilter {
 
-	private AnnotationTypeFilter annotationTypeFilter = new AnnotationTypeFilter(ScriptMapping.class);
-	private AssignableTypeFilter assignableTypeFilter = new AssignableTypeFilter(Validation.class);
-	
-	@Override
-	public boolean match(MetadataReader metadataReader,
-			MetadataReaderFactory metadataReaderFactory) throws IOException {
-		return annotationTypeFilter.match(metadataReader, metadataReaderFactory) &&
-				assignableTypeFilter.match(metadataReader, metadataReaderFactory);
-	}
+    private AnnotationTypeFilter annotationTypeFilter = new AnnotationTypeFilter(ScriptMapping.class);
+    private AssignableTypeFilter assignableTypeFilter = new AssignableTypeFilter(Validation.class);
+    
+    @Override
+    public boolean match(MetadataReader metadataReader,
+            MetadataReaderFactory metadataReaderFactory) throws IOException {
+        return annotationTypeFilter.match(metadataReader, metadataReaderFactory) &&
+                assignableTypeFilter.match(metadataReader, metadataReaderFactory);
+    }
 }

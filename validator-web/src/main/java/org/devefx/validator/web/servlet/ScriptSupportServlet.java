@@ -32,42 +32,42 @@ import org.devefx.validator.internal.util.WebContextThreadStack;
 import org.devefx.validator.script.UrlProcessor;
 
 public class ScriptSupportServlet extends HttpServlet {
-	
-	private static final long serialVersionUID = 3093149631565854976L;
-	
-	private static final Log log = LogFactory.getLog(ScriptSupportServlet.class);
+    
+    private static final long serialVersionUID = 3093149631565854976L;
+    
+    private static final Log log = LogFactory.getLog(ScriptSupportServlet.class);
 
-	protected Container container;
-	
-	protected ServletConfig servletConfig;
-	
-	protected UrlProcessor processor;
-	
-	@Override
-	public void init(ServletConfig servletConfig) throws ServletException {
-		super.init(servletConfig);
-		
-		try {
-			this.container = StartupUtil.createAndSetupDefaultContainer(servletConfig);
-			
-			this.servletConfig = servletConfig;
-		} catch (Exception ex) {
-			log.fatal("init failed", ex);
+    protected Container container;
+    
+    protected ServletConfig servletConfig;
+    
+    protected UrlProcessor processor;
+    
+    @Override
+    public void init(ServletConfig servletConfig) throws ServletException {
+        super.init(servletConfig);
+        
+        try {
+            this.container = StartupUtil.createAndSetupDefaultContainer(servletConfig);
+            
+            this.servletConfig = servletConfig;
+        } catch (Exception ex) {
+            log.fatal("init failed", ex);
             throw new ServletException(ex);
-		}
-		
-		this.processor = this.container.getBean(UrlProcessor.class);
-	}
-	
-	@Override
-	protected void service(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		try {
-			// set up the web context and delegate to the processor
-			WebContextThreadStack.engageThread(servletConfig, request, response);
-			this.processor.handle(request, response);
-		} finally {
-			WebContextThreadStack.disengageThread();
-		}
-	}
+        }
+        
+        this.processor = this.container.getBean(UrlProcessor.class);
+    }
+    
+    @Override
+    protected void service(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            // set up the web context and delegate to the processor
+            WebContextThreadStack.engageThread(servletConfig, request, response);
+            this.processor.handle(request, response);
+        } finally {
+            WebContextThreadStack.disengageThread();
+        }
+    }
 }

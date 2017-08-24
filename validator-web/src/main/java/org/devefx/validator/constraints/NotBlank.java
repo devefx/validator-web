@@ -22,12 +22,12 @@ import org.devefx.validator.script.annotation.Script;
 @Script
 public class NotBlank implements ConstraintValidator {
 
-	@Override
-	public boolean isValid(Object value) {
-		if (value == null) {
-			return false;
-		}
-		return value.toString().trim().length() > 0;
-	}
+    @Override
+    public boolean isValid(Object value) {
+        if (value == null) {
+            return false;
+        }
+        return value.toString().trim().length() > 0;
+    }
 
 }

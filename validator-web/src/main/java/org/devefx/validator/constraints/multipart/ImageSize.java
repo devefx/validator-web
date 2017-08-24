@@ -24,64 +24,64 @@ import org.devefx.validator.web.multipart.ImageMultipartFile;
 @Script
 public class ImageSize implements ConstraintValidator {
 
-	@InitParam
-	private int minWidth;
-	@InitParam
-	private int maxWidth;
-	@InitParam
-	private int minHeight;
-	@InitParam
-	private int maxHeight;
-	
-	public ImageSize(int maxWidth, int maxHeight) {
-		this(1, maxWidth, 1, maxHeight);
-	}
-	
-	public ImageSize(int minWidth, int maxWidth, int minHeight, int maxHeight) {
-		this.minWidth = minWidth;
-		this.maxWidth = maxWidth;
-		this.minHeight = minHeight;
-		this.maxHeight = maxHeight;
-		validateParameters();
-	}
+    @InitParam
+    private int minWidth;
+    @InitParam
+    private int maxWidth;
+    @InitParam
+    private int minHeight;
+    @InitParam
+    private int maxHeight;
+    
+    public ImageSize(int maxWidth, int maxHeight) {
+        this(1, maxWidth, 1, maxHeight);
+    }
+    
+    public ImageSize(int minWidth, int maxWidth, int minHeight, int maxHeight) {
+        this.minWidth = minWidth;
+        this.maxWidth = maxWidth;
+        this.minHeight = minHeight;
+        this.maxHeight = maxHeight;
+        validateParameters();
+    }
 
-	@Override
-	public boolean isValid(Object value) {
-		// null values are valid
-		if (value == null) {
-			return true;
-		}
-		// converter type
-		ImageMultipartFile image;
-		if (value instanceof ImageMultipartFile) {
-			image = (ImageMultipartFile) value;
-		} else {
-			throw new IllegalArgumentException("Unsupported of type [" + value.getClass().getName() + "]");
-		}
-		int width = image.getWidth();
-		int height = image.getHeight();
-		return width >= minWidth && width <= maxWidth &&
-				height >= minHeight && height <= maxHeight;
-	}
-	
-	private void validateParameters() {
-		if (minWidth < 1) {
-			throw new IllegalArgumentException("The minWidth parameter cannot be less than 1.");
-		}
-		if (maxWidth < 1) {
-			throw new IllegalArgumentException("The maxWidth parameter cannot be less than 1.");
-		}
-		if (minHeight < 1) {
-			throw new IllegalArgumentException("The minHeight parameter cannot be less than 1.");
-		}
-		if (maxHeight < 1) {
-			throw new IllegalArgumentException("The maxHeight parameter cannot be less than 1.");
-		}
-		if (maxWidth < minWidth) {
-			throw new IllegalArgumentException("The width cannot be negative.");
-		}
-		if (maxHeight < minHeight) {
-			throw new IllegalArgumentException("The height cannot be negative.");
-		}
-	}
+    @Override
+    public boolean isValid(Object value) {
+        // null values are valid
+        if (value == null) {
+            return true;
+        }
+        // converter type
+        ImageMultipartFile image;
+        if (value instanceof ImageMultipartFile) {
+            image = (ImageMultipartFile) value;
+        } else {
+            throw new IllegalArgumentException("Unsupported of type [" + value.getClass().getName() + "]");
+        }
+        int width = image.getWidth();
+        int height = image.getHeight();
+        return width >= minWidth && width <= maxWidth &&
+                height >= minHeight && height <= maxHeight;
+    }
+    
+    private void validateParameters() {
+        if (minWidth < 1) {
+            throw new IllegalArgumentException("The minWidth parameter cannot be less than 1.");
+        }
+        if (maxWidth < 1) {
+            throw new IllegalArgumentException("The maxWidth parameter cannot be less than 1.");
+        }
+        if (minHeight < 1) {
+            throw new IllegalArgumentException("The minHeight parameter cannot be less than 1.");
+        }
+        if (maxHeight < 1) {
+            throw new IllegalArgumentException("The maxHeight parameter cannot be less than 1.");
+        }
+        if (maxWidth < minWidth) {
+            throw new IllegalArgumentException("The width cannot be negative.");
+        }
+        if (maxHeight < minHeight) {
+            throw new IllegalArgumentException("The height cannot be negative.");
+        }
+    }
 }

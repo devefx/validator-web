@@ -23,36 +23,36 @@ import org.devefx.validator.script.annotation.Script;
 @Script
 public class Length implements ConstraintValidator {
 
-	@InitParam
-	private int min;
-	@InitParam
-	private int max;
-	
-	public Length(int min, int max) {
-		this.min = min;
-		this.max = max;
-		validateParameters();
-	}
-	
-	@Override
-	public boolean isValid(Object value) {
-		if (value == null) {
-			return true;
-		}
-		String stringValue = value.toString();
-		int length = stringValue.length();
-		return length >= min && length <= max;
-	}
-	
-	private void validateParameters() {
-		if (min < 0) {
-			throw new IllegalArgumentException("The min parameter cannot be negative.");
-		}
-		if (max < 0) {
-			throw new IllegalArgumentException("The max parameter cannot be negative.");
-		}
-		if (max < min) {
-			throw new IllegalArgumentException("The length cannot be negative.");
-		}
-	}
+    @InitParam
+    private int min;
+    @InitParam
+    private int max;
+    
+    public Length(int min, int max) {
+        this.min = min;
+        this.max = max;
+        validateParameters();
+    }
+    
+    @Override
+    public boolean isValid(Object value) {
+        if (value == null) {
+            return true;
+        }
+        String stringValue = value.toString();
+        int length = stringValue.length();
+        return length >= min && length <= max;
+    }
+    
+    private void validateParameters() {
+        if (min < 0) {
+            throw new IllegalArgumentException("The min parameter cannot be negative.");
+        }
+        if (max < 0) {
+            throw new IllegalArgumentException("The max parameter cannot be negative.");
+        }
+        if (max < min) {
+            throw new IllegalArgumentException("The length cannot be negative.");
+        }
+    }
 }

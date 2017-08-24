@@ -21,8 +21,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.AnnotatedElement;
 
 public interface Validator {
-	
-	ValidatorContext getValidatorContext();
-	
+    
+    ValidatorContext getValidatorContext();
+    
     boolean validate(AnnotatedElement validElement, HttpServletRequest request, HttpServletResponse response);
 }

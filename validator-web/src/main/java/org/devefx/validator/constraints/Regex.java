@@ -27,33 +27,33 @@ import org.devefx.validator.script.annotation.Script;
 @Script
 public class Regex implements ConstraintValidator {
 
-	private java.util.regex.Pattern pattern;
-	@InitParam
-	private String regexp;
-	@InitParam
-	private int flags;
+    private java.util.regex.Pattern pattern;
+    @InitParam
+    private String regexp;
+    @InitParam
+    private int flags;
 
-	public Regex(String regexp) {
-		this(regexp, 0);
-	}
-	
-	public Regex(String regexp, int flags) {
-		try {
-			this.regexp = regexp;
-			this.flags = flags;
-			this.pattern = Pattern.compile(this.regexp, this.flags);
-		} catch (PatternSyntaxException e) {
-			throw new IllegalArgumentException("Invalid regular expression.");
-		}
-	}
-	
-	@Override
-	public boolean isValid(Object value) {
-		if (value == null) {
-			return true;
-		}
-		Matcher m = pattern.matcher(value.toString());
-		return m.matches();
-	}
-	
+    public Regex(String regexp) {
+        this(regexp, 0);
+    }
+    
+    public Regex(String regexp, int flags) {
+        try {
+            this.regexp = regexp;
+            this.flags = flags;
+            this.pattern = Pattern.compile(this.regexp, this.flags);
+        } catch (PatternSyntaxException e) {
+            throw new IllegalArgumentException("Invalid regular expression.");
+        }
+    }
+    
+    @Override
+    public boolean isValid(Object value) {
+        if (value == null) {
+            return true;
+        }
+        Matcher m = pattern.matcher(value.toString());
+        return m.matches();
+    }
+    
 }

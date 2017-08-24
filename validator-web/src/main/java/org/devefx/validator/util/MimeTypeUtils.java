@@ -34,253 +34,253 @@ import java.util.Map;
  */
 public abstract class MimeTypeUtils {
 
-	/**
-	 * Public constant mime type that includes all media ranges (i.e. "&#42;/&#42;").
-	 */
-	public static final MimeType ALL;
+    /**
+     * Public constant mime type that includes all media ranges (i.e. "&#42;/&#42;").
+     */
+    public static final MimeType ALL;
 
-	/**
-	 * A String equivalent of {@link MimeTypeUtils#ALL}.
-	 */
-	public static final String ALL_VALUE = "*/*";
+    /**
+     * A String equivalent of {@link MimeTypeUtils#ALL}.
+     */
+    public static final String ALL_VALUE = "*/*";
 
-	/**
-	 *  Public constant mime type for {@code application/atom+xml}.
-	 */
-	public final static MimeType APPLICATION_ATOM_XML;
+    /**
+     *  Public constant mime type for {@code application/atom+xml}.
+     */
+    public final static MimeType APPLICATION_ATOM_XML;
 
-	/**
-	 * A String equivalent of {@link MimeTypeUtils#APPLICATION_ATOM_XML}.
-	 */
-	public final static String APPLICATION_ATOM_XML_VALUE = "application/atom+xml";
+    /**
+     * A String equivalent of {@link MimeTypeUtils#APPLICATION_ATOM_XML}.
+     */
+    public final static String APPLICATION_ATOM_XML_VALUE = "application/atom+xml";
 
-	/**
-	 * Public constant mime type for {@code application/x-www-form-urlencoded}.
-	 *  */
-	public final static MimeType APPLICATION_FORM_URLENCODED;
+    /**
+     * Public constant mime type for {@code application/x-www-form-urlencoded}.
+     *  */
+    public final static MimeType APPLICATION_FORM_URLENCODED;
 
-	/**
-	 * A String equivalent of {@link MimeTypeUtils#APPLICATION_FORM_URLENCODED}.
-	 */
-	public final static String APPLICATION_FORM_URLENCODED_VALUE = "application/x-www-form-urlencoded";
+    /**
+     * A String equivalent of {@link MimeTypeUtils#APPLICATION_FORM_URLENCODED}.
+     */
+    public final static String APPLICATION_FORM_URLENCODED_VALUE = "application/x-www-form-urlencoded";
 
-	/**
-	 * Public constant mime type for {@code application/json}.
-	 * */
-	public final static MimeType APPLICATION_JSON;
+    /**
+     * Public constant mime type for {@code application/json}.
+     * */
+    public final static MimeType APPLICATION_JSON;
 
-	/**
-	 * A String equivalent of {@link MimeTypeUtils#APPLICATION_JSON}.
-	 */
-	public final static String APPLICATION_JSON_VALUE = "application/json";
+    /**
+     * A String equivalent of {@link MimeTypeUtils#APPLICATION_JSON}.
+     */
+    public final static String APPLICATION_JSON_VALUE = "application/json";
 
-	/**
-	 * Public constant mime type for {@code application/octet-stream}.
-	 *  */
-	public final static MimeType APPLICATION_OCTET_STREAM;
+    /**
+     * Public constant mime type for {@code application/octet-stream}.
+     *  */
+    public final static MimeType APPLICATION_OCTET_STREAM;
 
-	/**
-	 * A String equivalent of {@link MimeTypeUtils#APPLICATION_OCTET_STREAM}.
-	 */
-	public final static String APPLICATION_OCTET_STREAM_VALUE = "application/octet-stream";
+    /**
+     * A String equivalent of {@link MimeTypeUtils#APPLICATION_OCTET_STREAM}.
+     */
+    public final static String APPLICATION_OCTET_STREAM_VALUE = "application/octet-stream";
 
-	/**
-	 * Public constant mime type for {@code application/xhtml+xml}.
-	 *  */
-	public final static MimeType APPLICATION_XHTML_XML;
+    /**
+     * Public constant mime type for {@code application/xhtml+xml}.
+     *  */
+    public final static MimeType APPLICATION_XHTML_XML;
 
-	/**
-	 * A String equivalent of {@link MimeTypeUtils#APPLICATION_XHTML_XML}.
-	 */
-	public final static String APPLICATION_XHTML_XML_VALUE = "application/xhtml+xml";
+    /**
+     * A String equivalent of {@link MimeTypeUtils#APPLICATION_XHTML_XML}.
+     */
+    public final static String APPLICATION_XHTML_XML_VALUE = "application/xhtml+xml";
 
-	/**
-	 * Public constant mime type for {@code application/xml}.
-	 */
-	public final static MimeType APPLICATION_XML;
+    /**
+     * Public constant mime type for {@code application/xml}.
+     */
+    public final static MimeType APPLICATION_XML;
 
-	/**
-	 * A String equivalent of {@link MimeTypeUtils#APPLICATION_XML}.
-	 */
-	public final static String APPLICATION_XML_VALUE = "application/xml";
+    /**
+     * A String equivalent of {@link MimeTypeUtils#APPLICATION_XML}.
+     */
+    public final static String APPLICATION_XML_VALUE = "application/xml";
 
-	/**
-	 * Public constant mime type for {@code image/gif}.
-	 */
-	public final static MimeType IMAGE_GIF;
+    /**
+     * Public constant mime type for {@code image/gif}.
+     */
+    public final static MimeType IMAGE_GIF;
 
-	/**
-	 * A String equivalent of {@link MimeTypeUtils#IMAGE_GIF}.
-	 */
-	public final static String IMAGE_GIF_VALUE = "image/gif";
+    /**
+     * A String equivalent of {@link MimeTypeUtils#IMAGE_GIF}.
+     */
+    public final static String IMAGE_GIF_VALUE = "image/gif";
 
-	/**
-	 * Public constant mime type for {@code image/jpeg}.
-	 */
-	public final static MimeType IMAGE_JPEG;
+    /**
+     * Public constant mime type for {@code image/jpeg}.
+     */
+    public final static MimeType IMAGE_JPEG;
 
-	/**
-	 * A String equivalent of {@link MimeTypeUtils#IMAGE_JPEG}.
-	 */
-	public final static String IMAGE_JPEG_VALUE = "image/jpeg";
+    /**
+     * A String equivalent of {@link MimeTypeUtils#IMAGE_JPEG}.
+     */
+    public final static String IMAGE_JPEG_VALUE = "image/jpeg";
 
-	/**
-	 * Public constant mime type for {@code image/png}.
-	 */
-	public final static MimeType IMAGE_PNG;
+    /**
+     * Public constant mime type for {@code image/png}.
+     */
+    public final static MimeType IMAGE_PNG;
 
-	/**
-	 * A String equivalent of {@link MimeTypeUtils#IMAGE_PNG}.
-	 */
-	public final static String IMAGE_PNG_VALUE = "image/png";
+    /**
+     * A String equivalent of {@link MimeTypeUtils#IMAGE_PNG}.
+     */
+    public final static String IMAGE_PNG_VALUE = "image/png";
 
-	/**
-	 * Public constant mime type for {@code multipart/form-data}.
-	 *  */
-	public final static MimeType MULTIPART_FORM_DATA;
+    /**
+     * Public constant mime type for {@code multipart/form-data}.
+     *  */
+    public final static MimeType MULTIPART_FORM_DATA;
 
-	/**
-	 * A String equivalent of {@link MimeTypeUtils#MULTIPART_FORM_DATA}.
-	 */
-	public final static String MULTIPART_FORM_DATA_VALUE = "multipart/form-data";
+    /**
+     * A String equivalent of {@link MimeTypeUtils#MULTIPART_FORM_DATA}.
+     */
+    public final static String MULTIPART_FORM_DATA_VALUE = "multipart/form-data";
 
-	/**
-	 * Public constant mime type for {@code text/html}.
-	 *  */
-	public final static MimeType TEXT_HTML;
+    /**
+     * Public constant mime type for {@code text/html}.
+     *  */
+    public final static MimeType TEXT_HTML;
 
-	/**
-	 * A String equivalent of {@link MimeTypeUtils#TEXT_HTML}.
-	 */
-	public final static String TEXT_HTML_VALUE = "text/html";
+    /**
+     * A String equivalent of {@link MimeTypeUtils#TEXT_HTML}.
+     */
+    public final static String TEXT_HTML_VALUE = "text/html";
 
-	/**
-	 * Public constant mime type for {@code text/plain}.
-	 *  */
-	public final static MimeType TEXT_PLAIN;
+    /**
+     * Public constant mime type for {@code text/plain}.
+     *  */
+    public final static MimeType TEXT_PLAIN;
 
-	/**
-	 * A String equivalent of {@link MimeTypeUtils#TEXT_PLAIN}.
-	 */
-	public final static String TEXT_PLAIN_VALUE = "text/plain";
+    /**
+     * A String equivalent of {@link MimeTypeUtils#TEXT_PLAIN}.
+     */
+    public final static String TEXT_PLAIN_VALUE = "text/plain";
 
-	/**
-	 * Public constant mime type for {@code text/xml}.
-	 *  */
-	public final static MimeType TEXT_XML;
+    /**
+     * Public constant mime type for {@code text/xml}.
+     *  */
+    public final static MimeType TEXT_XML;
 
-	/**
-	 * A String equivalent of {@link MimeTypeUtils#TEXT_XML}.
-	 */
-	public final static String TEXT_XML_VALUE = "text/xml";
-
-
-	static {
-		ALL = MimeType.valueOf(ALL_VALUE);
-		APPLICATION_ATOM_XML = MimeType.valueOf(APPLICATION_ATOM_XML_VALUE);
-		APPLICATION_FORM_URLENCODED = MimeType.valueOf(APPLICATION_FORM_URLENCODED_VALUE);
-		APPLICATION_JSON = MimeType.valueOf(APPLICATION_JSON_VALUE);
-		APPLICATION_OCTET_STREAM = MimeType.valueOf(APPLICATION_OCTET_STREAM_VALUE);
-		APPLICATION_XHTML_XML = MimeType.valueOf(APPLICATION_XHTML_XML_VALUE);
-		APPLICATION_XML = MimeType.valueOf(APPLICATION_XML_VALUE);
-		IMAGE_GIF = MimeType.valueOf(IMAGE_GIF_VALUE);
-		IMAGE_JPEG = MimeType.valueOf(IMAGE_JPEG_VALUE);
-		IMAGE_PNG = MimeType.valueOf(IMAGE_PNG_VALUE);
-		MULTIPART_FORM_DATA = MimeType.valueOf(MULTIPART_FORM_DATA_VALUE);
-		TEXT_HTML = MimeType.valueOf(TEXT_HTML_VALUE);
-		TEXT_PLAIN = MimeType.valueOf(TEXT_PLAIN_VALUE);
-		TEXT_XML = MimeType.valueOf(TEXT_XML_VALUE);
-	}
+    /**
+     * A String equivalent of {@link MimeTypeUtils#TEXT_XML}.
+     */
+    public final static String TEXT_XML_VALUE = "text/xml";
 
 
-	/**
-	 * Parse the given String into a single {@code MimeType}.
-	 * @param mimeType the string to parse
-	 * @return the mime type
-	 * @throws InvalidMimeTypeException if the string cannot be parsed
-	 */
-	public static MimeType parseMimeType(String mimeType) {
-		if (!StringUtils.hasLength(mimeType)) {
-			throw new InvalidMimeTypeException(mimeType, "'mimeType' must not be empty");
-		}
-		String[] parts = StringUtils.tokenizeToStringArray(mimeType, ";");
+    static {
+        ALL = MimeType.valueOf(ALL_VALUE);
+        APPLICATION_ATOM_XML = MimeType.valueOf(APPLICATION_ATOM_XML_VALUE);
+        APPLICATION_FORM_URLENCODED = MimeType.valueOf(APPLICATION_FORM_URLENCODED_VALUE);
+        APPLICATION_JSON = MimeType.valueOf(APPLICATION_JSON_VALUE);
+        APPLICATION_OCTET_STREAM = MimeType.valueOf(APPLICATION_OCTET_STREAM_VALUE);
+        APPLICATION_XHTML_XML = MimeType.valueOf(APPLICATION_XHTML_XML_VALUE);
+        APPLICATION_XML = MimeType.valueOf(APPLICATION_XML_VALUE);
+        IMAGE_GIF = MimeType.valueOf(IMAGE_GIF_VALUE);
+        IMAGE_JPEG = MimeType.valueOf(IMAGE_JPEG_VALUE);
+        IMAGE_PNG = MimeType.valueOf(IMAGE_PNG_VALUE);
+        MULTIPART_FORM_DATA = MimeType.valueOf(MULTIPART_FORM_DATA_VALUE);
+        TEXT_HTML = MimeType.valueOf(TEXT_HTML_VALUE);
+        TEXT_PLAIN = MimeType.valueOf(TEXT_PLAIN_VALUE);
+        TEXT_XML = MimeType.valueOf(TEXT_XML_VALUE);
+    }
 
-		String fullType = parts[0].trim();
-		// java.net.HttpURLConnection returns a *; q=.2 Accept header
-		if (MimeType.WILDCARD_TYPE.equals(fullType)) {
-			fullType = "*/*";
-		}
-		int subIndex = fullType.indexOf('/');
-		if (subIndex == -1) {
-			throw new InvalidMimeTypeException(mimeType, "does not contain '/'");
-		}
-		if (subIndex == fullType.length() - 1) {
-			throw new InvalidMimeTypeException(mimeType, "does not contain subtype after '/'");
-		}
-		String type = fullType.substring(0, subIndex);
-		String subtype = fullType.substring(subIndex + 1, fullType.length());
-		if (MimeType.WILDCARD_TYPE.equals(type) && !MimeType.WILDCARD_TYPE.equals(subtype)) {
-			throw new InvalidMimeTypeException(mimeType, "wildcard type is legal only in '*/*' (all mime types)");
-		}
 
-		Map<String, String> parameters = null;
-		if (parts.length > 1) {
-			parameters = new LinkedHashMap<String, String>(parts.length - 1);
-			for (int i = 1; i < parts.length; i++) {
-				String parameter = parts[i];
-				int eqIndex = parameter.indexOf('=');
-				if (eqIndex != -1) {
-					String attribute = parameter.substring(0, eqIndex);
-					String value = parameter.substring(eqIndex + 1, parameter.length());
-					parameters.put(attribute, value);
-				}
-			}
-		}
+    /**
+     * Parse the given String into a single {@code MimeType}.
+     * @param mimeType the string to parse
+     * @return the mime type
+     * @throws InvalidMimeTypeException if the string cannot be parsed
+     */
+    public static MimeType parseMimeType(String mimeType) {
+        if (!StringUtils.hasLength(mimeType)) {
+            throw new InvalidMimeTypeException(mimeType, "'mimeType' must not be empty");
+        }
+        String[] parts = StringUtils.tokenizeToStringArray(mimeType, ";");
 
-		try {
-			return new MimeType(type, subtype, parameters);
-		}
-		catch (UnsupportedCharsetException ex) {
-			throw new InvalidMimeTypeException(mimeType, "unsupported charset '" + ex.getCharsetName() + "'");
-		}
-		catch (IllegalArgumentException ex) {
-			throw new InvalidMimeTypeException(mimeType, ex.getMessage());
-		}
-	}
+        String fullType = parts[0].trim();
+        // java.net.HttpURLConnection returns a *; q=.2 Accept header
+        if (MimeType.WILDCARD_TYPE.equals(fullType)) {
+            fullType = "*/*";
+        }
+        int subIndex = fullType.indexOf('/');
+        if (subIndex == -1) {
+            throw new InvalidMimeTypeException(mimeType, "does not contain '/'");
+        }
+        if (subIndex == fullType.length() - 1) {
+            throw new InvalidMimeTypeException(mimeType, "does not contain subtype after '/'");
+        }
+        String type = fullType.substring(0, subIndex);
+        String subtype = fullType.substring(subIndex + 1, fullType.length());
+        if (MimeType.WILDCARD_TYPE.equals(type) && !MimeType.WILDCARD_TYPE.equals(subtype)) {
+            throw new InvalidMimeTypeException(mimeType, "wildcard type is legal only in '*/*' (all mime types)");
+        }
 
-	/**
-	 * Parse the given, comma-separated string into a list of {@code MimeType} objects.
-	 * @param mimeTypes the string to parse
-	 * @return the list of mime types
-	 * @throws IllegalArgumentException if the string cannot be parsed
-	 */
-	public static List<MimeType> parseMimeTypes(String mimeTypes) {
-		if (!StringUtils.hasLength(mimeTypes)) {
-			return Collections.emptyList();
-		}
-		String[] tokens = mimeTypes.split(",\\s*");
-		List<MimeType> result = new ArrayList<MimeType>(tokens.length);
-		for (String token : tokens) {
-			result.add(parseMimeType(token));
-		}
-		return result;
-	}
+        Map<String, String> parameters = null;
+        if (parts.length > 1) {
+            parameters = new LinkedHashMap<String, String>(parts.length - 1);
+            for (int i = 1; i < parts.length; i++) {
+                String parameter = parts[i];
+                int eqIndex = parameter.indexOf('=');
+                if (eqIndex != -1) {
+                    String attribute = parameter.substring(0, eqIndex);
+                    String value = parameter.substring(eqIndex + 1, parameter.length());
+                    parameters.put(attribute, value);
+                }
+            }
+        }
 
-	/**
-	 * Return a string representation of the given list of {@code MimeType} objects.
-	 * @param mimeTypes the string to parse
-	 * @return the list of mime types
-	 * @throws IllegalArgumentException if the String cannot be parsed
-	 */
-	public static String toString(Collection<? extends MimeType> mimeTypes) {
-		StringBuilder builder = new StringBuilder();
-		for (Iterator<? extends MimeType> iterator = mimeTypes.iterator(); iterator.hasNext();) {
-			MimeType mimeType = iterator.next();
-			mimeType.appendTo(builder);
-			if (iterator.hasNext()) {
-				builder.append(", ");
-			}
-		}
-		return builder.toString();
-	}
+        try {
+            return new MimeType(type, subtype, parameters);
+        }
+        catch (UnsupportedCharsetException ex) {
+            throw new InvalidMimeTypeException(mimeType, "unsupported charset '" + ex.getCharsetName() + "'");
+        }
+        catch (IllegalArgumentException ex) {
+            throw new InvalidMimeTypeException(mimeType, ex.getMessage());
+        }
+    }
+
+    /**
+     * Parse the given, comma-separated string into a list of {@code MimeType} objects.
+     * @param mimeTypes the string to parse
+     * @return the list of mime types
+     * @throws IllegalArgumentException if the string cannot be parsed
+     */
+    public static List<MimeType> parseMimeTypes(String mimeTypes) {
+        if (!StringUtils.hasLength(mimeTypes)) {
+            return Collections.emptyList();
+        }
+        String[] tokens = mimeTypes.split(",\\s*");
+        List<MimeType> result = new ArrayList<MimeType>(tokens.length);
+        for (String token : tokens) {
+            result.add(parseMimeType(token));
+        }
+        return result;
+    }
+
+    /**
+     * Return a string representation of the given list of {@code MimeType} objects.
+     * @param mimeTypes the string to parse
+     * @return the list of mime types
+     * @throws IllegalArgumentException if the String cannot be parsed
+     */
+    public static String toString(Collection<? extends MimeType> mimeTypes) {
+        StringBuilder builder = new StringBuilder();
+        for (Iterator<? extends MimeType> iterator = mimeTypes.iterator(); iterator.hasNext();) {
+            MimeType mimeType = iterator.next();
+            mimeType.appendTo(builder);
+            if (iterator.hasNext()) {
+                builder.append(", ");
+            }
+        }
+        return builder.toString();
+    }
 }

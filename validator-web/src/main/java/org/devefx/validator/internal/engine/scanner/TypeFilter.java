@@ -18,5 +18,5 @@ package org.devefx.validator.internal.engine.scanner;
 
 public interface TypeFilter {
 
-	boolean match(Class<?> type);
+    boolean match(Class<?> type);
 }

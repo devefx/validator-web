@@ -17,12 +17,12 @@
 package org.devefx.validator.util;
 
 public final class ScriptUtil {
-	
-	/**
-	 * Prevent instantiation
-	 */
-	private ScriptUtil() {
-	}
+    
+    /**
+     * Prevent instantiation
+     */
+    private ScriptUtil() {
+    }
     
     /**
      * Determines whether the supplied string is a valid script name to use for

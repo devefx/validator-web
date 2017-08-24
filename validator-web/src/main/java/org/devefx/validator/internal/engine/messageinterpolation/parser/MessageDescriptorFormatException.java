@@ -24,9 +24,9 @@ import org.devefx.validator.ValidationException;
  * @author Hardy Ferentschik
  */
 public class MessageDescriptorFormatException extends ValidationException {
-	private static final long serialVersionUID = -6496195139309899468L;
+    private static final long serialVersionUID = -6496195139309899468L;
 
-	public MessageDescriptorFormatException(String s) {
+    public MessageDescriptorFormatException(String s) {
         super(s);
     }
 }

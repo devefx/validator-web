@@ -41,100 +41,100 @@ import org.devefx.validator.util.Assert;
 import org.devefx.validator.web.View;
 
 public class ValidatorImpl implements Validator {
-	
-	/**
-	 * The validator ajax submit tags
-	 */
-	public static final String VALIDATOR_AJAXSUBMIT = "_validator_ajaxsubmit";
-	
-	private final InvalidHandler defaultInvalidHandler = new DefaultInvalidHandler();
-	private final RequestExtractor requestExtractor;
-	private final Map<AnnotatedElement, ValidElement> validElementCache;
-	private final ValidatorContext validatorContext;
-	
-	protected ValidatorImpl(ValidatorFactory validatorFactory) {
-		this.validatorContext = new ValidatorContext(validatorFactory);
-		this.requestExtractor = new HttpMessageReaderExtractor(validatorFactory.getMessageReaders());
-		this.validElementCache = new ConcurrentHashMap<>();
-	}
-	
-	@Override
-	public ValidatorContext getValidatorContext() {
-		return validatorContext;
-	}
-	
-	@Override
-	public boolean validate(AnnotatedElement validElement,
-			HttpServletRequest request, HttpServletResponse response) {
-		Assert.notNull(validElement, "validElement must not be null.");
-		try {
-			ThreadContext.bind(this);
-			
-			ValidElement element = getOrCreateValidElement(validElement);
-			if (!element.isConstrained()) {
-				return true;
-			}
-			
-			ValidationContext.Accessor validationContext = validatorContext.getOrCreateValidationContext(element.getValidationClass());
-			ValueContext valueContext = createValueContext(
-					request,
-					element.getRequestType());
-			
-			return validateInContext(validationContext, valueContext, element.getGroups(), request, response);
-		} finally {
-			ThreadContext.unbindValidator();
-		}
-	}
-	
-	private boolean validateInContext(ValidationContext.Accessor context, ValueContext valueContext, Class<?>[] groups,
+    
+    /**
+     * The validator ajax submit tags
+     */
+    public static final String VALIDATOR_AJAXSUBMIT = "_validator_ajaxsubmit";
+    
+    private final InvalidHandler defaultInvalidHandler = new DefaultInvalidHandler();
+    private final RequestExtractor requestExtractor;
+    private final Map<AnnotatedElement, ValidElement> validElementCache;
+    private final ValidatorContext validatorContext;
+    
+    protected ValidatorImpl(ValidatorFactory validatorFactory) {
+        this.validatorContext = new ValidatorContext(validatorFactory);
+        this.requestExtractor = new HttpMessageReaderExtractor(validatorFactory.getMessageReaders());
+        this.validElementCache = new ConcurrentHashMap<>();
+    }
+    
+    @Override
+    public ValidatorContext getValidatorContext() {
+        return validatorContext;
+    }
+    
+    @Override
+    public boolean validate(AnnotatedElement validElement,
             HttpServletRequest request, HttpServletResponse response) {
-		ValidatorDelegate validatorDelegate = context.getValidatorDelegate();
-		
-		List<ConstraintViolation> constraintViolations = validatorDelegate.validate(valueContext, context, groups);
-		if (constraintViolations == null || constraintViolations.isEmpty()) {
-			return true;
-		}
-		
-		validateInvalidProcessing(context, constraintViolations, request, response);
-		return false;
-	}
-	
-	private void validateInvalidProcessing(ValidationContext.Accessor context,
-			List<ConstraintViolation> constraintViolations,
-			HttpServletRequest request, HttpServletResponse response) {
-		
-		InvalidHandler invalidHandler = defaultInvalidHandler;
-		if (request.getParameter(VALIDATOR_AJAXSUBMIT) == null) {
-			invalidHandler = context.getInvalidHandler();
-		}
-		View view = invalidHandler.renderInvalid(constraintViolations);
-		if (view != null) {
-			try {
-				view.render(request, response);
-			} catch (Exception e) {
-				throw new ValidationException("Unable to render:" + e.getMessage(), e);
-			}
-		}
-	}
-	
-	private ValidElement getOrCreateValidElement(AnnotatedElement annotatedElement) {
-		ValidElement validElement = validElementCache.get(annotatedElement);
-		if (validElement == null) {
-			validElement = ValidElement.by(annotatedElement);
-			validElementCache.put(annotatedElement, validElement);
-		}
-		return validElement;
-	}
-	
-	private ValueContext createValueContext(HttpServletRequest request, Class<?> requiredClass) {
-		try {
-			Object bean = requestExtractor.extractData(requiredClass, request);
-			// set up the thread context
-			ThreadContext.bindModel(bean);
-			return new ValueContext(bean, requiredClass);
-		} catch (IOException e) {
-			throw new ValidationException("I/O error, can't extract " + requiredClass
-					+ " from the request:" + e.getMessage(), e);
-		}
-	}
+        Assert.notNull(validElement, "validElement must not be null.");
+        try {
+            ThreadContext.bind(this);
+            
+            ValidElement element = getOrCreateValidElement(validElement);
+            if (!element.isConstrained()) {
+                return true;
+            }
+            
+            ValidationContext.Accessor validationContext = validatorContext.getOrCreateValidationContext(element.getValidationClass());
+            ValueContext valueContext = createValueContext(
+                    request,
+                    element.getRequestType());
+            
+            return validateInContext(validationContext, valueContext, element.getGroups(), request, response);
+        } finally {
+            ThreadContext.unbindValidator();
+        }
+    }
+    
+    private boolean validateInContext(ValidationContext.Accessor context, ValueContext valueContext, Class<?>[] groups,
+            HttpServletRequest request, HttpServletResponse response) {
+        ValidatorDelegate validatorDelegate = context.getValidatorDelegate();
+        
+        List<ConstraintViolation> constraintViolations = validatorDelegate.validate(valueContext, context, groups);
+        if (constraintViolations == null || constraintViolations.isEmpty()) {
+            return true;
+        }
+        
+        validateInvalidProcessing(context, constraintViolations, request, response);
+        return false;
+    }
+    
+    private void validateInvalidProcessing(ValidationContext.Accessor context,
+            List<ConstraintViolation> constraintViolations,
+            HttpServletRequest request, HttpServletResponse response) {
+        
+        InvalidHandler invalidHandler = defaultInvalidHandler;
+        if (request.getParameter(VALIDATOR_AJAXSUBMIT) == null) {
+            invalidHandler = context.getInvalidHandler();
+        }
+        View view = invalidHandler.renderInvalid(constraintViolations);
+        if (view != null) {
+            try {
+                view.render(request, response);
+            } catch (Exception e) {
+                throw new ValidationException("Unable to render:" + e.getMessage(), e);
+            }
+        }
+    }
+    
+    private ValidElement getOrCreateValidElement(AnnotatedElement annotatedElement) {
+        ValidElement validElement = validElementCache.get(annotatedElement);
+        if (validElement == null) {
+            validElement = ValidElement.by(annotatedElement);
+            validElementCache.put(annotatedElement, validElement);
+        }
+        return validElement;
+    }
+    
+    private ValueContext createValueContext(HttpServletRequest request, Class<?> requiredClass) {
+        try {
+            Object bean = requestExtractor.extractData(requiredClass, request);
+            // set up the thread context
+            ThreadContext.bindModel(bean);
+            return new ValueContext(bean, requiredClass);
+        } catch (IOException e) {
+            throw new ValidationException("I/O error, can't extract " + requiredClass
+                    + " from the request:" + e.getMessage(), e);
+        }
+    }
 }

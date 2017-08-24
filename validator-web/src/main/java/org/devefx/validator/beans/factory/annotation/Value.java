@@ -23,9 +23,9 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Value {
-	
-	/**
-	 * the property key.
-	 */
-	String value();
+    
+    /**
+     * the property key.
+     */
+    String value();
 }

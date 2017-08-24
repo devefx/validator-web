@@ -19,41 +19,41 @@ package org.devefx.validator.beans;
 import org.devefx.validator.util.ObjectUtils;
 
 public class BeansException extends RuntimeException {
-	private static final long serialVersionUID = -7176800521599676853L;
+    private static final long serialVersionUID = -7176800521599676853L;
 
-	/**
-	 * Create a new BeansException with the specified message.
-	 * @param msg the detail message
-	 */
-	public BeansException(String msg) {
-		super(msg);
-	}
+    /**
+     * Create a new BeansException with the specified message.
+     * @param msg the detail message
+     */
+    public BeansException(String msg) {
+        super(msg);
+    }
 
-	/**
-	 * Create a new BeansException with the specified message
-	 * and root cause.
-	 * @param msg the detail message
-	 * @param cause the root cause
-	 */
-	public BeansException(String msg, Throwable cause) {
-		super(msg, cause);
-	}
+    /**
+     * Create a new BeansException with the specified message
+     * and root cause.
+     * @param msg the detail message
+     * @param cause the root cause
+     */
+    public BeansException(String msg, Throwable cause) {
+        super(msg, cause);
+    }
 
-	@Override
-	public boolean equals(Object other) {
-		if (this == other) {
-			return true;
-		}
-		if (!(other instanceof BeansException)) {
-			return false;
-		}
-		BeansException otherBe = (BeansException) other;
-		return (getMessage().equals(otherBe.getMessage()) &&
-				ObjectUtils.nullSafeEquals(getCause(), otherBe.getCause()));
-	}
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+        if (!(other instanceof BeansException)) {
+            return false;
+        }
+        BeansException otherBe = (BeansException) other;
+        return (getMessage().equals(otherBe.getMessage()) &&
+                ObjectUtils.nullSafeEquals(getCause(), otherBe.getCause()));
+    }
 
-	@Override
-	public int hashCode() {
-		return getMessage().hashCode();
-	}
+    @Override
+    public int hashCode() {
+        return getMessage().hashCode();
+    }
 }

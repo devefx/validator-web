@@ -17,14 +17,14 @@
 package org.devefx.validator;
 
 public class UnavailableValidatorException extends ValidationException {
-	
-	private static final long serialVersionUID = -4307669748387647486L;
+    
+    private static final long serialVersionUID = -4307669748387647486L;
 
-	public UnavailableValidatorException(String message) {
-		super(message);
-	}
-	
-	public UnavailableValidatorException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    public UnavailableValidatorException(String message) {
+        super(message);
+    }
+    
+    public UnavailableValidatorException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

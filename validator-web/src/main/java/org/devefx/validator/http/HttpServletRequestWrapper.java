@@ -24,11 +24,11 @@ import javax.servlet.http.HttpServletRequest;
 
 public class HttpServletRequestWrapper extends javax.servlet.http.HttpServletRequestWrapper {
 
-	private PushbackServletInputStream pushbackInputStream;
-	
-	public HttpServletRequestWrapper(HttpServletRequest request) {
-		super(request);
-	}
+    private PushbackServletInputStream pushbackInputStream;
+    
+    public HttpServletRequestWrapper(HttpServletRequest request) {
+        super(request);
+    }
 
     public boolean hasMessageBody() throws IOException {
         if (super.getContentLength() == 0) {
@@ -36,9 +36,9 @@ public class HttpServletRequestWrapper extends javax.servlet.http.HttpServletReq
         }
         return true;
     }
-	
+    
     public boolean hasEmptyMessageBody() throws IOException {
-    	InputStream body = super.getInputStream();
+        InputStream body = super.getInputStream();
         if (body == null) {
             return true;
         } else if (body.markSupported()) {
@@ -63,9 +63,9 @@ public class HttpServletRequestWrapper extends javax.servlet.http.HttpServletReq
     
     @Override
     public ServletInputStream getInputStream() throws IOException {
-    	if (this.pushbackInputStream != null) {
-    		return this.pushbackInputStream;
-    	}
-    	return super.getInputStream();
+        if (this.pushbackInputStream != null) {
+            return this.pushbackInputStream;
+        }
+        return super.getInputStream();
     }
 }

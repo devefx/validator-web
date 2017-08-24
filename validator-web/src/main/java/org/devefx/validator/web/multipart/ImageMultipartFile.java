@@ -17,16 +17,16 @@
 package org.devefx.validator.web.multipart;
 
 public interface ImageMultipartFile extends MultipartFile {
-	
-	/**
-	 * Return the image width
-	 * @return
-	 */
-	int getWidth();
-	
-	/**
-	 * Return the image height
-	 * @return
-	 */
-	int getHeight();
+    
+    /**
+     * Return the image width
+     * @return
+     */
+    int getWidth();
+    
+    /**
+     * Return the image height
+     * @return
+     */
+    int getHeight();
 }

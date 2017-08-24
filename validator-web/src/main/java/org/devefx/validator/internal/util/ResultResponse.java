@@ -17,21 +17,21 @@
 package org.devefx.validator.internal.util;
 
 public class ResultResponse<T> {
-	
-	private int status;
-	
-	private T contents;
-	
-	public ResultResponse(int status, T contents) {
-		this.status = status;
-		this.contents = contents;
-	}
+    
+    private int status;
+    
+    private T contents;
+    
+    public ResultResponse(int status, T contents) {
+        this.status = status;
+        this.contents = contents;
+    }
 
-	public int getStatus() {
-		return status;
-	}
-	
-	public T getContents() {
-		return contents;
-	}
+    public int getStatus() {
+        return status;
+    }
+    
+    public T getContents() {
+        return contents;
+    }
 }

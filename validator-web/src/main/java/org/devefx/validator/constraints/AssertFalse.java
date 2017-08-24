@@ -22,22 +22,22 @@ import org.devefx.validator.script.annotation.Script;
 @Script
 public class AssertFalse implements ConstraintValidator {
 
-	@Override
-	public boolean isValid(Object value) {
-		//null values are valid
-		if (value == null) {
-			return true;
-		}
-		// converter type
-		Boolean bool;
-		if (value instanceof Boolean) {
-			bool = (Boolean)value;
-		} else if (value instanceof String) {
-			bool = value.equals("true");
-		} else {
-			throw new IllegalArgumentException("Unsupported of type [" + value.getClass().getName() + "]");
-		}
-		return !bool;
-	}
+    @Override
+    public boolean isValid(Object value) {
+        //null values are valid
+        if (value == null) {
+            return true;
+        }
+        // converter type
+        Boolean bool;
+        if (value instanceof Boolean) {
+            bool = (Boolean)value;
+        } else if (value instanceof String) {
+            bool = value.equals("true");
+        } else {
+            throw new IllegalArgumentException("Unsupported of type [" + value.getClass().getName() + "]");
+        }
+        return !bool;
+    }
 
 }

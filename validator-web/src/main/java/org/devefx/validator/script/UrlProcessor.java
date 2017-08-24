@@ -32,66 +32,66 @@ import org.devefx.validator.script.handler.ExceptionHandler;
 import org.devefx.validator.script.handler.NotFoundHandler;
 
 public class UrlProcessor implements InitializingBean {
-	
-	private static final Log log = LogFactory.getLog(UrlProcessor.class);
+    
+    private static final Log log = LogFactory.getLog(UrlProcessor.class);
 
-	/**
+    /**
      * The mapping of URLs to {@link Handler}s
      */
-	protected Map<String, Handler> urlMapping = new HashMap<>();
-	
-	/**
+    protected Map<String, Handler> urlMapping = new HashMap<>();
+    
+    /**
      * The default if we have no other action (HTTP-404)
      */
-	protected NotFoundHandler notFoundHandler = new NotFoundHandler();
-	
-	/**
+    protected NotFoundHandler notFoundHandler = new NotFoundHandler();
+    
+    /**
      * If execution fails, we do this (HTTP-501)
      */
-	protected ExceptionHandler exceptionHandler = new ExceptionHandler();
-	
-	@Override
-	public void afterSetup(Container container) {
-		Collection<Handler> handlers = container.getBeansOfType(Handler.class).values();
-		for (Handler handler : handlers) {
-			String path = handler.getPath();
-			Handler previous = urlMapping.put(path, handler);
-			if (previous != null) {
-				throw new RuntimeException("the mapping already exists: " + path +
-						"[" + handler + "]");
-			}
-		}
-	}
-	
-	public Map<String, Handler> getUrlMapping() {
-		return urlMapping;
-	}
-	
-	public void handle(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		try {
-			String pathInfo = request.getPathInfo();
-			if (pathInfo == null || pathInfo.length() == 0 || "/".equals(pathInfo)) {
-				notFoundHandler.handle(request, response);
-			} else {
-				// Loop through all the known URLs
-				for (Map.Entry<String, Handler> entry : urlMapping.entrySet()) {
-					String url = entry.getKey();
-					// If this URL matches, call the handler
-					if (pathInfo.startsWith(url)) {
-						Handler handler = entry.getValue();
-	                    handler.handle(request, response);
-	                    return;
-	                }
-				}
-	            notFoundHandler.handle(request, response);
-			}
-		} catch (SecurityException se) {
+    protected ExceptionHandler exceptionHandler = new ExceptionHandler();
+    
+    @Override
+    public void afterSetup(Container container) {
+        Collection<Handler> handlers = container.getBeansOfType(Handler.class).values();
+        for (Handler handler : handlers) {
+            String path = handler.getPath();
+            Handler previous = urlMapping.put(path, handler);
+            if (previous != null) {
+                throw new RuntimeException("the mapping already exists: " + path +
+                        "[" + handler + "]");
+            }
+        }
+    }
+    
+    public Map<String, Handler> getUrlMapping() {
+        return urlMapping;
+    }
+    
+    public void handle(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        try {
+            String pathInfo = request.getPathInfo();
+            if (pathInfo == null || pathInfo.length() == 0 || "/".equals(pathInfo)) {
+                notFoundHandler.handle(request, response);
+            } else {
+                // Loop through all the known URLs
+                for (Map.Entry<String, Handler> entry : urlMapping.entrySet()) {
+                    String url = entry.getKey();
+                    // If this URL matches, call the handler
+                    if (pathInfo.startsWith(url)) {
+                        Handler handler = entry.getValue();
+                        handler.handle(request, response);
+                        return;
+                    }
+                }
+                notFoundHandler.handle(request, response);
+            }
+        } catch (SecurityException se) {
             // We don't want to give the client any information about the security error, handle it with a 404.
             log.error("Security Exception: ", se);
             notFoundHandler.handle(request, response);
-		} catch (Exception e) {
-			exceptionHandler.setException(e);
-			exceptionHandler.handle(request, response);
-		}
-	}
+        } catch (Exception e) {
+            exceptionHandler.setException(e);
+            exceptionHandler.handle(request, response);
+        }
+    }
 }

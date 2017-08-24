@@ -27,34 +27,34 @@ import org.devefx.validator.web.multipart.ImageMultipartFile;
 
 public class CommonsImageMultipartFile extends CommonsMultipartFile implements ImageMultipartFile {
 
-	private static final long serialVersionUID = -4497064398444297064L;
+    private static final long serialVersionUID = -4497064398444297064L;
 
-	private final BufferedImage image;
-	
-	public CommonsImageMultipartFile(FileItem fileItem) throws IOException {
-		super(fileItem);
-		this.image = readImage(fileItem);
-	}
-	
-	public BufferedImage getImage() {
-		return image;
-	}
-	
-	@Override
-	public int getWidth() {
-		return image.getWidth();
-	}
+    private final BufferedImage image;
+    
+    public CommonsImageMultipartFile(FileItem fileItem) throws IOException {
+        super(fileItem);
+        this.image = readImage(fileItem);
+    }
+    
+    public BufferedImage getImage() {
+        return image;
+    }
+    
+    @Override
+    public int getWidth() {
+        return image.getWidth();
+    }
 
-	@Override
-	public int getHeight() {
-		return image.getHeight();
-	}
+    @Override
+    public int getHeight() {
+        return image.getHeight();
+    }
 
-	protected BufferedImage readImage(FileItem file) throws IOException {
-		InputStream in = file.getInputStream();
-		if (in == null) {
-			return null;
-		}
-		return ImageIO.read(in);
-	}
+    protected BufferedImage readImage(FileItem file) throws IOException {
+        InputStream in = file.getInputStream();
+        if (in == null) {
+            return null;
+        }
+        return ImageIO.read(in);
+    }
 }

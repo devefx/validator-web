@@ -26,44 +26,44 @@ import org.devefx.validator.script.annotation.Script;
 @Script
 public class Size implements ConstraintValidator {
 
-	@InitParam
-	private int min;
-	@InitParam
-	private int max;
+    @InitParam
+    private int min;
+    @InitParam
+    private int max;
 
-	public Size(int min, int max) {
-		this.min = min;
-		this.max = max;
-		validateParameters();
-	}
-	
-	@Override
-	public boolean isValid(Object value) {
-		if (value == null) {
-			return true;
-		}
-		try {
-			int length = 1;
-			if (value instanceof Collection) {
-				length = ((Collection<?>)value).size();
-			} else if (value instanceof Object[]) {
-				length = Array.getLength(value);
-			}
-			return length >= min && length <= max;
-		} catch (IllegalArgumentException e) {
-			return false;
-		}
-	}
+    public Size(int min, int max) {
+        this.min = min;
+        this.max = max;
+        validateParameters();
+    }
+    
+    @Override
+    public boolean isValid(Object value) {
+        if (value == null) {
+            return true;
+        }
+        try {
+            int length = 1;
+            if (value instanceof Collection) {
+                length = ((Collection<?>)value).size();
+            } else if (value instanceof Object[]) {
+                length = Array.getLength(value);
+            }
+            return length >= min && length <= max;
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
+    }
 
-	private void validateParameters() {
-		if (min < 0) {
-			throw new IllegalArgumentException("The min parameter cannot be negative.");
-		}
-		if (max < 0) {
-			throw new IllegalArgumentException("The max parameter cannot be negative.");
-		}
-		if (max < min) {
-			throw new IllegalArgumentException("The length cannot be negative.");
-		}
-	}
+    private void validateParameters() {
+        if (min < 0) {
+            throw new IllegalArgumentException("The min parameter cannot be negative.");
+        }
+        if (max < 0) {
+            throw new IllegalArgumentException("The max parameter cannot be negative.");
+        }
+        if (max < min) {
+            throw new IllegalArgumentException("The length cannot be negative.");
+        }
+    }
 }

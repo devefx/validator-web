@@ -21,10 +21,10 @@ import java.util.List;
 import org.devefx.validator.web.View;
 
 public interface InvalidHandler {
-	
-	int MATCH_CONSTRAINTS = 100;
-	
-	int NOT_MATCH_CONSTRAINTS = 101;
+    
+    int MATCH_CONSTRAINTS = 100;
+    
+    int NOT_MATCH_CONSTRAINTS = 101;
 
     View renderInvalid(List<ConstraintViolation> violations);
 

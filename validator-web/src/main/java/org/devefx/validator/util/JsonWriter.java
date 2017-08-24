@@ -21,7 +21,7 @@ import java.util.*;
 
 @SuppressWarnings({"unchecked", "rawtypes"})
 public class JsonWriter {
-	
+    
     private static int convertDepth = 15;
     private static String timestampPattern = "yyyy-MM-dd HH:mm:ss";
     private static String datePattern = "yyyy-MM-dd";

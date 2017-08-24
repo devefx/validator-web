@@ -30,8 +30,8 @@ import org.devefx.validator.util.ResourceUtils;
  * @author Joe Walker [joe at getahead dot ltd dot uk]
  */
 public class LegacyCompressor implements Compressor {
-	
-	/**
+    
+    /**
      * The log stream
      */
     private static final Log log = LogFactory.getLog(LegacyCompressor.class);
@@ -59,7 +59,7 @@ public class LegacyCompressor implements Compressor {
     /**
      * Flag for use in javascript compression: Remove single line comments.
      * For ease of use you may wish to use one of the LEVEL_* compression levels.
-     * @noinspection PointlessBitwiseExpression
+     * no inspection PointlessBitwiseExpression
      */
     public static final int COMPRESS_STRIP_SL_COMMENTS = 1 << 0;
     
@@ -129,12 +129,12 @@ public class LegacyCompressor implements Compressor {
      */
     protected int compressionLevel = LEVEL_DEBUGGABLE | COMPRESS_STRIP_BLANKLINES | COMPRESS_REMOVE_NEWLINES;
     
-	@Override
-	public String compressJavaScript(String script) throws Exception {
-		return compress(script, compressionLevel);
-	}
-	
-	/**
+    @Override
+    public String compressJavaScript(String script) throws Exception {
+        return compress(script, compressionLevel);
+    }
+    
+    /**
      * Compress the source code by removing java style comments and removing
      * leading and trailing spaces.
      * @param text The javascript (or java) program to compress
@@ -142,7 +142,7 @@ public class LegacyCompressor implements Compressor {
      * @return The compressed version
      */
     public static String compress(String text, int level) {
-    	String reply = text;
+        String reply = text;
 
         // First we strip multi line comments. I think this is important:
         if ((level & COMPRESS_STRIP_ML_COMMENTS) != 0) {

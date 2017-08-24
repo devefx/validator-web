@@ -20,6 +20,6 @@ import org.devefx.validator.beans.Container;
 
 public interface InitializingBean {
 
-	void afterSetup(Container container);
-	
+    void afterSetup(Container container);
+    
 }

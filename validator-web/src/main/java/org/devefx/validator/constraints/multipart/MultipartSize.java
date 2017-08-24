@@ -24,47 +24,47 @@ import org.devefx.validator.web.multipart.MultipartFile;
 @Script
 public class MultipartSize implements ConstraintValidator {
 
-	@InitParam
-	private int min;
-	@InitParam
-	private int max;
-	
-	public MultipartSize(int max) {
-		this(1, max);
-	}
-	
-	public MultipartSize(int min, int max) {
-		this.min = min;
-		this.max = max;
-		validateParameters();
-	}
-	
-	@Override
-	public boolean isValid(Object value) {
-		// null values are valid
-		if (value == null) {
-			return true;
-		}
-		// converter type
-		MultipartFile file;
-		if (value instanceof MultipartFile) {
-			file = (MultipartFile) value;
-		} else {
-			throw new IllegalArgumentException("Unsupported of type [" + value.getClass().getName() + "]");
-		}
-		long size = file.getSize();
-		return size >= min && size <= max;
-	}
-	
-	private void validateParameters() {
-		if (min < 1) {
-			throw new IllegalArgumentException("The min parameter cannot be less than 1.");
-		}
-		if (max < 1) {
-			throw new IllegalArgumentException("The max parameter cannot be less than 1.");
-		}
-		if (max < min) {
-			throw new IllegalArgumentException("The length cannot be negative.");
-		}
-	}
+    @InitParam
+    private int min;
+    @InitParam
+    private int max;
+    
+    public MultipartSize(int max) {
+        this(1, max);
+    }
+    
+    public MultipartSize(int min, int max) {
+        this.min = min;
+        this.max = max;
+        validateParameters();
+    }
+    
+    @Override
+    public boolean isValid(Object value) {
+        // null values are valid
+        if (value == null) {
+            return true;
+        }
+        // converter type
+        MultipartFile file;
+        if (value instanceof MultipartFile) {
+            file = (MultipartFile) value;
+        } else {
+            throw new IllegalArgumentException("Unsupported of type [" + value.getClass().getName() + "]");
+        }
+        long size = file.getSize();
+        return size >= min && size <= max;
+    }
+    
+    private void validateParameters() {
+        if (min < 1) {
+            throw new IllegalArgumentException("The min parameter cannot be less than 1.");
+        }
+        if (max < 1) {
+            throw new IllegalArgumentException("The max parameter cannot be less than 1.");
+        }
+        if (max < min) {
+            throw new IllegalArgumentException("The length cannot be negative.");
+        }
+    }
 }

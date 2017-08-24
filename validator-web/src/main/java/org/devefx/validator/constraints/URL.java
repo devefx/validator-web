@@ -25,49 +25,49 @@ import java.net.MalformedURLException;
 @Script
 public class URL implements ConstraintValidator {
 
-	@InitParam
-	private String protocol;
-	@InitParam
-	private String host;
-	@InitParam
-	private int port;
-	
-	public URL() {
-		this(null, null, -1);
-	}
-	
-	public URL(String protocol, String host, int port) {
-		this.protocol = protocol;
-		this.host = host;
-		this.port = port;
-	}
-	
-	@Override
-	public boolean isValid(Object value) {
-		if (value == null) {
-			return true;
-		}
-		String stringValue = value.toString();
-		if (stringValue.length() == 0) {
-			return true;
-		}
-		java.net.URL url;
-		try {
-			url = new java.net.URL(stringValue);
-		} catch (MalformedURLException e) {
-			return false;
-		}
-		
-		if (protocol != null && protocol.length() > 0 && !url.getProtocol().equals(protocol)) {
-			return false;
-		}
-		if (host != null && host.length() > 0 && !url.getHost().equals(host)) {
-			return false;
-		}
-		if (port != -1 && url.getPort() != port) {
-			return false;
-		}
-		return true;
-	}
+    @InitParam
+    private String protocol;
+    @InitParam
+    private String host;
+    @InitParam
+    private int port;
+    
+    public URL() {
+        this(null, null, -1);
+    }
+    
+    public URL(String protocol, String host, int port) {
+        this.protocol = protocol;
+        this.host = host;
+        this.port = port;
+    }
+    
+    @Override
+    public boolean isValid(Object value) {
+        if (value == null) {
+            return true;
+        }
+        String stringValue = value.toString();
+        if (stringValue.length() == 0) {
+            return true;
+        }
+        java.net.URL url;
+        try {
+            url = new java.net.URL(stringValue);
+        } catch (MalformedURLException e) {
+            return false;
+        }
+        
+        if (protocol != null && protocol.length() > 0 && !url.getProtocol().equals(protocol)) {
+            return false;
+        }
+        if (host != null && host.length() > 0 && !url.getHost().equals(host)) {
+            return false;
+        }
+        if (port != -1 && url.getPort() != port) {
+            return false;
+        }
+        return true;
+    }
 
 }

@@ -39,8 +39,8 @@ public class FastJsonHttpMessageReader extends AbstractHttpMessageReader<Object>
      * Can serialize/deserialize all types.
      */
     public FastJsonHttpMessageReader() {
-    	super(MediaType.ALL);
-	}
+        super(MediaType.ALL);
+    }
     
     /**
      * @return the fastJsonConfig.
@@ -55,17 +55,17 @@ public class FastJsonHttpMessageReader extends AbstractHttpMessageReader<Object>
     public void setFastJsonConfig(FastJsonConfig fastJsonConfig) {
         this.fastJsonConfig = fastJsonConfig;
     }
-	
-	@Override
-	protected boolean supports(Class<?> clazz) {
-		return true;
-	}
+    
+    @Override
+    protected boolean supports(Class<?> clazz) {
+        return true;
+    }
 
-	@Override
-	protected Object readInternal(Class<? extends Object> clazz, HttpServletRequest request)
-			throws IOException, HttpMessageNotReadableException {
-		
-		InputStream in = request.getInputStream();
-		return JSON.parseObject(in, fastJsonConfig.getCharset(), clazz, fastJsonConfig.getFeatures());
-	}
+    @Override
+    protected Object readInternal(Class<? extends Object> clazz, HttpServletRequest request)
+            throws IOException, HttpMessageNotReadableException {
+        
+        InputStream in = request.getInputStream();
+        return JSON.parseObject(in, fastJsonConfig.getCharset(), clazz, fastJsonConfig.getFeatures());
+    }
 }

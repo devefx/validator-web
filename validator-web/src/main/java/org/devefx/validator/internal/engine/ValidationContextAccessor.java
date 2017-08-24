@@ -34,128 +34,128 @@ import org.devefx.validator.internal.resourceloading.ResourceBundleLocator;
 import org.devefx.validator.util.Assert;
 
 public class ValidationContextAccessor implements Accessor {
-	
-	private static final String MESSAGE_SUFFIX = ".message";
-	
-	private boolean failFast;
-	private boolean throwException;
-	private ResourceBundleLocator resourceBundleLocator;
-	private ValidatorDelegate validatorDelegate;
-	private InvalidHandler invalidHandler;
-	private final List<ConstraintDescriptor> constraintDescriptors;
-	private final Validation validation;
-	private final ValidatorContext validatorContext;
-	
-	public ValidationContextAccessor(Validation validation, ValidatorContext validatorContext) {
-		this.validation = validation;
-		this.validatorContext = validatorContext;
-		this.constraintDescriptors = new ArrayList<>();
-	}
-	
-	@Override
-	public void setFailFast(boolean failFast) {
-		this.failFast = failFast;
-	}
+    
+    private static final String MESSAGE_SUFFIX = ".message";
+    
+    private boolean failFast;
+    private boolean throwException;
+    private ResourceBundleLocator resourceBundleLocator;
+    private ValidatorDelegate validatorDelegate;
+    private InvalidHandler invalidHandler;
+    private final List<ConstraintDescriptor> constraintDescriptors;
+    private final Validation validation;
+    private final ValidatorContext validatorContext;
+    
+    public ValidationContextAccessor(Validation validation, ValidatorContext validatorContext) {
+        this.validation = validation;
+        this.validatorContext = validatorContext;
+        this.constraintDescriptors = new ArrayList<>();
+    }
+    
+    @Override
+    public void setFailFast(boolean failFast) {
+        this.failFast = failFast;
+    }
 
-	@Override
-	public void setThrowException(boolean throwException) {
-		this.throwException = throwException;
-	}
+    @Override
+    public void setThrowException(boolean throwException) {
+        this.throwException = throwException;
+    }
 
-	@Override
-	public void setResourceBundleLocator(
-			ResourceBundleLocator resourceBundleLocator) {
-		this.resourceBundleLocator = resourceBundleLocator;
-	}
+    @Override
+    public void setResourceBundleLocator(
+            ResourceBundleLocator resourceBundleLocator) {
+        this.resourceBundleLocator = resourceBundleLocator;
+    }
 
-	@Override
-	public void setValidatorDelegate(ValidatorDelegate delegate) {
-		this.validatorDelegate = delegate;
-	}
+    @Override
+    public void setValidatorDelegate(ValidatorDelegate delegate) {
+        this.validatorDelegate = delegate;
+    }
 
-	@Override
-	public void setInvalidHandler(InvalidHandler invalidHandler) {
-		this.invalidHandler = invalidHandler;
-	}
+    @Override
+    public void setInvalidHandler(InvalidHandler invalidHandler) {
+        this.invalidHandler = invalidHandler;
+    }
 
-	@Override
-	public boolean isFailFast() {
-		return failFast;
-	}
+    @Override
+    public boolean isFailFast() {
+        return failFast;
+    }
 
-	@Override
-	public boolean isThrowException() {
-		return throwException;
-	}
+    @Override
+    public boolean isThrowException() {
+        return throwException;
+    }
 
-	@Override
-	public ResourceBundleLocator getResourceBundleLocator() {
-		return resourceBundleLocator;
-	}
+    @Override
+    public ResourceBundleLocator getResourceBundleLocator() {
+        return resourceBundleLocator;
+    }
 
-	@Override
-	public ValidatorDelegate getValidatorDelegate() {
-		return validatorDelegate;
-	}
+    @Override
+    public ValidatorDelegate getValidatorDelegate() {
+        return validatorDelegate;
+    }
 
-	@Override
-	public InvalidHandler getInvalidHandler() {
-		return invalidHandler;
-	}
-	
-	@Override
-	public List<ConstraintDescriptor> getConstraintDescriptors() {
-		return constraintDescriptors;
-	}
-	
-	@Override
-	public Validation getValidation() {
-		return validation;
-	}
-	
-	@Override
-	public ValidatorContext getValidatorContext() {
-		return validatorContext;
-	}
-	
-	@Override
-	public void constraint(String name, String message,
-			ConstraintValidator constraintValidator, Class<?>... groups) {
-		Assert.notNull(name, "name cannot be null.");
-    	Assert.notNull(constraintValidator, "constraintValidator cannot be null.");
-    	
-    	Set<Class<?>> resultGroups;
-    	if (groups.length == 0) {
-    		resultGroups = DEFAULT_GROUPS;
-    	} else {
-    		resultGroups = new HashSet<>(Arrays.asList(groups));
-    	}
-		ConstraintDescriptor constraintDescriptor = new ConstraintDescriptorImpl(name, 
-				message,
-				resultGroups,
-				constraintValidator);
-		constraintDescriptors.add(constraintDescriptor);
-	}
+    @Override
+    public InvalidHandler getInvalidHandler() {
+        return invalidHandler;
+    }
+    
+    @Override
+    public List<ConstraintDescriptor> getConstraintDescriptors() {
+        return constraintDescriptors;
+    }
+    
+    @Override
+    public Validation getValidation() {
+        return validation;
+    }
+    
+    @Override
+    public ValidatorContext getValidatorContext() {
+        return validatorContext;
+    }
+    
+    @Override
+    public void constraint(String name, String message,
+            ConstraintValidator constraintValidator, Class<?>... groups) {
+        Assert.notNull(name, "name cannot be null.");
+        Assert.notNull(constraintValidator, "constraintValidator cannot be null.");
+        
+        Set<Class<?>> resultGroups;
+        if (groups.length == 0) {
+            resultGroups = DEFAULT_GROUPS;
+        } else {
+            resultGroups = new HashSet<>(Arrays.asList(groups));
+        }
+        ConstraintDescriptor constraintDescriptor = new ConstraintDescriptorImpl(name, 
+                message,
+                resultGroups,
+                constraintValidator);
+        constraintDescriptors.add(constraintDescriptor);
+    }
 
-	@Override
-	public void constraint(String name,
-			ConstraintValidator constraintValidator, Class<?>... groups) {
-		Assert.notNull(name, "name cannot be null.");
-    	Assert.notNull(constraintValidator, "constraintValidator cannot be null.");
-    	
-    	String messageTemplate = getDefaultMessagetTemplate(constraintValidator);
-    	this.constraint(name, 
-    			messageTemplate,
-    			constraintValidator,
-    			groups);
-	}
-	
-	private static String getDefaultMessagetTemplate(ConstraintValidator constraintValidator) {
-		Class<?> constraintClass = constraintValidator.getClass();
-		String className = constraintClass.getName();
-		
-		StringBuilder sb = new StringBuilder().append(TokenCollector.BEGIN_TERM);
+    @Override
+    public void constraint(String name,
+            ConstraintValidator constraintValidator, Class<?>... groups) {
+        Assert.notNull(name, "name cannot be null.");
+        Assert.notNull(constraintValidator, "constraintValidator cannot be null.");
+        
+        String messageTemplate = getDefaultMessagetTemplate(constraintValidator);
+        this.constraint(name, 
+                messageTemplate,
+                constraintValidator,
+                groups);
+    }
+    
+    private static String getDefaultMessagetTemplate(ConstraintValidator constraintValidator) {
+        Class<?> constraintClass = constraintValidator.getClass();
+        String className = constraintClass.getName();
+        
+        StringBuilder sb = new StringBuilder().append(TokenCollector.BEGIN_TERM);
         sb.append(className).append(MESSAGE_SUFFIX).append(TokenCollector.END_TERM);
         return sb.toString();
-	}
+    }
 }

@@ -26,7 +26,7 @@ import javax.servlet.ServletContext;
 
 public class FakeServletConfig implements ServletConfig {
 
-	/**
+    /**
      * The servlet name
      */
     private final String name;
@@ -40,7 +40,7 @@ public class FakeServletConfig implements ServletConfig {
      * Initialization parameters
      */
     private final Map<String, String> initParameters;
-	
+    
     /**
      * @param name The servlet name
      * @param servletContext The ServletContext
@@ -58,47 +58,48 @@ public class FakeServletConfig implements ServletConfig {
         this.name = name;
         this.servletContext = servletContext;
         this.initParameters = (initParameters != null) ? Collections.unmodifiableMap(initParameters) :
-        	Collections.<String, String>emptyMap();
+            Collections.<String, String>emptyMap();
     }
     
     /**
      * Copy the values from another {@link ServletConfig} so we can modify them.
+     * @param servletConfig
      */
     public FakeServletConfig(ServletConfig servletConfig) {
-    	this.name = servletConfig.getServletName();
+        this.name = servletConfig.getServletName();
         this.servletContext = servletConfig.getServletContext();
         this.initParameters = getInitParametersInServletConfig(servletConfig);
     }
     
-	@Override
-	public String getServletName() {
-		return name;
-	}
+    @Override
+    public String getServletName() {
+        return name;
+    }
 
-	@Override
-	public ServletContext getServletContext() {
-		return servletContext;
-	}
+    @Override
+    public ServletContext getServletContext() {
+        return servletContext;
+    }
 
-	@Override
-	public String getInitParameter(String name) {
-		return initParameters.get(name);
-	}
+    @Override
+    public String getInitParameter(String name) {
+        return initParameters.get(name);
+    }
 
-	@Override
-	public Enumeration<String> getInitParameterNames() {
-		return Collections.enumeration(initParameters.keySet());
-	}
+    @Override
+    public Enumeration<String> getInitParameterNames() {
+        return Collections.enumeration(initParameters.keySet());
+    }
 
     @SuppressWarnings("unchecked")
-	private Map<String, String> getInitParametersInServletConfig(ServletConfig servletConfig) {
-    	Map<String , String> initParameters = new HashMap<String, String>();
-    	Enumeration<String> params = servletConfig.getInitParameterNames();
+    private Map<String, String> getInitParametersInServletConfig(ServletConfig servletConfig) {
+        Map<String , String> initParameters = new HashMap<String, String>();
+        Enumeration<String> params = servletConfig.getInitParameterNames();
         while (params.hasMoreElements()) {
-        	String name = params.nextElement();
-        	String value = servletConfig.getInitParameter(name);
-        	initParameters.put(name, value);
-		}
+            String name = params.nextElement();
+            String value = servletConfig.getInitParameter(name);
+            initParameters.put(name, value);
+        }
         return Collections.unmodifiableMap(initParameters);
     }
 }

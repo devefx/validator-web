@@ -100,7 +100,6 @@ import java.util.concurrent.locks.ReentrantLock;
  * <tt>Hashtable</tt> in programs that rely on its thread safety but not on
  * its synchronization details.
  * <p>
- * <p>
  * Retrieval operations (including <tt>get</tt>) generally do not block, so
  * may overlap with update operations (including <tt>put</tt> and
  * <tt>remove</tt>). Retrievals reflect the results of the most recently
@@ -112,7 +111,6 @@ import java.util.concurrent.locks.ReentrantLock;
  * iterator/enumeration. They do <em>not</em> throw
  * {@link ConcurrentModificationException}. However, iterators are designed to
  * be used by only one thread at a time.
- * <p>
  * <p>
  * The allowed concurrency among update operations is guided by the optional
  * <tt>concurrencyLevel</tt> constructor argument (default <tt>16</tt>),
@@ -130,14 +128,11 @@ import java.util.concurrent.locks.ReentrantLock;
  * possible, it is a good idea to provide estimates of expected table sizes in
  * constructors.
  * <p>
- * <p>
  * This class and its views and iterators implement all of the <em>optional</em>
  * methods of the {@link Map} and {@link Iterator} interfaces.
  * <p>
- * <p>
  * Like {@link Hashtable} but unlike {@link HashMap}, this class does
  * <em>not</em> allow <tt>null</tt> to be used as a key or value.
- * <p>
  * <p>
  * This class is a member of the <a href="{@docRoot}/../technotes/guides/collections/index.html">
  * Java Collections Framework</a>.
@@ -151,10 +146,10 @@ final public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V>
         implements java.util.concurrent.ConcurrentMap<K, V>, Serializable {
     private static final long serialVersionUID = 7249069246763182397L;
 
-	/*
+    /*
          * The basic strategy is to subdivide the table among Segments,
-		 * each of which itself is a concurrently readable hash table.
-		 */
+         * each of which itself is a concurrently readable hash table.
+         */
 
     /**
      * An option specifying which Java reference type should be used to refer
@@ -188,7 +183,7 @@ final public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V>
 
     ;
 
-	/* ---------------- Constants -------------- */
+    /* ---------------- Constants -------------- */
 
     static final ReferenceType DEFAULT_KEY_TYPE = ReferenceType.WEAK;
 
@@ -235,7 +230,7 @@ final public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V>
      */
     static final int RETRIES_BEFORE_LOCK = 2;
 
-	/* ---------------- Fields -------------- */
+    /* ---------------- Fields -------------- */
 
     /**
      * Mask value for indexing into segments. The upper bits of a
@@ -259,7 +254,7 @@ final public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V>
     transient Set<Map.Entry<K, V>> entrySet;
     transient Collection<V> values;
 
-	/* ---------------- Small Utilities -------------- */
+    /* ---------------- Small Utilities -------------- */
 
     /**
      * Applies a supplemental hash function to a given hashCode, which
@@ -294,7 +289,7 @@ final public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V>
                 System.identityHashCode(key) : key.hashCode());
     }
 
-	/* ---------------- Inner Classes -------------- */
+    /* ---------------- Inner Classes -------------- */
 
     static interface KeyReference {
         int keyHash();
@@ -463,42 +458,42 @@ final public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V>
      * simplify some locking and avoid separate construction.
      */
     static final class Segment<K, V> extends ReentrantLock implements Serializable {
-		/*
-				 * Segments maintain a table of entry lists that are ALWAYS
-				 * kept in a consistent state, so can be read without locking.
-				 * Next fields of nodes are immutable (final).  All list
-				 * additions are performed at the front of each bin. This
-				 * makes it easy to check changes, and also fast to traverse.
-				 * When nodes would otherwise be changed, new nodes are
-				 * created to replace them. This works well for hash tables
-				 * since the bin lists tend to be short. (The average length
-				 * is less than two for the default load factor threshold.)
-				 *
-				 * Read operations can thus proceed without locking, but rely
-				 * on selected uses of volatiles to ensure that completed
-				 * write operations performed by other threads are
-				 * noticed. For most purposes, the "count" field, tracking the
-				 * number of elements, serves as that volatile variable
-				 * ensuring visibility.  This is convenient because this field
-				 * needs to be read in many read operations anyway:
-				 *
-				 *   - All (unsynchronized) read operations must first read the
-				 *     "count" field, and should not look at table entries if
-				 *     it is 0.
-				 *
-				 *   - All (synchronized) write operations should write to
-				 *     the "count" field after structurally changing any bin.
-				 *     The operations must not take any action that could even
-				 *     momentarily cause a concurrent read operation to see
-				 *     inconsistent data. This is made easier by the nature of
-				 *     the read operations in Map. For example, no operation
-				 *     can reveal that the table has grown but the threshold
-				 *     has not yet been updated, so there are no atomicity
-				 *     requirements for this with respect to reads.
-				 *
-				 * As a guide, all critical volatile reads and writes to the
-				 * count field are marked in code comments.
-				 */
+        /*
+                 * Segments maintain a table of entry lists that are ALWAYS
+                 * kept in a consistent state, so can be read without locking.
+                 * Next fields of nodes are immutable (final).  All list
+                 * additions are performed at the front of each bin. This
+                 * makes it easy to check changes, and also fast to traverse.
+                 * When nodes would otherwise be changed, new nodes are
+                 * created to replace them. This works well for hash tables
+                 * since the bin lists tend to be short. (The average length
+                 * is less than two for the default load factor threshold.)
+                 *
+                 * Read operations can thus proceed without locking, but rely
+                 * on selected uses of volatiles to ensure that completed
+                 * write operations performed by other threads are
+                 * noticed. For most purposes, the "count" field, tracking the
+                 * number of elements, serves as that volatile variable
+                 * ensuring visibility.  This is convenient because this field
+                 * needs to be read in many read operations anyway:
+                 *
+                 *   - All (unsynchronized) read operations must first read the
+                 *     "count" field, and should not look at table entries if
+                 *     it is 0.
+                 *
+                 *   - All (synchronized) write operations should write to
+                 *     the "count" field after structurally changing any bin.
+                 *     The operations must not take any action that could even
+                 *     momentarily cause a concurrent read operation to see
+                 *     inconsistent data. This is made easier by the nature of
+                 *     the read operations in Map. For example, no operation
+                 *     can reveal that the table has grown but the threshold
+                 *     has not yet been updated, so there are no atomicity
+                 *     requirements for this with respect to reads.
+                 *
+                 * As a guide, all critical volatile reads and writes to the
+                 * count field are marked in code comments.
+                 */
 
         private static final long serialVersionUID = 2249069246763182397L;
 
@@ -607,7 +602,7 @@ final public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V>
             }
         }
 
-		/* Specialized implementations of map methods */
+        /* Specialized implementations of map methods */
 
         V get(Object key, int hash) {
             if (count != 0) { // read-volatile
@@ -740,19 +735,19 @@ final public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V>
             if (oldCapacity >= MAXIMUM_CAPACITY)
                 return 0;
 
-			/*
-						 * Reclassify nodes in each list to new Map.  Because we are
-						 * using power-of-two expansion, the elements from each bin
-						 * must either stay at same index, or move with a power of two
-						 * offset. We eliminate unnecessary node creation by catching
-						 * cases where old nodes can be reused because their next
-						 * fields won't change. Statistically, at the default
-						 * threshold, only about one-sixth of them need cloning when
-						 * a table doubles. The nodes they replace will be garbage
-						 * collectable as soon as they are no longer referenced by any
-						 * reader thread that may be in the midst of traversing table
-						 * right now.
-						 */
+            /*
+                         * Reclassify nodes in each list to new Map.  Because we are
+                         * using power-of-two expansion, the elements from each bin
+                         * must either stay at same index, or move with a power of two
+                         * offset. We eliminate unnecessary node creation by catching
+                         * cases where old nodes can be reused because their next
+                         * fields won't change. Statistically, at the default
+                         * threshold, only about one-sixth of them need cloning when
+                         * a table doubles. The nodes they replace will be garbage
+                         * collectable as soon as they are no longer referenced by any
+                         * reader thread that may be in the midst of traversing table
+                         * right now.
+                         */
 
             HashEntry<K, V>[] newTable = HashEntry.newArray(oldCapacity << 1);
             threshold = (int) (newTable.length * loadFactor);
@@ -878,7 +873,7 @@ final public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V>
 
 
 
-	/* ---------------- Public operations -------------- */
+    /* ---------------- Public operations -------------- */
 
     /**
      * Creates a new, empty map with the specified initial
@@ -1042,15 +1037,15 @@ final public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V>
      */
     public boolean isEmpty() {
         final Segment<K, V>[] segments = this.segments;
-		/*
-				 * We keep track of per-segment modCounts to avoid ABA
-				 * problems in which an element in one segment was added and
-				 * in another removed during traversal, in which case the
-				 * table was never actually empty at any point. Note the
-				 * similar use of modCounts in the size() and containsValue()
-				 * methods, which are the only other methods also susceptible
-				 * to ABA problems.
-				 */
+        /*
+                 * We keep track of per-segment modCounts to avoid ABA
+                 * problems in which an element in one segment was added and
+                 * in another removed during traversal, in which case the
+                 * table was never actually empty at any point. Note the
+                 * similar use of modCounts in the size() and containsValue()
+                 * methods, which are the only other methods also susceptible
+                 * to ABA problems.
+                 */
         int[] mc = new int[segments.length];
         int mcsum = 0;
         for (int i = 0; i < segments.length; ++i) {
@@ -1124,7 +1119,6 @@ final public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V>
     /**
      * Returns the value to which the specified key is mapped,
      * or {@code null} if this map contains no mapping for the key.
-     * <p>
      * <p>More formally, if this map contains a mapping from a key
      * {@code k} to a value {@code v} such that {@code key.equals(k)},
      * then this method returns {@code v}; otherwise it returns
@@ -1231,7 +1225,6 @@ final public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V>
     /**
      * Maps the specified key to the specified value in this table.
      * Neither the key nor the value can be null.
-     * <p>
      * <p> The value can be retrieved by calling the <tt>get</tt> method
      * with a key that is equal to the original key.
      *
@@ -1360,7 +1353,6 @@ final public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V>
      * <tt>removeAll</tt>, <tt>retainAll</tt>, and <tt>clear</tt>
      * operations.  It does not support the <tt>add</tt> or
      * <tt>addAll</tt> operations.
-     * <p>
      * <p>The view's <tt>iterator</tt> is a "weakly consistent" iterator
      * that will never throw {@link ConcurrentModificationException},
      * and guarantees to traverse elements as they existed upon
@@ -1381,7 +1373,6 @@ final public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V>
      * <tt>Collection.remove</tt>, <tt>removeAll</tt>,
      * <tt>retainAll</tt>, and <tt>clear</tt> operations.  It does not
      * support the <tt>add</tt> or <tt>addAll</tt> operations.
-     * <p>
      * <p>The view's <tt>iterator</tt> is a "weakly consistent" iterator
      * that will never throw {@link ConcurrentModificationException},
      * and guarantees to traverse elements as they existed upon
@@ -1402,7 +1393,6 @@ final public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V>
      * <tt>removeAll</tt>, <tt>retainAll</tt>, and <tt>clear</tt>
      * operations.  It does not support the <tt>add</tt> or
      * <tt>addAll</tt> operations.
-     * <p>
      * <p>The view's <tt>iterator</tt> is a "weakly consistent" iterator
      * that will never throw {@link ConcurrentModificationException},
      * and guarantees to traverse elements as they existed upon
@@ -1434,7 +1424,7 @@ final public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V>
         return new ValueIterator();
     }
 
-	/* ---------------- Iterator Support -------------- */
+    /* ---------------- Iterator Support -------------- */
 
     abstract class HashIterator {
         int nextSegmentIndex;
@@ -1706,7 +1696,7 @@ final public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V>
         }
     }
 
-	/* ---------------- Serialization Support -------------- */
+    /* ---------------- Serialization Support -------------- */
 
     /**
      * Save the state of the <tt>ConcurrentReferenceHashMap</tt> instance to a

@@ -22,12 +22,12 @@ import org.devefx.validator.script.annotation.ScriptMapping;
 
 public class ValidationScriptMappingTypeFilter implements TypeFilter {
 
-	private AnnotationTypeFilter annotationTypeFilter = new AnnotationTypeFilter(ScriptMapping.class);
-	private AssignableTypeFilter assignableTypeFilter = new AssignableTypeFilter(Validation.class);
-	
-	@Override
-	public boolean match(Class<?> type) {
-		return annotationTypeFilter.match(type) &&
-				assignableTypeFilter.match(type);
-	}
+    private AnnotationTypeFilter annotationTypeFilter = new AnnotationTypeFilter(ScriptMapping.class);
+    private AssignableTypeFilter assignableTypeFilter = new AssignableTypeFilter(Validation.class);
+    
+    @Override
+    public boolean match(Class<?> type) {
+        return annotationTypeFilter.match(type) &&
+                assignableTypeFilter.match(type);
+    }
 }

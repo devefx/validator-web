@@ -28,23 +28,23 @@ import org.springframework.beans.factory.support.RootBeanDefinition;
 
 public class ConfigPostProcessor implements BeanFactoryPostProcessor {
 
-	@Override
-	public void postProcessBeanFactory(
-			ConfigurableListableBeanFactory beanFactory) throws BeansException {
-		
-		BeanDefinitionRegistry registry = (BeanDefinitionRegistry) beanFactory;
-		
-		if (isEmpty(beanFactory.getBeansOfType(ValidatorController.class))) {
-			BeanDefinition beanDefinition = new RootBeanDefinition(ValidatorController.class);
-			String beanName = BeanDefinitionReaderUtils.generateBeanName(beanDefinition, registry);
-			registry.registerBeanDefinition(beanName, beanDefinition);
-		}
-		
-		if (isEmpty(beanFactory.getBeansOfType(ValidatorHandlerMapping.class))) {
-			BeanDefinition beanDefinition = new RootBeanDefinition(ValidatorHandlerMapping.class);
-			String beanName = BeanDefinitionReaderUtils.generateBeanName(beanDefinition, registry);
-			registry.registerBeanDefinition(beanName, beanDefinition);
-		}
-	}
-	
+    @Override
+    public void postProcessBeanFactory(
+            ConfigurableListableBeanFactory beanFactory) throws BeansException {
+        
+        BeanDefinitionRegistry registry = (BeanDefinitionRegistry) beanFactory;
+        
+        if (isEmpty(beanFactory.getBeansOfType(ValidatorController.class))) {
+            BeanDefinition beanDefinition = new RootBeanDefinition(ValidatorController.class);
+            String beanName = BeanDefinitionReaderUtils.generateBeanName(beanDefinition, registry);
+            registry.registerBeanDefinition(beanName, beanDefinition);
+        }
+        
+        if (isEmpty(beanFactory.getBeansOfType(ValidatorHandlerMapping.class))) {
+            BeanDefinition beanDefinition = new RootBeanDefinition(ValidatorHandlerMapping.class);
+            String beanName = BeanDefinitionReaderUtils.generateBeanName(beanDefinition, registry);
+            registry.registerBeanDefinition(beanName, beanDefinition);
+        }
+    }
+    
 }

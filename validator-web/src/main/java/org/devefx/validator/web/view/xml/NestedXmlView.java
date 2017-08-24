@@ -24,17 +24,17 @@ import org.devefx.validator.util.XmlWriter;
 import org.devefx.validator.web.view.AbstractNestedView;
 
 public class NestedXmlView extends AbstractNestedView {
-	
-	public NestedXmlView() {
-		setContentType("application/xml;charset=UTF-8");
-	}
+    
+    public NestedXmlView() {
+        setContentType("application/xml;charset=UTF-8");
+    }
 
-	@Override
-	protected void writeContent(OutputStream stream, Object value)
-			throws IOException {
-		String xmlStr = XmlWriter.beanToXml(value);
-		if (StringUtils.hasText(xmlStr)) {
-			stream.write(xmlStr.getBytes(getCharset()));
-		}
-	}
+    @Override
+    protected void writeContent(OutputStream stream, Object value)
+            throws IOException {
+        String xmlStr = XmlWriter.beanToXml(value);
+        if (StringUtils.hasText(xmlStr)) {
+            stream.write(xmlStr.getBytes(getCharset()));
+        }
+    }
 }

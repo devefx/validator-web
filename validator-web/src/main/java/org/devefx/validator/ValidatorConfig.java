@@ -17,48 +17,48 @@
 package org.devefx.validator;
 
 public class ValidatorConfig {
-	
-	public static final boolean DEFAULT_FAIL_FAST = false;
-	
-	public static final boolean DEFAULT_THROW_EXCEPTION = false;
-	
-	private boolean failFast = DEFAULT_FAIL_FAST;
-	
-	private boolean throwException = DEFAULT_THROW_EXCEPTION;
-	
-	private ValidatorDelegate validatorDelegate;
-	
-	private InvalidHandler invalidHandler;
+    
+    public static final boolean DEFAULT_FAIL_FAST = false;
+    
+    public static final boolean DEFAULT_THROW_EXCEPTION = false;
+    
+    private boolean failFast = DEFAULT_FAIL_FAST;
+    
+    private boolean throwException = DEFAULT_THROW_EXCEPTION;
+    
+    private ValidatorDelegate validatorDelegate;
+    
+    private InvalidHandler invalidHandler;
 
-	public boolean isFailFast() {
-		return failFast;
-	}
+    public boolean isFailFast() {
+        return failFast;
+    }
 
-	public void setFailFast(boolean failFast) {
-		this.failFast = failFast;
-	}
+    public void setFailFast(boolean failFast) {
+        this.failFast = failFast;
+    }
 
-	public boolean isThrowException() {
-		return throwException;
-	}
+    public boolean isThrowException() {
+        return throwException;
+    }
 
-	public void setThrowException(boolean throwException) {
-		this.throwException = throwException;
-	}
-	
-	public ValidatorDelegate getValidatorDelegate() {
-		return validatorDelegate;
-	}
-	
-	public void setValidatorDelegate(ValidatorDelegate validatorDelegate) {
-		this.validatorDelegate = validatorDelegate;
-	}
-	
-	public InvalidHandler getInvalidHandler() {
-		return invalidHandler;
-	}
-	
-	public void setInvalidHandler(InvalidHandler invalidHandler) {
-		this.invalidHandler = invalidHandler;
-	}
+    public void setThrowException(boolean throwException) {
+        this.throwException = throwException;
+    }
+    
+    public ValidatorDelegate getValidatorDelegate() {
+        return validatorDelegate;
+    }
+    
+    public void setValidatorDelegate(ValidatorDelegate validatorDelegate) {
+        this.validatorDelegate = validatorDelegate;
+    }
+    
+    public InvalidHandler getInvalidHandler() {
+        return invalidHandler;
+    }
+    
+    public void setInvalidHandler(InvalidHandler invalidHandler) {
+        this.invalidHandler = invalidHandler;
+    }
 }

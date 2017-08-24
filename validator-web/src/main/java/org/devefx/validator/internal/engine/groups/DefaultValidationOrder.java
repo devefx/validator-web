@@ -21,20 +21,20 @@ import java.util.Iterator;
 import java.util.List;
 
 public final class DefaultValidationOrder implements ValidationOrder {
-	
-	/**
-	 * The list of single groups to be used this validation.
-	 */
-	private List<Group> groupList = new ArrayList<>();
+    
+    /**
+     * The list of single groups to be used this validation.
+     */
+    private List<Group> groupList = new ArrayList<>();
 
-	@Override
-	public Iterator<Group> getGroupIterator() {
-		return groupList.iterator();
-	}
-	
-	public void insertGroup(Group group) {
-		if (!groupList.contains(group)) {
-			groupList.add(group);
-		}
-	}
+    @Override
+    public Iterator<Group> getGroupIterator() {
+        return groupList.iterator();
+    }
+    
+    public void insertGroup(Group group) {
+        if (!groupList.contains(group)) {
+            groupList.add(group);
+        }
+    }
 }

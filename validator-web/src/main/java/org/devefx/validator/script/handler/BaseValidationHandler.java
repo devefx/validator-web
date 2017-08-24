@@ -26,55 +26,55 @@ import org.devefx.validator.script.mapping.DefaultMappingManager;
 import org.devefx.validator.util.ScriptUtil;
 
 public abstract class BaseValidationHandler extends JavaScriptHandler {
-	
-	protected final Log log = LogFactory.getLog(getClass());
+    
+    protected final Log log = LogFactory.getLog(getClass());
 
-	protected DefaultMappingManager mappingManager;
+    protected DefaultMappingManager mappingManager;
 
-	@Inject
-	public void setMappingManager(DefaultMappingManager mappingManager) {
-		this.mappingManager = mappingManager;
-	}
-	
-	@Override
-	protected String generateJavaScript(String contextPath, String servletPath,
-			String pathInfo) throws IOException {
-		
-		String scriptName = pathInfo;
-		
-		if (!scriptName.startsWith(getPath()) || !scriptName.endsWith(getSuffix())) {
-			return null;
-		}
-		
-		scriptName = scriptName.substring(getPath().length());
-		scriptName = scriptName.substring(0, scriptName.length() - getSuffix().length());
-		
-		if (!ScriptUtil.isValidScriptName(scriptName)) {
-			log.debug("Throwing at request for script with name: '" + scriptName + "'");
+    @Inject
+    public void setMappingManager(DefaultMappingManager mappingManager) {
+        this.mappingManager = mappingManager;
+    }
+    
+    @Override
+    protected String generateJavaScript(String contextPath, String servletPath,
+            String pathInfo) throws IOException {
+        
+        String scriptName = pathInfo;
+        
+        if (!scriptName.startsWith(getPath()) || !scriptName.endsWith(getSuffix())) {
+            return null;
+        }
+        
+        scriptName = scriptName.substring(getPath().length());
+        scriptName = scriptName.substring(0, scriptName.length() - getSuffix().length());
+        
+        if (!ScriptUtil.isValidScriptName(scriptName)) {
+            log.debug("Throwing at request for script with name: '" + scriptName + "'");
             throw new SecurityException("Illegal script name.");
-		}
-		
-		if (scriptName.contains("/")) {
-			Pattern p = Pattern.compile(scriptName.replaceAll("/", "[/\\.]"));
-			String match = null;
-			for (String name : mappingManager.getMappingNames()) {
-				if (p.matcher(name).matches()) {
-					if (match == null) {
-						match = name;
-					} else {
-						throw new IllegalArgumentException("Script name '" + scriptName + "' matches several validations.");
-					}
-				}
-			}
-			if (match != null) {
-				scriptName = match;
-			}
-		}
-		
-		// Generate script
-		return generateValidationScript(contextPath, servletPath, scriptName);
-	}
-	
-	protected abstract String generateValidationScript(String contextPath, String servletPath, String scriptName);
-	
+        }
+        
+        if (scriptName.contains("/")) {
+            Pattern p = Pattern.compile(scriptName.replaceAll("/", "[/\\.]"));
+            String match = null;
+            for (String name : mappingManager.getMappingNames()) {
+                if (p.matcher(name).matches()) {
+                    if (match == null) {
+                        match = name;
+                    } else {
+                        throw new IllegalArgumentException("Script name '" + scriptName + "' matches several validations.");
+                    }
+                }
+            }
+            if (match != null) {
+                scriptName = match;
+            }
+        }
+        
+        // Generate script
+        return generateValidationScript(contextPath, servletPath, scriptName);
+    }
+    
+    protected abstract String generateValidationScript(String contextPath, String servletPath, String scriptName);
+    
 }

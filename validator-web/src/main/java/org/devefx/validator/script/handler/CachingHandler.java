@@ -32,24 +32,24 @@ import org.devefx.validator.http.HttpConstants;
 import org.devefx.validator.script.Handler;
 
 public abstract class CachingHandler implements Handler {
-	
-	/** Logger that is available to subclasses */
-	protected final Log log = LogFactory.getLog(getClass());
-	
-	/** Default content type. Overridable as bean property. */
-	public static final String DEFAULT_CONTENT_TYPE = "text/html;charset=ISO-8859-1";
-	
-	/** Do we ignore all the Last-Modified/ETags blathering? */
-	private boolean ignoreLastModified = false;
-	
-	/** The cache time unit of seconds */
-	private int periodCacheableTime = -1;
-	
-	private String contentType = DEFAULT_CONTENT_TYPE;
-	
-	private String path;
-	
-	/** We cache the script output for speed */
+    
+    /** Logger that is available to subclasses */
+    protected final Log log = LogFactory.getLog(getClass());
+    
+    /** Default content type. Overridable as bean property. */
+    public static final String DEFAULT_CONTENT_TYPE = "text/html;charset=ISO-8859-1";
+    
+    /** Do we ignore all the Last-Modified/ETags blathering? */
+    private boolean ignoreLastModified = false;
+    
+    /** The cache time unit of seconds */
+    private int periodCacheableTime = -1;
+    
+    private String contentType = DEFAULT_CONTENT_TYPE;
+    
+    private String path;
+    
+    /** We cache the script output for speed */
     private final Map<String, CachedResource> resourceCache = new HashMap<String, CachedResource>();
     
     /**
@@ -64,74 +64,74 @@ public abstract class CachingHandler implements Handler {
      */
     @Value("${periodCacheableTime}")
     public void setPeriodCacheableTime(int periodCacheableTime) {
-		this.periodCacheableTime = periodCacheableTime;
-	}
+        this.periodCacheableTime = periodCacheableTime;
+    }
     
     /**
      * Return the cache time unit of seconds
      */
     public int getPeriodCacheableTime() {
-		return periodCacheableTime;
-	}
+        return periodCacheableTime;
+    }
     
-	/**
-	 * Set the content type for this view.
-	 * Default is "text/html;charset=ISO-8859-1".
-	 * <p>May be ignored by subclasses if the view itself is assumed
-	 * to set the content type, e.g. in case of JSPs.
-	 */
-	public void setContentType(String contentType) {
-		this.contentType = contentType;
-	}
+    /**
+     * Set the content type for this view.
+     * Default is "text/html;charset=ISO-8859-1".
+     * <p>May be ignored by subclasses if the view itself is assumed
+     * to set the content type, e.g. in case of JSPs.
+     */
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
+    }
 
-	/**
-	 * Return the content type for this view.
-	 */
-	public String getContentType() {
-		return this.contentType;
-	}
-	
-	@Override
-	public String getPath() {
-		return this.path;
-	}
-	
-	public void setPath(String path) {
-		this.path = path;
-	}
-	
-	@Override
-	public void handle(HttpServletRequest request, HttpServletResponse response)
-			throws IOException {
-		
-		long lastModified = getLastModifiedTime();
-		
-		// Is the browser in sync with our latest?
+    /**
+     * Return the content type for this view.
+     */
+    public String getContentType() {
+        return this.contentType;
+    }
+    
+    @Override
+    public String getPath() {
+        return this.path;
+    }
+    
+    public void setPath(String path) {
+        this.path = path;
+    }
+    
+    @Override
+    public void handle(HttpServletRequest request, HttpServletResponse response)
+            throws IOException {
+        
+        long lastModified = getLastModifiedTime();
+        
+        // Is the browser in sync with our latest?
         if (isUpToDate(request, lastModified)) {
-        	response.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
-        	return;
+            response.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
+            return;
         }
-		
+        
         // Is our cache up to date WRT the real resource?
         CachedResource resource;
         synchronized (resourceCache) {
-			String url = getCachingKey(request);
-			resource = resourceCache.get(url);
-			
-			if (resource == null || lastModified > resource.lastModifiedTime) {
-				if (log.isDebugEnabled()) {
+            String url = getCachingKey(request);
+            resource = resourceCache.get(url);
+            
+            if (resource == null || lastModified > resource.lastModifiedTime) {
+                if (log.isDebugEnabled()) {
                     if (resource == null) {
                         log.debug("Generating contents for " + url + ". It is not currently cached." );
                     } else  {
                         log.debug("Generating contents for " + url + ". Resource modtime=" + lastModified + ". Cached modtime");
                     }
                 }
-				resource = new CachedResource();
-				resource.contents = generateCachableContent(request.getContextPath(), request.getServletPath(), request.getPathInfo());
-				resource.lastModifiedTime = lastModified;
-				resourceCache.put(url, resource);
-			}
-		}
+                resource = new CachedResource();
+                resource.contents = generateCachableContent(request.getContextPath(), request.getServletPath(), request.getPathInfo());
+                resource.lastModifiedTime = lastModified;
+                resourceCache.put(url, resource);
+            }
+        }
         
         addCacheHeaders(response);
         
@@ -140,46 +140,46 @@ public abstract class CachingHandler implements Handler {
         response.setDateHeader(HttpConstants.HEADER_ETAG, lastModified);
         
         if (resource.contents != null) {
-        	PrintWriter out = response.getWriter();
-        	out.write(resource.contents);
-        	out.flush();
+            PrintWriter out = response.getWriter();
+            out.write(resource.contents);
+            out.flush();
         } else {
-        	response.sendError(HttpServletResponse.SC_NOT_FOUND);
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
-	}
-	
-	protected void addCacheHeaders(HttpServletResponse response) {
-		if (getPeriodCacheableTime() == 0) {
-			addNoCacheHeaders(response);
-			return;
-		}
-		int cacheSecs;
-    	if (getPeriodCacheableTime() < 0) {
-    		cacheSecs = 5 * 60; // 5 minutes
-    	} else {
-    		cacheSecs = getPeriodCacheableTime();
-    	}
-    	long expiry = new Date().getTime() + cacheSecs * 1000;
-    	// Set standard HTTP/1.1 cache headers.
+    }
+    
+    protected void addCacheHeaders(HttpServletResponse response) {
+        if (getPeriodCacheableTime() == 0) {
+            addNoCacheHeaders(response);
+            return;
+        }
+        int cacheSecs;
+        if (getPeriodCacheableTime() < 0) {
+            cacheSecs = 5 * 60; // 5 minutes
+        } else {
+            cacheSecs = getPeriodCacheableTime();
+        }
+        long expiry = new Date().getTime() + cacheSecs * 1000;
+        // Set standard HTTP/1.1 cache headers.
         response.setHeader("Cache-Control", "public, max-age=" + cacheSecs);
         // Set to expire far in the past. Prevents caching at the proxy server
         response.setDateHeader("Expires", expiry);
-	}
+    }
 
-	/**
+    /**
      * Add headers to prevent browsers and proxies from caching this reply.
      * @param resp The response to add headers to
      */
-	protected void addNoCacheHeaders(HttpServletResponse response) {
-    	// Set standard HTTP/1.1 no-cache headers.
-    	response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
+    protected void addNoCacheHeaders(HttpServletResponse response) {
+        // Set standard HTTP/1.1 no-cache headers.
+        response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
         // Set standard HTTP/1.0 no-cache header.
-    	response.setHeader("Pragma", "no-cache");
+        response.setHeader("Pragma", "no-cache");
         // Set to expire far in the past. Prevents caching at the proxy server
-    	response.setDateHeader("Expires", 0);
-	}
+        response.setDateHeader("Expires", 0);
+    }
 
-	/**
+    /**
      * Detect the last time, after which we are sure that the resource has not
      * changed
      * @return The last modification time
@@ -203,7 +203,7 @@ public abstract class CachingHandler implements Handler {
      * @return true iff the ETags and If-Modified-Since headers say we have not changed
      */
     protected boolean isUpToDate(HttpServletRequest req, long lastModified) {
-    	String etag = "\"" + lastModified + '\"';
+        String etag = "\"" + lastModified + '\"';
 
         if (ignoreLastModified) {
             return false;
@@ -213,19 +213,19 @@ public abstract class CachingHandler implements Handler {
         try {
             modifiedSince = req.getDateHeader(HttpConstants.HEADER_IF_MODIFIED);
         } catch (RuntimeException ex) {
-        	// ignore
+            // ignore
         }
         
         if (modifiedSince != -1) {
-        	// Browsers are only accurate to the second
-        	modifiedSince -= modifiedSince % 1000;
+            // Browsers are only accurate to the second
+            modifiedSince -= modifiedSince % 1000;
         }
         String givenEtag = req.getHeader(HttpConstants.HEADER_IF_NONE);
         String cachedPath = getCachingKey(req);
         
         // Deal with missing etags
         if (givenEtag == null) {
-        	// There is no ETag, just go with If-Modified-Since
+            // There is no ETag, just go with If-Modified-Since
             if (modifiedSince >= lastModified) {
                 if (log.isDebugEnabled()) {
                     log.debug("Sending 304 for " + cachedPath + " If-Modified-Since=" + modifiedSince + ", Last-Modified=" + lastModified);
@@ -257,40 +257,40 @@ public abstract class CachingHandler implements Handler {
             return true;
         }
         log.debug("Sending content for " + cachedPath + ", If-Modified-Since=" + modifiedSince + ", Last Modified=" + lastModified + ", Old ETag=" + givenEtag + ", New ETag=" + etag);
-    	return false;
+        return false;
     }
     
     /**
-	 * Returns the caching key which is based on the servlet path
-	 * as well as the  cachedPath.
+     * Returns the caching key which is based on the servlet path
+     * as well as the  cachedPath.
      *
      * @param request
      */
     protected String getCachingKey(HttpServletRequest request) {
-    	StringBuilder absolutePath = new StringBuilder();
-    	String scheme = request.getScheme();
-    	int port = request.getServerPort();
-    	
-    	absolutePath.append(scheme);
+        StringBuilder absolutePath = new StringBuilder();
+        String scheme = request.getScheme();
+        int port = request.getServerPort();
+        
+        absolutePath.append(scheme);
         absolutePath.append("://");
         absolutePath.append(request.getServerName());
         
         if (port > 0 && (("http".equalsIgnoreCase(scheme) && port != 80) || ("https".equalsIgnoreCase(scheme) && port != 443))) {
-        	absolutePath.append(':');
+            absolutePath.append(':');
             absolutePath.append(port);
         }
         
         absolutePath.append(request.getContextPath());
         absolutePath.append(request.getServletPath());
-    	
-    	if (request.getPathInfo() != null) {
-    		absolutePath.append(request.getPathInfo());
-    	}
-    	return absolutePath.toString();
+        
+        if (request.getPathInfo() != null) {
+            absolutePath.append(request.getPathInfo());
+        }
+        return absolutePath.toString();
     }
-	
+    
     class CachedResource {
-    	protected String contents;
-    	protected long lastModifiedTime;
+        protected String contents;
+        protected long lastModifiedTime;
     }
 }

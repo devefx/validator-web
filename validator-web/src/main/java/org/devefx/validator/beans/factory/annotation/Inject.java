@@ -26,15 +26,15 @@ import org.devefx.validator.util.StringUtils;
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Inject {
-	
-	/**
-	 * Dependency name. Defaults to {@link StringUtils#EMPTY_STRING}.
-	 */
-	String value() default StringUtils.EMPTY_STRING;
-	
-	/**
-	 * Declares whether the annotated dependency is required.
-	 * <p>Defaults to {@code true}.
-	 */
-	boolean required() default true;
+    
+    /**
+     * Dependency name. Defaults to {@link StringUtils#EMPTY_STRING}.
+     */
+    String value() default StringUtils.EMPTY_STRING;
+    
+    /**
+     * Declares whether the annotated dependency is required.
+     * <p>Defaults to {@code true}.
+     */
+    boolean required() default true;
 }

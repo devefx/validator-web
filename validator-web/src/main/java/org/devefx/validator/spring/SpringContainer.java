@@ -30,86 +30,86 @@ import org.springframework.beans.factory.ListableBeanFactory;
 
 public class SpringContainer extends DefaultContainer {
 
-	private final BeanFactory beanFactory;
-	
-	public SpringContainer(BeanFactory beanFactory) {
-		this.beanFactory = beanFactory;
-	}
+    private final BeanFactory beanFactory;
+    
+    public SpringContainer(BeanFactory beanFactory) {
+        this.beanFactory = beanFactory;
+    }
 
-	@Override
-	public Object getBean(String name) throws BeansException {
-		Object bean;
-		try {
-			bean = beanFactory.getBean(name);
-		} catch (BeansException e) {
-			bean = super.getBean(name);
-		}
-		return bean;
-	}
+    @Override
+    public Object getBean(String name) throws BeansException {
+        Object bean;
+        try {
+            bean = beanFactory.getBean(name);
+        } catch (BeansException e) {
+            bean = super.getBean(name);
+        }
+        return bean;
+    }
 
-	@Override
-	public <T> T getBean(String name, Class<T> requiredType) throws BeansException {
-		T bean;
-		try {
-			bean = beanFactory.getBean(name, requiredType);
-		} catch (BeansException e) {
-			bean = super.getBean(name, requiredType);
-		}
-		return bean;
-	}
+    @Override
+    public <T> T getBean(String name, Class<T> requiredType) throws BeansException {
+        T bean;
+        try {
+            bean = beanFactory.getBean(name, requiredType);
+        } catch (BeansException e) {
+            bean = super.getBean(name, requiredType);
+        }
+        return bean;
+    }
 
-	@Override
-	public <T> T getBean(Class<T> requiredType) throws BeansException {
-		T bean;
-		try {
-			bean = beanFactory.getBean(requiredType);
-		} catch (BeansException e) {
-			bean = super.getBean(requiredType);
-		}
-		return bean;
-	}
+    @Override
+    public <T> T getBean(Class<T> requiredType) throws BeansException {
+        T bean;
+        try {
+            bean = beanFactory.getBean(requiredType);
+        } catch (BeansException e) {
+            bean = super.getBean(requiredType);
+        }
+        return bean;
+    }
 
-	@Override
-	public String[] getBeanNamesForType(Class<?> type) {
-		String[] beanNames = super.getBeanNamesForType(type);
-		if (beanFactory instanceof ListableBeanFactory) {
-			String[] array = ((ListableBeanFactory)beanFactory).getBeanNamesForType(type);
-			if (!ObjectUtils.isEmpty(array)) {
-				Set<String> uniqNames = new HashSet<String>(beanNames.length);
-				uniqNames.addAll(Arrays.asList(beanNames));
-				uniqNames.addAll(Arrays.asList(array));
-				beanNames = uniqNames.toArray(EMPTY_ARRAY);
-			}
-		}
-		return beanNames;
-	}
+    @Override
+    public String[] getBeanNamesForType(Class<?> type) {
+        String[] beanNames = super.getBeanNamesForType(type);
+        if (beanFactory instanceof ListableBeanFactory) {
+            String[] array = ((ListableBeanFactory)beanFactory).getBeanNamesForType(type);
+            if (!ObjectUtils.isEmpty(array)) {
+                Set<String> uniqNames = new HashSet<String>(beanNames.length);
+                uniqNames.addAll(Arrays.asList(beanNames));
+                uniqNames.addAll(Arrays.asList(array));
+                beanNames = uniqNames.toArray(EMPTY_ARRAY);
+            }
+        }
+        return beanNames;
+    }
 
-	@Override
-	public <T> Map<String, T> getBeansOfType(Class<T> type) {
-		Map<String, T> beans = super.getBeansOfType(type);
-		if (beanFactory instanceof ListableBeanFactory) {
-			beans.putAll(
-					((ListableBeanFactory)beanFactory).getBeansOfType(type));
-		}
-		return beans;
-	}
+    @Override
+    public <T> Map<String, T> getBeansOfType(Class<T> type) {
+        Map<String, T> beans = super.getBeansOfType(type);
+        if (beanFactory instanceof ListableBeanFactory) {
+            beans.putAll(
+                    ((ListableBeanFactory)beanFactory).getBeansOfType(type));
+        }
+        return beans;
+    }
 
-	@Override
-	public boolean containsBean(String name) {
-		return beanFactory.containsBean(name) ||
-				super.containsBean(name);
-	}
-	
-	@Override
-	public String getProperty(String name) {
-		Collection<InitPropertyPlaceholderConfigurer> configurers =
-				getBeansOfType(InitPropertyPlaceholderConfigurer.class).values();
-		for (InitPropertyPlaceholderConfigurer configurer : configurers) {
-			String propValue = configurer.getProperty(name);
-			if (propValue != null) {
-				return propValue;
-			}
-		}
-		return super.getProperty(name);
-	}
+    @Override
+    public boolean containsBean(String name) {
+        return beanFactory.containsBean(name) ||
+                super.containsBean(name);
+    }
+    
+    @Override
+    public String getProperty(String name) {
+        Collection<InitPropertyPlaceholderConfigurer> configurers =
+                getBeansOfType(InitPropertyPlaceholderConfigurer.class).values();
+        for (InitPropertyPlaceholderConfigurer configurer : configurers) {
+            String propValue = configurer.getProperty(name);
+            if (propValue != null) {
+                return propValue;
+            }
+        }
+        return super.getProperty(name);
+    }
 }

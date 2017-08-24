@@ -22,17 +22,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public interface Handler {
-	
-	/**
-	 * @return Path mapping URIs to this Handle
-	 */
-	String getPath();
-	
-	/**
+    
+    /**
+     * @return Path mapping URIs to this Handle
+     */
+    String getPath();
+    
+    /**
      * Handle a URL request that has been mapped to this Handler
      * @param request The HTTP request data
      * @param response Where we write the HTTP response data
      * @throws IOException If the write process fails
      */
-	void handle(HttpServletRequest request, HttpServletResponse response) throws IOException;
+    void handle(HttpServletRequest request, HttpServletResponse response) throws IOException;
 }

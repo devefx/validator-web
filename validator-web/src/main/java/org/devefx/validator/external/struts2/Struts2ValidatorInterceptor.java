@@ -42,9 +42,9 @@ public class Struts2ValidatorInterceptor extends MethodFilterInterceptor impleme
     private ServletConfig servletConfig;
     
     @Override
-	public void setServletContext(ServletContext servletContext) {
-    	this.servletConfig = new FakeServletConfig("struts2Interceptor", servletContext);
-	}
+    public void setServletContext(ServletContext servletContext) {
+        this.servletConfig = new FakeServletConfig("struts2Interceptor", servletContext);
+    }
     
     @Override
     protected String doIntercept(ActionInvocation invocation) throws Exception {
@@ -60,10 +60,10 @@ public class Struts2ValidatorInterceptor extends MethodFilterInterceptor impleme
                 throw new ServletException("non-HTTP request or response");
             }
             try {
-            	// set up the web context and delegate to the processor
-            	WebContextThreadStack.engageThread(servletConfig, request, response);
-            	// validate the request
-            	Class<?> actionClass = actionProxy.getAction().getClass();
+                // set up the web context and delegate to the processor
+                WebContextThreadStack.engageThread(servletConfig, request, response);
+                // validate the request
+                Class<?> actionClass = actionProxy.getAction().getClass();
                 Validator validator = ValidatorUtils.getValidator();
                 if (!validator.validate(actionClass, request, response)) {
                     return null;
@@ -72,9 +72,9 @@ public class Struts2ValidatorInterceptor extends MethodFilterInterceptor impleme
                 if (!validator.validate(actionMethod, request, response)) {
                     return null;
                 }
-			} finally {
-				WebContextThreadStack.disengageThread();
-			}
+            } finally {
+                WebContextThreadStack.disengageThread();
+            }
         }
         return invocation.invoke();
     }

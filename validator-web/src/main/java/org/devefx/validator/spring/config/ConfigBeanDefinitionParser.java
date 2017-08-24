@@ -22,13 +22,13 @@ import org.w3c.dom.Element;
 
 public class ConfigBeanDefinitionParser extends AbstractSimpleBeanDefinitionParser {
 
-	@Override
-	protected Class<?> getBeanClass(Element element) {
-		return ConfigPostProcessor.class;
-	}
-	
-	@Override
-	protected boolean shouldGenerateIdAsFallback() {
-		return true;
-	}
+    @Override
+    protected Class<?> getBeanClass(Element element) {
+        return ConfigPostProcessor.class;
+    }
+    
+    @Override
+    protected boolean shouldGenerateIdAsFallback() {
+        return true;
+    }
 }

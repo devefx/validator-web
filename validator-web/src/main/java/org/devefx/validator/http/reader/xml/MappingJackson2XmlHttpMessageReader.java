@@ -25,14 +25,14 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 public class MappingJackson2XmlHttpMessageReader extends AbstractJackson2HttpMessageReader {
 
-	public MappingJackson2XmlHttpMessageReader() {
-		this(new XmlMapper());
-	}
-	
-	public MappingJackson2XmlHttpMessageReader(ObjectMapper objectMapper) {
-		super(objectMapper, new MediaType("application", "xml", DEFAULT_CHARSET),
-				new MediaType("text", "xml", DEFAULT_CHARSET),
-				new MediaType("application", "*+xml", DEFAULT_CHARSET));
-		Assert.isInstanceOf(XmlMapper.class, objectMapper, "XmlMapper required");
-	}
+    public MappingJackson2XmlHttpMessageReader() {
+        this(new XmlMapper());
+    }
+    
+    public MappingJackson2XmlHttpMessageReader(ObjectMapper objectMapper) {
+        super(objectMapper, new MediaType("application", "xml", DEFAULT_CHARSET),
+                new MediaType("text", "xml", DEFAULT_CHARSET),
+                new MediaType("application", "*+xml", DEFAULT_CHARSET));
+        Assert.isInstanceOf(XmlMapper.class, objectMapper, "XmlMapper required");
+    }
 }

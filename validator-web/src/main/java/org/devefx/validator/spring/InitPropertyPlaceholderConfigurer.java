@@ -23,19 +23,19 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 
 public class InitPropertyPlaceholderConfigurer extends
-		PropertyPlaceholderConfigurer {
-	
-	private Properties properties = new Properties();
+        PropertyPlaceholderConfigurer {
+    
+    private Properties properties = new Properties();
 
-	@Override
-	protected void processProperties(
-			ConfigurableListableBeanFactory beanFactoryToProcess,
-			Properties props) throws BeansException {
-		super.processProperties(beanFactoryToProcess, props);
-		this.properties.putAll(props);
-	}
-	
-	public String getProperty(String key) {
-		return this.properties.getProperty(key);
-	}
+    @Override
+    protected void processProperties(
+            ConfigurableListableBeanFactory beanFactoryToProcess,
+            Properties props) throws BeansException {
+        super.processProperties(beanFactoryToProcess, props);
+        this.properties.putAll(props);
+    }
+    
+    public String getProperty(String key) {
+        return this.properties.getProperty(key);
+    }
 }

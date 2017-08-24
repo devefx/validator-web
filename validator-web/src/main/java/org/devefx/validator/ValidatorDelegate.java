@@ -19,7 +19,7 @@ package org.devefx.validator;
 import java.util.List;
 
 public interface ValidatorDelegate {
-	
-	List<ConstraintViolation> validate(ValueContext valueContext, ValidationContext.Accessor context, Class<?>... groups);
-	
+    
+    List<ConstraintViolation> validate(ValueContext valueContext, ValidationContext.Accessor context, Class<?>... groups);
+    
 }

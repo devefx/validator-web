@@ -21,7 +21,7 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 
 public interface RequestExtractor {
-	
-	<T> T extractData(Class<T> requiredClass, HttpServletRequest request) throws IOException;
+    
+    <T> T extractData(Class<T> requiredClass, HttpServletRequest request) throws IOException;
 
 }

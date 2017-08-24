@@ -20,8 +20,8 @@ import org.springframework.beans.factory.xml.NamespaceHandlerSupport;
 
 public class ValidatorSpringNamespaceHandler extends NamespaceHandlerSupport {
 
-	@Override
-	public void init() {
-		registerBeanDefinitionParser("config", new ConfigBeanDefinitionParser());
-	}
+    @Override
+    public void init() {
+        registerBeanDefinitionParser("config", new ConfigBeanDefinitionParser());
+    }
 }

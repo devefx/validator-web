@@ -27,13 +27,13 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Script {
 
-	/**
-	 * With the corresponding script unique id, the default for the class name
-	 */
-	String id() default "";
-	
-	/**
-	 * If it is true, will be for remote validator
-	 */
-	boolean remote() default false;
+    /**
+     * With the corresponding script unique id, the default for the class name
+     */
+    String id() default "";
+    
+    /**
+     * If it is true, will be for remote validator
+     */
+    boolean remote() default false;
 }

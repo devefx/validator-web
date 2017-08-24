@@ -20,8 +20,8 @@ import org.devefx.validator.script.Compressor;
 
 public class NullCompressor implements Compressor {
 
-	@Override
-	public String compressJavaScript(String script) throws Exception {
-		return script;
-	}
+    @Override
+    public String compressJavaScript(String script) throws Exception {
+        return script;
+    }
 }

@@ -29,20 +29,20 @@ import org.devefx.validator.util.MultiValueMap;
 @Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Valid {
-	
-	/**
-	 * used the validation to validate
-	 */
-	Class<? extends Validation> value();
-	
-	/**
-	 * the type of the request data type.
-	 */
-	Class<?> requestType() default MultiValueMap.class;
-	
-	/**
-	 * the group or list of groups targeted for validation (defaults to {@link Default})
-	 */
-	Class<?>[] groups() default { };
-	
+    
+    /**
+     * used the validation to validate
+     */
+    Class<? extends Validation> value();
+    
+    /**
+     * the type of the request data type.
+     */
+    Class<?> requestType() default MultiValueMap.class;
+    
+    /**
+     * the group or list of groups targeted for validation (defaults to {@link Default})
+     */
+    Class<?>[] groups() default { };
+    
 }

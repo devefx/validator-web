@@ -24,29 +24,29 @@ import org.devefx.validator.util.Assert;
 @Script
 public class Options implements ConstraintValidator {
 
-	@InitParam
-	private ConstraintValidator[] subValidators;
-	
-	public Options(ConstraintValidator firstValidator, ConstraintValidator secondValidator,
-			ConstraintValidator... subValidators) {
-		Assert.notNull(firstValidator, "firstValidator cannot be null.");
-		Assert.notNull(secondValidator, "secondValidator cannot be null.");
-		
-		this.subValidators = new ConstraintValidator[2 + subValidators.length];
-		this.subValidators[0] = firstValidator;
-		this.subValidators[1] = secondValidator;
-		if (subValidators.length != 0) {
-			System.arraycopy(subValidators, 0, this.subValidators, 2, subValidators.length);
-		}
-	}
-	
-	@Override
-	public boolean isValid(Object value) {
-		for (ConstraintValidator validator : subValidators) {
-			if (validator != null && validator.isValid(value)) {
-				return true;
-			}
-		}
-		return false;
-	}
+    @InitParam
+    private ConstraintValidator[] subValidators;
+    
+    public Options(ConstraintValidator firstValidator, ConstraintValidator secondValidator,
+            ConstraintValidator... subValidators) {
+        Assert.notNull(firstValidator, "firstValidator cannot be null.");
+        Assert.notNull(secondValidator, "secondValidator cannot be null.");
+        
+        this.subValidators = new ConstraintValidator[2 + subValidators.length];
+        this.subValidators[0] = firstValidator;
+        this.subValidators[1] = secondValidator;
+        if (subValidators.length != 0) {
+            System.arraycopy(subValidators, 0, this.subValidators, 2, subValidators.length);
+        }
+    }
+    
+    @Override
+    public boolean isValid(Object value) {
+        for (ConstraintValidator validator : subValidators) {
+            if (validator != null && validator.isValid(value)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

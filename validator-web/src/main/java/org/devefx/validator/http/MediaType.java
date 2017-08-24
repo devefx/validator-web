@@ -32,365 +32,365 @@ import org.devefx.validator.util.MimeTypeUtils;
 import org.devefx.validator.util.StringUtils;
 
 public class MediaType extends MimeType implements Serializable {
-	
-	private static final long serialVersionUID = 2069937152339670231L;
+    
+    private static final long serialVersionUID = 2069937152339670231L;
 
-	/**
-	 * Public constant media type that includes all media ranges (i.e. "&#42;/&#42;").
-	 */
-	public static final MediaType ALL;
+    /**
+     * Public constant media type that includes all media ranges (i.e. "&#42;/&#42;").
+     */
+    public static final MediaType ALL;
 
-	/**
-	 * A String equivalent of {@link MediaType#ALL}.
-	 */
-	public static final String ALL_VALUE = "*/*";
+    /**
+     * A String equivalent of {@link MediaType#ALL}.
+     */
+    public static final String ALL_VALUE = "*/*";
 
-	/**
-	 *  Public constant media type for {@code application/atom+xml}.
-	 */
-	public final static MediaType APPLICATION_ATOM_XML;
+    /**
+     *  Public constant media type for {@code application/atom+xml}.
+     */
+    public final static MediaType APPLICATION_ATOM_XML;
 
-	/**
-	 * A String equivalent of {@link MediaType#APPLICATION_ATOM_XML}.
-	 */
-	public final static String APPLICATION_ATOM_XML_VALUE = "application/atom+xml";
+    /**
+     * A String equivalent of {@link MediaType#APPLICATION_ATOM_XML}.
+     */
+    public final static String APPLICATION_ATOM_XML_VALUE = "application/atom+xml";
 
-	/**
-	 * Public constant media type for {@code application/x-www-form-urlencoded}.
-	 *  */
-	public final static MediaType APPLICATION_FORM_URLENCODED;
+    /**
+     * Public constant media type for {@code application/x-www-form-urlencoded}.
+     *  */
+    public final static MediaType APPLICATION_FORM_URLENCODED;
 
-	/**
-	 * A String equivalent of {@link MediaType#APPLICATION_FORM_URLENCODED}.
-	 */
-	public final static String APPLICATION_FORM_URLENCODED_VALUE = "application/x-www-form-urlencoded";
+    /**
+     * A String equivalent of {@link MediaType#APPLICATION_FORM_URLENCODED}.
+     */
+    public final static String APPLICATION_FORM_URLENCODED_VALUE = "application/x-www-form-urlencoded";
 
-	/**
-	 * Public constant media type for {@code application/json}.
-	 * */
-	public final static MediaType APPLICATION_JSON;
+    /**
+     * Public constant media type for {@code application/json}.
+     * */
+    public final static MediaType APPLICATION_JSON;
 
-	/**
-	 * A String equivalent of {@link MediaType#APPLICATION_JSON}.
-	 */
-	public final static String APPLICATION_JSON_VALUE = "application/json";
+    /**
+     * A String equivalent of {@link MediaType#APPLICATION_JSON}.
+     */
+    public final static String APPLICATION_JSON_VALUE = "application/json";
 
-	/**
-	 * Public constant media type for {@code application/octet-stream}.
-	 *  */
-	public final static MediaType APPLICATION_OCTET_STREAM;
+    /**
+     * Public constant media type for {@code application/octet-stream}.
+     *  */
+    public final static MediaType APPLICATION_OCTET_STREAM;
 
-	/**
-	 * A String equivalent of {@link MediaType#APPLICATION_OCTET_STREAM}.
-	 */
-	public final static String APPLICATION_OCTET_STREAM_VALUE = "application/octet-stream";
+    /**
+     * A String equivalent of {@link MediaType#APPLICATION_OCTET_STREAM}.
+     */
+    public final static String APPLICATION_OCTET_STREAM_VALUE = "application/octet-stream";
 
-	/**
-	 * Public constant media type for {@code application/xhtml+xml}.
-	 *  */
-	public final static MediaType APPLICATION_XHTML_XML;
+    /**
+     * Public constant media type for {@code application/xhtml+xml}.
+     *  */
+    public final static MediaType APPLICATION_XHTML_XML;
 
-	/**
-	 * A String equivalent of {@link MediaType#APPLICATION_XHTML_XML}.
-	 */
-	public final static String APPLICATION_XHTML_XML_VALUE = "application/xhtml+xml";
+    /**
+     * A String equivalent of {@link MediaType#APPLICATION_XHTML_XML}.
+     */
+    public final static String APPLICATION_XHTML_XML_VALUE = "application/xhtml+xml";
 
-	/**
-	 * Public constant media type for {@code application/xml}.
-	 */
-	public final static MediaType APPLICATION_XML;
+    /**
+     * Public constant media type for {@code application/xml}.
+     */
+    public final static MediaType APPLICATION_XML;
 
-	/**
-	 * A String equivalent of {@link MediaType#APPLICATION_XML}.
-	 */
-	public final static String APPLICATION_XML_VALUE = "application/xml";
+    /**
+     * A String equivalent of {@link MediaType#APPLICATION_XML}.
+     */
+    public final static String APPLICATION_XML_VALUE = "application/xml";
 
-	/**
-	 * Public constant media type for {@code image/gif}.
-	 */
-	public final static MediaType IMAGE_GIF;
+    /**
+     * Public constant media type for {@code image/gif}.
+     */
+    public final static MediaType IMAGE_GIF;
 
-	/**
-	 * A String equivalent of {@link MediaType#IMAGE_GIF}.
-	 */
-	public final static String IMAGE_GIF_VALUE = "image/gif";
+    /**
+     * A String equivalent of {@link MediaType#IMAGE_GIF}.
+     */
+    public final static String IMAGE_GIF_VALUE = "image/gif";
 
-	/**
-	 * Public constant media type for {@code image/jpeg}.
-	 */
-	public final static MediaType IMAGE_JPEG;
+    /**
+     * Public constant media type for {@code image/jpeg}.
+     */
+    public final static MediaType IMAGE_JPEG;
 
-	/**
-	 * A String equivalent of {@link MediaType#IMAGE_JPEG}.
-	 */
-	public final static String IMAGE_JPEG_VALUE = "image/jpeg";
+    /**
+     * A String equivalent of {@link MediaType#IMAGE_JPEG}.
+     */
+    public final static String IMAGE_JPEG_VALUE = "image/jpeg";
 
-	/**
-	 * Public constant media type for {@code image/png}.
-	 */
-	public final static MediaType IMAGE_PNG;
+    /**
+     * Public constant media type for {@code image/png}.
+     */
+    public final static MediaType IMAGE_PNG;
 
-	/**
-	 * A String equivalent of {@link MediaType#IMAGE_PNG}.
-	 */
-	public final static String IMAGE_PNG_VALUE = "image/png";
+    /**
+     * A String equivalent of {@link MediaType#IMAGE_PNG}.
+     */
+    public final static String IMAGE_PNG_VALUE = "image/png";
 
-	/**
-	 * Public constant media type for {@code multipart/form-data}.
-	 *  */
-	public final static MediaType MULTIPART_FORM_DATA;
+    /**
+     * Public constant media type for {@code multipart/form-data}.
+     *  */
+    public final static MediaType MULTIPART_FORM_DATA;
 
-	/**
-	 * A String equivalent of {@link MediaType#MULTIPART_FORM_DATA}.
-	 */
-	public final static String MULTIPART_FORM_DATA_VALUE = "multipart/form-data";
+    /**
+     * A String equivalent of {@link MediaType#MULTIPART_FORM_DATA}.
+     */
+    public final static String MULTIPART_FORM_DATA_VALUE = "multipart/form-data";
 
-	/**
-	 * Public constant media type for {@code text/html}.
-	 *  */
-	public final static MediaType TEXT_HTML;
+    /**
+     * Public constant media type for {@code text/html}.
+     *  */
+    public final static MediaType TEXT_HTML;
 
-	/**
-	 * A String equivalent of {@link MediaType#TEXT_HTML}.
-	 */
-	public final static String TEXT_HTML_VALUE = "text/html";
+    /**
+     * A String equivalent of {@link MediaType#TEXT_HTML}.
+     */
+    public final static String TEXT_HTML_VALUE = "text/html";
 
-	/**
-	 * Public constant media type for {@code text/plain}.
-	 *  */
-	public final static MediaType TEXT_PLAIN;
+    /**
+     * Public constant media type for {@code text/plain}.
+     *  */
+    public final static MediaType TEXT_PLAIN;
 
-	/**
-	 * A String equivalent of {@link MediaType#TEXT_PLAIN}.
-	 */
-	public final static String TEXT_PLAIN_VALUE = "text/plain";
+    /**
+     * A String equivalent of {@link MediaType#TEXT_PLAIN}.
+     */
+    public final static String TEXT_PLAIN_VALUE = "text/plain";
 
-	/**
-	 * Public constant media type for {@code text/xml}.
-	 *  */
-	public final static MediaType TEXT_XML;
+    /**
+     * Public constant media type for {@code text/xml}.
+     *  */
+    public final static MediaType TEXT_XML;
 
-	/**
-	 * A String equivalent of {@link MediaType#TEXT_XML}.
-	 */
-	public final static String TEXT_XML_VALUE = "text/xml";
-
-
-	private static final String PARAM_QUALITY_FACTOR = "q";
+    /**
+     * A String equivalent of {@link MediaType#TEXT_XML}.
+     */
+    public final static String TEXT_XML_VALUE = "text/xml";
 
 
-	static {
-		ALL = valueOf(ALL_VALUE);
-		APPLICATION_ATOM_XML = valueOf(APPLICATION_ATOM_XML_VALUE);
-		APPLICATION_FORM_URLENCODED = valueOf(APPLICATION_FORM_URLENCODED_VALUE);
-		APPLICATION_JSON = valueOf(APPLICATION_JSON_VALUE);
-		APPLICATION_OCTET_STREAM = valueOf(APPLICATION_OCTET_STREAM_VALUE);
-		APPLICATION_XHTML_XML = valueOf(APPLICATION_XHTML_XML_VALUE);
-		APPLICATION_XML = valueOf(APPLICATION_XML_VALUE);
-		IMAGE_GIF = valueOf(IMAGE_GIF_VALUE);
-		IMAGE_JPEG = valueOf(IMAGE_JPEG_VALUE);
-		IMAGE_PNG = valueOf(IMAGE_PNG_VALUE);
-		MULTIPART_FORM_DATA = valueOf(MULTIPART_FORM_DATA_VALUE);
-		TEXT_HTML = valueOf(TEXT_HTML_VALUE);
-		TEXT_PLAIN = valueOf(TEXT_PLAIN_VALUE);
-		TEXT_XML = valueOf(TEXT_XML_VALUE);
-	}
+    private static final String PARAM_QUALITY_FACTOR = "q";
 
 
-	/**
-	 * Create a new {@code MediaType} for the given primary type.
-	 * <p>The {@linkplain #getSubtype() subtype} is set to "&#42;", parameters empty.
-	 * @param type the primary type
-	 * @throws IllegalArgumentException if any of the parameters contain illegal characters
-	 */
-	public MediaType(String type) {
-		super(type);
-	}
-
-	/**
-	 * Create a new {@code MediaType} for the given primary type and subtype.
-	 * <p>The parameters are empty.
-	 * @param type the primary type
-	 * @param subtype the subtype
-	 * @throws IllegalArgumentException if any of the parameters contain illegal characters
-	 */
-	public MediaType(String type, String subtype) {
-		super(type, subtype, Collections.<String, String>emptyMap());
-	}
-
-	/**
-	 * Create a new {@code MediaType} for the given type, subtype, and character set.
-	 * @param type the primary type
-	 * @param subtype the subtype
-	 * @param charset the character set
-	 * @throws IllegalArgumentException if any of the parameters contain illegal characters
-	 */
-	public MediaType(String type, String subtype, Charset charset) {
-		super(type, subtype, charset);
-	}
-
-	/**
-	 * Create a new {@code MediaType} for the given type, subtype, and quality value.
-	 * @param type the primary type
-	 * @param subtype the subtype
-	 * @param qualityValue the quality value
-	 * @throws IllegalArgumentException if any of the parameters contain illegal characters
-	 */
-	public MediaType(String type, String subtype, double qualityValue) {
-		this(type, subtype, Collections.singletonMap(PARAM_QUALITY_FACTOR, Double.toString(qualityValue)));
-	}
-
-	/**
-	 * Copy-constructor that copies the type and subtype of the given {@code MediaType},
-	 * and allows for different parameter.
-	 * @param other the other media type
-	 * @param parameters the parameters, may be {@code null}
-	 * @throws IllegalArgumentException if any of the parameters contain illegal characters
-	 */
-	public MediaType(MediaType other, Map<String, String> parameters) {
-		super(other.getType(), other.getSubtype(), parameters);
-	}
-
-	/**
-	 * Create a new {@code MediaType} for the given type, subtype, and parameters.
-	 * @param type the primary type
-	 * @param subtype the subtype
-	 * @param parameters the parameters, may be {@code null}
-	 * @throws IllegalArgumentException if any of the parameters contain illegal characters
-	 */
-	public MediaType(String type, String subtype, Map<String, String> parameters) {
-		super(type, subtype, parameters);
-	}
-
-	protected void checkParameters(String attribute, String value) {
-		super.checkParameters(attribute, value);
-		if (PARAM_QUALITY_FACTOR.equals(attribute)) {
-			value = unquote(value);
-			double d = Double.parseDouble(value);
-			Assert.isTrue(d >= 0D && d <= 1D,
-					"Invalid quality value \"" + value + "\": should be between 0.0 and 1.0");
-		}
-	}
-
-	/**
-	 * Return the quality value, as indicated by a {@code q} parameter, if any.
-	 * Defaults to {@code 1.0}.
-	 * @return the quality factory
-	 */
-	public double getQualityValue() {
-		String qualityFactory = getParameter(PARAM_QUALITY_FACTOR);
-		return (qualityFactory != null ? Double.parseDouble(unquote(qualityFactory)) : 1D);
-	}
-
-	/**
-	 * Indicate whether this {@code MediaType} includes the given media type.
-	 * <p>For instance, {@code text/*} includes {@code text/plain} and {@code text/html}, and {@code application/*+xml}
-	 * includes {@code application/soap+xml}, etc. This method is <b>not</b> symmetric.
-	 * @param other the reference media type with which to compare
-	 * @return {@code true} if this media type includes the given media type; {@code false} otherwise
-	 */
-	public boolean includes(MediaType other) {
-		return super.includes(other);
-	}
-
-	/**
-	 * Indicate whether this {@code MediaType} is compatible with the given media type.
-	 * <p>For instance, {@code text/*} is compatible with {@code text/plain}, {@code text/html}, and vice versa.
-	 * In effect, this method is similar to {@link #includes(MediaType)}, except that it <b>is</b> symmetric.
-	 * @param other the reference media type with which to compare
-	 * @return {@code true} if this media type is compatible with the given media type; {@code false} otherwise
-	 */
-	public boolean isCompatibleWith(MediaType other) {
-		return super.isCompatibleWith(other);
-	}
-
-	/**
-	 * Return a replica of this instance with the quality value of the given MediaType.
-	 * @return the same instance if the given MediaType doesn't have a quality value, or a new one otherwise
-	 */
-	public MediaType copyQualityValue(MediaType mediaType) {
-		if (!mediaType.getParameters().containsKey(PARAM_QUALITY_FACTOR)) {
-			return this;
-		}
-		Map<String, String> params = new LinkedHashMap<String, String>(getParameters());
-		params.put(PARAM_QUALITY_FACTOR, mediaType.getParameters().get(PARAM_QUALITY_FACTOR));
-		return new MediaType(this, params);
-	}
-
-	/**
-	 * Return a replica of this instance with its quality value removed.
-	 * @return the same instance if the media type doesn't contain a quality value, or a new one otherwise
-	 */
-	public MediaType removeQualityValue() {
-		if (!getParameters().containsKey(PARAM_QUALITY_FACTOR)) {
-			return this;
-		}
-		Map<String, String> params = new LinkedHashMap<String, String>(getParameters());
-		params.remove(PARAM_QUALITY_FACTOR);
-		return new MediaType(this, params);
-	}
+    static {
+        ALL = valueOf(ALL_VALUE);
+        APPLICATION_ATOM_XML = valueOf(APPLICATION_ATOM_XML_VALUE);
+        APPLICATION_FORM_URLENCODED = valueOf(APPLICATION_FORM_URLENCODED_VALUE);
+        APPLICATION_JSON = valueOf(APPLICATION_JSON_VALUE);
+        APPLICATION_OCTET_STREAM = valueOf(APPLICATION_OCTET_STREAM_VALUE);
+        APPLICATION_XHTML_XML = valueOf(APPLICATION_XHTML_XML_VALUE);
+        APPLICATION_XML = valueOf(APPLICATION_XML_VALUE);
+        IMAGE_GIF = valueOf(IMAGE_GIF_VALUE);
+        IMAGE_JPEG = valueOf(IMAGE_JPEG_VALUE);
+        IMAGE_PNG = valueOf(IMAGE_PNG_VALUE);
+        MULTIPART_FORM_DATA = valueOf(MULTIPART_FORM_DATA_VALUE);
+        TEXT_HTML = valueOf(TEXT_HTML_VALUE);
+        TEXT_PLAIN = valueOf(TEXT_PLAIN_VALUE);
+        TEXT_XML = valueOf(TEXT_XML_VALUE);
+    }
 
 
-	/**
-	 * Parse the given String value into a {@code MediaType} object,
-	 * with this method name following the 'valueOf' naming convention
-	 * (as supported by {@link org.springframework.core.convert.ConversionService}.
-	 * @see #parseMediaType(String)
-	 */
-	public static MediaType valueOf(String value) {
-		return parseMediaType(value);
-	}
+    /**
+     * Create a new {@code MediaType} for the given primary type.
+     * <p>The {@linkplain #getSubtype() subtype} is set to "&#42;", parameters empty.
+     * @param type the primary type
+     * @throws IllegalArgumentException if any of the parameters contain illegal characters
+     */
+    public MediaType(String type) {
+        super(type);
+    }
 
-	/**
-	 * Parse the given String into a single {@code MediaType}.
-	 * @param mediaType the string to parse
-	 * @return the media type
-	 * @throws InvalidMediaTypeException if the string cannot be parsed
-	 */
-	public static MediaType parseMediaType(String mediaType) {
-		MimeType type;
-		try {
-			type = MimeTypeUtils.parseMimeType(mediaType);
-		}
-		catch (InvalidMimeTypeException ex) {
-			throw new InvalidMediaTypeException(ex.getMimeType(), ex.getMessage());
-		}
-		try {
-			return new MediaType(type.getType(), type.getSubtype(), type.getParameters());
-		} catch (IllegalArgumentException ex) {
-			throw new InvalidMediaTypeException(mediaType, ex.getMessage());
-		}
-	}
+    /**
+     * Create a new {@code MediaType} for the given primary type and subtype.
+     * <p>The parameters are empty.
+     * @param type the primary type
+     * @param subtype the subtype
+     * @throws IllegalArgumentException if any of the parameters contain illegal characters
+     */
+    public MediaType(String type, String subtype) {
+        super(type, subtype, Collections.<String, String>emptyMap());
+    }
+
+    /**
+     * Create a new {@code MediaType} for the given type, subtype, and character set.
+     * @param type the primary type
+     * @param subtype the subtype
+     * @param charset the character set
+     * @throws IllegalArgumentException if any of the parameters contain illegal characters
+     */
+    public MediaType(String type, String subtype, Charset charset) {
+        super(type, subtype, charset);
+    }
+
+    /**
+     * Create a new {@code MediaType} for the given type, subtype, and quality value.
+     * @param type the primary type
+     * @param subtype the subtype
+     * @param qualityValue the quality value
+     * @throws IllegalArgumentException if any of the parameters contain illegal characters
+     */
+    public MediaType(String type, String subtype, double qualityValue) {
+        this(type, subtype, Collections.singletonMap(PARAM_QUALITY_FACTOR, Double.toString(qualityValue)));
+    }
+
+    /**
+     * Copy-constructor that copies the type and subtype of the given {@code MediaType},
+     * and allows for different parameter.
+     * @param other the other media type
+     * @param parameters the parameters, may be {@code null}
+     * @throws IllegalArgumentException if any of the parameters contain illegal characters
+     */
+    public MediaType(MediaType other, Map<String, String> parameters) {
+        super(other.getType(), other.getSubtype(), parameters);
+    }
+
+    /**
+     * Create a new {@code MediaType} for the given type, subtype, and parameters.
+     * @param type the primary type
+     * @param subtype the subtype
+     * @param parameters the parameters, may be {@code null}
+     * @throws IllegalArgumentException if any of the parameters contain illegal characters
+     */
+    public MediaType(String type, String subtype, Map<String, String> parameters) {
+        super(type, subtype, parameters);
+    }
+
+    protected void checkParameters(String attribute, String value) {
+        super.checkParameters(attribute, value);
+        if (PARAM_QUALITY_FACTOR.equals(attribute)) {
+            value = unquote(value);
+            double d = Double.parseDouble(value);
+            Assert.isTrue(d >= 0D && d <= 1D,
+                    "Invalid quality value \"" + value + "\": should be between 0.0 and 1.0");
+        }
+    }
+
+    /**
+     * Return the quality value, as indicated by a {@code q} parameter, if any.
+     * Defaults to {@code 1.0}.
+     * @return the quality factory
+     */
+    public double getQualityValue() {
+        String qualityFactory = getParameter(PARAM_QUALITY_FACTOR);
+        return (qualityFactory != null ? Double.parseDouble(unquote(qualityFactory)) : 1D);
+    }
+
+    /**
+     * Indicate whether this {@code MediaType} includes the given media type.
+     * <p>For instance, {@code text/*} includes {@code text/plain} and {@code text/html}, and {@code application/*+xml}
+     * includes {@code application/soap+xml}, etc. This method is <b>not</b> symmetric.
+     * @param other the reference media type with which to compare
+     * @return {@code true} if this media type includes the given media type; {@code false} otherwise
+     */
+    public boolean includes(MediaType other) {
+        return super.includes(other);
+    }
+
+    /**
+     * Indicate whether this {@code MediaType} is compatible with the given media type.
+     * <p>For instance, {@code text/*} is compatible with {@code text/plain}, {@code text/html}, and vice versa.
+     * In effect, this method is similar to {@link #includes(MediaType)}, except that it <b>is</b> symmetric.
+     * @param other the reference media type with which to compare
+     * @return {@code true} if this media type is compatible with the given media type; {@code false} otherwise
+     */
+    public boolean isCompatibleWith(MediaType other) {
+        return super.isCompatibleWith(other);
+    }
+
+    /**
+     * Return a replica of this instance with the quality value of the given MediaType.
+     * @return the same instance if the given MediaType doesn't have a quality value, or a new one otherwise
+     */
+    public MediaType copyQualityValue(MediaType mediaType) {
+        if (!mediaType.getParameters().containsKey(PARAM_QUALITY_FACTOR)) {
+            return this;
+        }
+        Map<String, String> params = new LinkedHashMap<String, String>(getParameters());
+        params.put(PARAM_QUALITY_FACTOR, mediaType.getParameters().get(PARAM_QUALITY_FACTOR));
+        return new MediaType(this, params);
+    }
+
+    /**
+     * Return a replica of this instance with its quality value removed.
+     * @return the same instance if the media type doesn't contain a quality value, or a new one otherwise
+     */
+    public MediaType removeQualityValue() {
+        if (!getParameters().containsKey(PARAM_QUALITY_FACTOR)) {
+            return this;
+        }
+        Map<String, String> params = new LinkedHashMap<String, String>(getParameters());
+        params.remove(PARAM_QUALITY_FACTOR);
+        return new MediaType(this, params);
+    }
 
 
-	/**
-	 * Parse the given, comma-separated string into a list of {@code MediaType} objects.
-	 * <p>This method can be used to parse an Accept or Content-Type header.
-	 * @param mediaTypes the string to parse
-	 * @return the list of media types
-	 * @throws IllegalArgumentException if the string cannot be parsed
-	 */
-	public static List<MediaType> parseMediaTypes(String mediaTypes) {
-		if (!StringUtils.hasLength(mediaTypes)) {
-			return Collections.emptyList();
-		}
-		String[] tokens = mediaTypes.split(",\\s*");
-		List<MediaType> result = new ArrayList<MediaType>(tokens.length);
-		for (String token : tokens) {
-			result.add(parseMediaType(token));
-		}
-		return result;
-	}
+    /**
+     * Parse the given String value into a {@code MediaType} object,
+     * with this method name following the 'valueOf' naming convention
+     * (as supported by {@link org.springframework.core.convert.ConversionService}.
+     * @see #parseMediaType(String)
+     */
+    public static MediaType valueOf(String value) {
+        return parseMediaType(value);
+    }
 
-	/**
-	 * Return a string representation of the given list of {@code MediaType} objects.
-	 * <p>This method can be used to for an {@code Accept} or {@code Content-Type} header.
-	 * @param mediaTypes the string to parse
-	 * @return the list of media types
-	 * @throws IllegalArgumentException if the String cannot be parsed
-	 */
-	public static String toString(Collection<MediaType> mediaTypes) {
-		return MimeTypeUtils.toString(mediaTypes);
-	}
+    /**
+     * Parse the given String into a single {@code MediaType}.
+     * @param mediaType the string to parse
+     * @return the media type
+     * @throws InvalidMediaTypeException if the string cannot be parsed
+     */
+    public static MediaType parseMediaType(String mediaType) {
+        MimeType type;
+        try {
+            type = MimeTypeUtils.parseMimeType(mediaType);
+        }
+        catch (InvalidMimeTypeException ex) {
+            throw new InvalidMediaTypeException(ex.getMimeType(), ex.getMessage());
+        }
+        try {
+            return new MediaType(type.getType(), type.getSubtype(), type.getParameters());
+        } catch (IllegalArgumentException ex) {
+            throw new InvalidMediaTypeException(mediaType, ex.getMessage());
+        }
+    }
+
+
+    /**
+     * Parse the given, comma-separated string into a list of {@code MediaType} objects.
+     * <p>This method can be used to parse an Accept or Content-Type header.
+     * @param mediaTypes the string to parse
+     * @return the list of media types
+     * @throws IllegalArgumentException if the string cannot be parsed
+     */
+    public static List<MediaType> parseMediaTypes(String mediaTypes) {
+        if (!StringUtils.hasLength(mediaTypes)) {
+            return Collections.emptyList();
+        }
+        String[] tokens = mediaTypes.split(",\\s*");
+        List<MediaType> result = new ArrayList<MediaType>(tokens.length);
+        for (String token : tokens) {
+            result.add(parseMediaType(token));
+        }
+        return result;
+    }
+
+    /**
+     * Return a string representation of the given list of {@code MediaType} objects.
+     * <p>This method can be used to for an {@code Accept} or {@code Content-Type} header.
+     * @param mediaTypes the string to parse
+     * @return the list of media types
+     * @throws IllegalArgumentException if the String cannot be parsed
+     */
+    public static String toString(Collection<MediaType> mediaTypes) {
+        return MimeTypeUtils.toString(mediaTypes);
+    }
 
 }

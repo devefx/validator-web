@@ -35,31 +35,31 @@ public class DefaultWebContext extends DefaultServerContext implements WebContex
      * The HttpServletResponse associated with the current request
      */
     private final HttpServletResponse response;
-	
-	public DefaultWebContext(HttpServletRequest request, HttpServletResponse response, ServletConfig servletConfig, ServletContext servletContext) {
-		setServletConfig(servletConfig);
-		setServletContext(servletContext);
-		this.request = request;
+    
+    public DefaultWebContext(HttpServletRequest request, HttpServletResponse response, ServletConfig servletConfig, ServletContext servletContext) {
+        setServletConfig(servletConfig);
+        setServletContext(servletContext);
+        this.request = request;
         this.response = response;
-	}
-	
-	@Override
-	public HttpSession getSession() {
-		return request.getSession();
-	}
+    }
+    
+    @Override
+    public HttpSession getSession() {
+        return request.getSession();
+    }
 
-	@Override
-	public HttpSession getSession(boolean create) {
-		return request.getSession(create);
-	}
+    @Override
+    public HttpSession getSession(boolean create) {
+        return request.getSession(create);
+    }
 
-	@Override
-	public HttpServletRequest getHttpServletRequest() {
-		return request;
-	}
+    @Override
+    public HttpServletRequest getHttpServletRequest() {
+        return request;
+    }
 
-	@Override
-	public HttpServletResponse getHttpServletResponse() {
-		return response;
-	}
+    @Override
+    public HttpServletResponse getHttpServletResponse() {
+        return response;
+    }
 }

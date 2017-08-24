@@ -19,7 +19,7 @@ package org.devefx.validator.internal.engine.groups;
 import java.util.Iterator;
 
 public interface ValidationOrder {
-	
-	Iterator<Group> getGroupIterator();
-	
+    
+    Iterator<Group> getGroupIterator();
+    
 }

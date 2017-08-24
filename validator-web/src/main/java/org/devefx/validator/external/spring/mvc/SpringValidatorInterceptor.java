@@ -30,32 +30,32 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class SpringValidatorInterceptor extends HandlerInterceptorAdapter implements ServletContextAware {
-	
-	private ServletConfig servletConfig;
-	
-	@Override
-	public void setServletContext(ServletContext servletContext) {
-		this.servletConfig = new FakeServletConfig("springInterceptor", servletContext);
-	}
-	
+    
+    private ServletConfig servletConfig;
+    
+    @Override
+    public void setServletContext(ServletContext servletContext) {
+        this.servletConfig = new FakeServletConfig("springInterceptor", servletContext);
+    }
+    
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-    	Validator validator = ValidatorUtils.getValidator();
+        Validator validator = ValidatorUtils.getValidator();
         if (handler instanceof HandlerMethod) {
-        	try {
-        		// set up the web context and delegate to the processor
-        		WebContextThreadStack.engageThread(servletConfig, request, response);
-        		// validate the request
-        		HandlerMethod handlerMethod = (HandlerMethod) handler;
+            try {
+                // set up the web context and delegate to the processor
+                WebContextThreadStack.engageThread(servletConfig, request, response);
+                // validate the request
+                HandlerMethod handlerMethod = (HandlerMethod) handler;
                 if (!validator.validate(handlerMethod.getBeanType(), request, response)) {
                     return false;
                 }
                 if (!validator.validate(handlerMethod.getMethod(), request, response)) {
                     return false;
                 }
-        	} finally {
-        		WebContextThreadStack.disengageThread();
-        	}
+            } finally {
+                WebContextThreadStack.disengageThread();
+            }
         }
         return super.preHandle(request, response, handler);
     }

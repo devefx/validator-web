@@ -20,13 +20,13 @@ import org.devefx.validator.beans.factory.annotation.Value;
 
 public class ValidatorFileJavaScriptHandler extends FileJavaScriptHandler {
 
-	public ValidatorFileJavaScriptHandler() {
-		super(PATH_RESOURCE + "/validator.js");
-	}
-	
-	@Value("${ValidatorFileJavaScriptHandler.path}")
-	@Override
-	public void setPath(String path) {
-		super.setPath(path);
-	}
+    public ValidatorFileJavaScriptHandler() {
+        super(PATH_RESOURCE + "/validator.js");
+    }
+    
+    @Value("${ValidatorFileJavaScriptHandler.path}")
+    @Override
+    public void setPath(String path) {
+        super.setPath(path);
+    }
 }

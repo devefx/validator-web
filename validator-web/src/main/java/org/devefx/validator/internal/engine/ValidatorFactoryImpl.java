@@ -55,53 +55,53 @@ public class ValidatorFactoryImpl implements ValidatorFactory {
     }
 
     public ValidatorFactoryImpl(ValidatorConfig validatorConfig) {
-    	setValidatorConfig(validatorConfig);
+        setValidatorConfig(validatorConfig);
     }
 
     @Override
     public MessageInterpolator getMessageInterpolator() {
-		return this.messageInterpolator;
-	}
+        return this.messageInterpolator;
+    }
     
     @Override
     public List<HttpMessageReader<?>> getMessageReaders() {
-		return this.messageReaders;
-	}
+        return this.messageReaders;
+    }
     
     @Override
     public ValidationFactory getValidationFactory() {
-		return this.validationFactory;
-	}
+        return this.validationFactory;
+    }
     
     @Override
     public ValidatorConfig getValidatorConfig() {
-		return this.validatorConfig;
-	}
+        return this.validatorConfig;
+    }
     
     public void setMessageInterpolator(MessageInterpolator messageInterpolator) {
-		this.messageInterpolator = messageInterpolator;
-	}
+        this.messageInterpolator = messageInterpolator;
+    }
     
     public void setMessageReaders(List<HttpMessageReader<?>> messageReaders) {
-		this.messageReaders = messageReaders;
-	}
+        this.messageReaders = messageReaders;
+    }
     
     public void setValidationFactory(ValidationFactory validationFactory) {
-		this.validationFactory = validationFactory;
-	}
+        this.validationFactory = validationFactory;
+    }
     
     public void setValidatorConfig(ValidatorConfig validatorConfig) {
-    	Assert.notNull(validatorConfig, "validator config must not be null.");
-		this.validatorConfig = validatorConfig;
-	}
+        Assert.notNull(validatorConfig, "validator config must not be null.");
+        this.validatorConfig = validatorConfig;
+    }
     
     public void init() {
-    	if (this.initialized) {
-    		return;
-    	}
-    	this.initialized = true;
-    	if (this.validatorConfig == null) {
-        	throw new IllegalArgumentException("validator config must not be null.");
+        if (this.initialized) {
+            return;
+        }
+        this.initialized = true;
+        if (this.validatorConfig == null) {
+            throw new IllegalArgumentException("validator config must not be null.");
         }
         if (this.messageInterpolator == null) {
             this.messageInterpolator = new ResourceBundleMessageInterpolator();
@@ -110,12 +110,12 @@ public class ValidatorFactoryImpl implements ValidatorFactory {
             this.messageReaders = new ArrayList<>();
             this.messageReaders.add(new FormHttpMessageReader());
             if (commonsFileUploadPresent) {
-            	this.messageReaders.add(new MultipartFormHttpMessageReader());
+                this.messageReaders.add(new MultipartFormHttpMessageReader());
             }
             if (jackson2Present) {
                 this.messageReaders.add(new MappingJackson2HttpMessageReader());
             } else if (fastjsonPresent) {
-            	this.messageReaders.add(new FastJsonHttpMessageReader());
+                this.messageReaders.add(new FastJsonHttpMessageReader());
             }
             if (jackson2XmlPresent) {
                 this.messageReaders.add(new MappingJackson2XmlHttpMessageReader());
@@ -125,16 +125,16 @@ public class ValidatorFactoryImpl implements ValidatorFactory {
             this.validationFactory = new DefaultValidationFactory();
         }
         if (this.validatorConfig.getInvalidHandler() == null) {
-        	this.validatorConfig.setInvalidHandler(new DefaultInvalidHandler());
+            this.validatorConfig.setInvalidHandler(new DefaultInvalidHandler());
         }
         if (this.validatorConfig.getValidatorDelegate() == null) {
-        	this.validatorConfig.setValidatorDelegate(new DefaultValidatorDelegate());
+            this.validatorConfig.setValidatorDelegate(new DefaultValidatorDelegate());
         }
     }
 
     @Override
     public Validator buildValidator() {
-    	init();
-    	return new ValidatorImpl(this);
+        init();
+        return new ValidatorImpl(this);
     }
 }

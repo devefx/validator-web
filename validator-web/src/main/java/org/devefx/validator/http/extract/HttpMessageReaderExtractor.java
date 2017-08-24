@@ -33,67 +33,67 @@ import org.devefx.validator.util.MultiValueMap;
 import org.devefx.validator.util.ServletUtils;
 
 public class HttpMessageReaderExtractor implements RequestExtractor {
-	
-	private static final Log logger = LogFactory.getLog(HttpMessageReaderExtractor.class);
+    
+    private static final Log logger = LogFactory.getLog(HttpMessageReaderExtractor.class);
 
-	private final List<HttpMessageReader<?>> messageReaders;
-	
-	private final Map<Class<?>, Object> instances = new HashMap<Class<?>, Object>(4);
-	
-	public HttpMessageReaderExtractor(List<HttpMessageReader<?>> messageReaders) {
-		this.messageReaders = messageReaders;
-	}
-	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	@Override
-	public <T> T extractData(Class<T> requiredClass, HttpServletRequest request)
-			throws IOException {
-		HttpServletRequestWrapper requestWrapper = new HttpServletRequestWrapper(request);
-		if (!requestWrapper.hasMessageBody() || requestWrapper.hasEmptyMessageBody()) {
-			if (requiredClass.isAssignableFrom(MultiValueMap.class)) {
-				return (T) ServletUtils.extractUrlParams(requestWrapper);
-			}
-			return getInstance(requiredClass);
-		}
-		MediaType contentType = getContentType(requestWrapper);
-		for (HttpMessageReader<?> messageReader : messageReaders) {
-			if (requiredClass != null) {
-				if (messageReader.canRead(requiredClass, contentType)) {
-					if (logger.isDebugEnabled()) {
+    private final List<HttpMessageReader<?>> messageReaders;
+    
+    private final Map<Class<?>, Object> instances = new HashMap<Class<?>, Object>(4);
+    
+    public HttpMessageReaderExtractor(List<HttpMessageReader<?>> messageReaders) {
+        this.messageReaders = messageReaders;
+    }
+    
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Override
+    public <T> T extractData(Class<T> requiredClass, HttpServletRequest request)
+            throws IOException {
+        HttpServletRequestWrapper requestWrapper = new HttpServletRequestWrapper(request);
+        if (!requestWrapper.hasMessageBody() || requestWrapper.hasEmptyMessageBody()) {
+            if (requiredClass.isAssignableFrom(MultiValueMap.class)) {
+                return (T) ServletUtils.extractUrlParams(requestWrapper);
+            }
+            return getInstance(requiredClass);
+        }
+        MediaType contentType = getContentType(requestWrapper);
+        for (HttpMessageReader<?> messageReader : messageReaders) {
+            if (requiredClass != null) {
+                if (messageReader.canRead(requiredClass, contentType)) {
+                    if (logger.isDebugEnabled()) {
                         logger.debug("Reading [" + requiredClass.getName() + "] as \"" +
                                 contentType + "\" using [" + messageReader + "]");
                     }
-					return (T) messageReader.read((Class) requiredClass, requestWrapper);
-				}
-			}
-		}
-		throw new RuntimeException(
+                    return (T) messageReader.read((Class) requiredClass, requestWrapper);
+                }
+            }
+        }
+        throw new RuntimeException(
                 "Could not extract response: no suitable HttpMessageReader found for response type [" +
                         requiredClass + "] and content type [" + contentType + "]");
-	}
-	
-	private MediaType getContentType(HttpServletRequest request) {
-		String contentType = request.getContentType();
-		if (contentType == null) {
-			if (logger.isTraceEnabled()) {
+    }
+    
+    private MediaType getContentType(HttpServletRequest request) {
+        String contentType = request.getContentType();
+        if (contentType == null) {
+            if (logger.isTraceEnabled()) {
                 logger.trace("No Content-Type header found, defaulting to application/octet-stream");
             }
-			return MediaType.APPLICATION_OCTET_STREAM;
-		}
-		return MediaType.parseMediaType(contentType);
-	}
-	
-	@SuppressWarnings("unchecked")
-	private <T> T getInstance(Class<T> clazz) {
-		Object instance = instances.get(clazz);
-		if (instance == null) {
-			try {
-				instance = ClassUtils.newInstance(clazz);
-				instances.put(clazz, instance);
-			} catch (Exception e) {
-				throw new IllegalArgumentException(clazz.getName() + " cannot be instantiated");
-			}
-		}
-		return (T) instance;
-	}
+            return MediaType.APPLICATION_OCTET_STREAM;
+        }
+        return MediaType.parseMediaType(contentType);
+    }
+    
+    @SuppressWarnings("unchecked")
+    private <T> T getInstance(Class<T> clazz) {
+        Object instance = instances.get(clazz);
+        if (instance == null) {
+            try {
+                instance = ClassUtils.newInstance(clazz);
+                instances.put(clazz, instance);
+            } catch (Exception e) {
+                throw new IllegalArgumentException(clazz.getName() + " cannot be instantiated");
+            }
+        }
+        return (T) instance;
+    }
 }

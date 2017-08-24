@@ -17,9 +17,9 @@
 package org.devefx.validator;
 
 public class ValidationException extends RuntimeException {
-	private static final long serialVersionUID = 5341938895329745901L;
+    private static final long serialVersionUID = 5341938895329745901L;
 
-	public ValidationException(String message) {
+    public ValidationException(String message) {
         super(message);
     }
 

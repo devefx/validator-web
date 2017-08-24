@@ -28,28 +28,29 @@ import org.devefx.validator.WebContext;
 import org.devefx.validator.web.context.DefaultWebContext;
 
 public final class WebContextThreadStack {
-	
-	private static final Log log = LogFactory.getLog(WebContextThreadStack.class);
+    
+    private static final Log log = LogFactory.getLog(WebContextThreadStack.class);
 
-	/**
+    /**
      * The storage of thread based data as a stack
      */
     private static ThreadLocal<Stack<WebContext>> contextStack = new ThreadLocal<Stack<WebContext>>();
-	
-	private WebContextThreadStack() {
-	}
-	
+    
+    private WebContextThreadStack() {
+    }
+    
     /**
      * Accessor for the WebContext that is associated with this thread.
+     * @return
      */
-	public static WebContext get() {
-		Stack<WebContext> stack = contextStack.get();
-		if (stack == null || stack.empty()) {
-			return null;
-		}
-		return stack.peek();
+    public static WebContext get() {
+        Stack<WebContext> stack = contextStack.get();
+        if (stack == null || stack.empty()) {
+            return null;
+        }
+        return stack.peek();
     }
-	
+    
     /**
      * Make the current thread know what the current request is.
      * @param servletConfig The servlet configuration object used by a servlet container
@@ -57,45 +58,46 @@ public final class WebContextThreadStack {
      * @param response The outgoing http reply
      * @see #disengageThread()
      */
-	public static void engageThread(ServletConfig servletConfig, HttpServletRequest request, HttpServletResponse response) {
-		try {
-			WebContext ec = new DefaultWebContext(request, response, servletConfig,
-					servletConfig.getServletContext());
-			engageThread(ec);
-		} catch (Exception ex) {
-			log.fatal("Failed to create an ExecutionContext", ex);
-		}
+    public static void engageThread(ServletConfig servletConfig, HttpServletRequest request, HttpServletResponse response) {
+        try {
+            WebContext ec = new DefaultWebContext(request, response, servletConfig,
+                    servletConfig.getServletContext());
+            engageThread(ec);
+        } catch (Exception ex) {
+            log.fatal("Failed to create an ExecutionContext", ex);
+        }
     }
     
     /**
      * Make the current thread know what the current request is.
      * Uses an existing WebContext for example from another thread.
+     * @param webContext
      * @see #disengageThread()
      */
-	public static void engageThread(WebContext webContext) {
-		Stack<WebContext> stack = contextStack.get();
-		if (stack == null) {
-			stack = new Stack<WebContext>();
-			contextStack.set(stack);
-		}
-		stack.add(webContext);
+    public static void engageThread(WebContext webContext) {
+        Stack<WebContext> stack = contextStack.get();
+        if (stack == null) {
+            stack = new Stack<WebContext>();
+            contextStack.set(stack);
+        }
+        stack.add(webContext);
     }
     
     /**
      * Unset the current ExecutionContext
      * @see #engageThread(ServletConfig, HttpServletRequest, HttpServletResponse)
      */
-	public static void disengageThread() {
-		if (contextStack != null) {
-			Stack<WebContext> stack = contextStack.get();
-			if (stack != null) {
-				if (!stack.empty()) {
-					stack.pop();
-				}
-				if (stack.empty()) {
-					contextStack.set(null);
-				}
-			}
-		}
+    public static void disengageThread() {
+        if (contextStack != null) {
+            Stack<WebContext> stack = contextStack.get();
+            if (stack != null) {
+                if (!stack.empty()) {
+                    stack.pop();
+                }
+                if (stack.empty()) {
+                    contextStack.set(null);
+                }
+            }
+        }
     }
 }

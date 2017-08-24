@@ -23,56 +23,60 @@ import org.devefx.validator.beans.factory.annotation.Value;
 import org.devefx.validator.script.Compressor;
 
 public abstract class JavaScriptHandler extends CachingHandler {
-	
-	protected Compressor compressor;
-	
-	protected boolean debug;
-	
-	protected String suffix = "";
-	
-	@Inject(required=false)
-	public void setCompressor(Compressor compressor) {
-		this.compressor = compressor;
+    
+    protected Compressor compressor;
+    
+    protected boolean debug;
+    
+    protected String suffix = "";
+    
+    public JavaScriptHandler() {
+    	setContentType("application/json;charset=UTF-8");
 	}
-	
-	@Value("${debug}")
-	public void setDebug(boolean debug) {
-		this.debug = debug;
-	}
-	
-	/**
-	 * Set the suffix that gets appended to view names when building a URL.
-	 */
-	public void setSuffix(String suffix) {
-		this.suffix = (suffix != null ? suffix : "");
-	}
+    
+    @Inject(required=false)
+    public void setCompressor(Compressor compressor) {
+        this.compressor = compressor;
+    }
+    
+    @Value("${debug}")
+    public void setDebug(boolean debug) {
+        this.debug = debug;
+    }
+    
+    /**
+     * Set the suffix that gets appended to view names when building a URL.
+     */
+    public void setSuffix(String suffix) {
+        this.suffix = (suffix != null ? suffix : "");
+    }
 
-	/**
-	 * Return the suffix that gets appended to view names when building a URL.
-	 */
-	protected String getSuffix() {
-		return this.suffix;
-	}
-	
-	@Override
-	public String generateCachableContent(String contextPath,
-			String servletPath, String pathInfo) throws IOException {
-		
-		String javascript = generateJavaScript(contextPath, servletPath, pathInfo);
-		
-		if (debug || compressor == null || javascript == null) {
-			return javascript;
-		}
-		
-		try {
-			return compressor.compressJavaScript(javascript);
-		} catch (Exception ex) {
-			if (log.isWarnEnabled()) {
-				log.warn("Compression system (" + compressor.getClass().getSimpleName() +") failed to compress script", ex);
-			}
-			return javascript;
-		}
-	}
-	
-	protected abstract String generateJavaScript(String contextPath, String servletPath, String pathInfo) throws IOException;
+    /**
+     * Return the suffix that gets appended to view names when building a URL.
+     */
+    protected String getSuffix() {
+        return this.suffix;
+    }
+    
+    @Override
+    public String generateCachableContent(String contextPath,
+            String servletPath, String pathInfo) throws IOException {
+        
+        String javascript = generateJavaScript(contextPath, servletPath, pathInfo);
+        
+        if (debug || compressor == null || javascript == null) {
+            return javascript;
+        }
+        
+        try {
+            return compressor.compressJavaScript(javascript);
+        } catch (Exception ex) {
+            if (log.isWarnEnabled()) {
+                log.warn("Compression system (" + compressor.getClass().getSimpleName() +") failed to compress script", ex);
+            }
+            return javascript;
+        }
+    }
+    
+    protected abstract String generateJavaScript(String contextPath, String servletPath, String pathInfo) throws IOException;
 }

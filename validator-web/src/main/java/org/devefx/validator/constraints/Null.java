@@ -20,9 +20,9 @@ import org.devefx.validator.ConstraintValidator;
 
 public class Null implements ConstraintValidator {
 
-	@Override
-	public boolean isValid(Object value) {
-		return value == null;
-	}
+    @Override
+    public boolean isValid(Object value) {
+        return value == null;
+    }
 
 }

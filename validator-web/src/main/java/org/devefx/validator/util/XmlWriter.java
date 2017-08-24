@@ -47,67 +47,67 @@ public class XmlWriter {
     }
 
     public static void setIgnoreNull(boolean ignoreNull) {
-    	XmlWriter.ignoreNull = ignoreNull;
+        XmlWriter.ignoreNull = ignoreNull;
     }
     
     
     public static String beanToXml(Object bean) {
-    	return beanToXml(bean, convertDepth);
+        return beanToXml(bean, convertDepth);
     }
     
     public static String beanToXml(Object bean, int depth) {
-    	if (bean == null) {
-    		return "</null>";
-    	}
-    	
-    	Class<?> beanClass = bean.getClass();
-    	String rootName = beanClass.getSimpleName();
-    	
-    	StringBuilder sb = new StringBuilder();
-    	appendBegin(rootName, sb);
-    	
-    	if (bean instanceof Map) {
-    		mapToXml((Map) bean, sb, depth);
-    	} else {
-    		mapToXml(MapUtils.beanToMap(bean), sb, depth);
-    	}
-    	
-    	appendEnd(rootName, sb);
-    	return sb.toString();
+        if (bean == null) {
+            return "</null>";
+        }
+        
+        Class<?> beanClass = bean.getClass();
+        String rootName = beanClass.getSimpleName();
+        
+        StringBuilder sb = new StringBuilder();
+        appendBegin(rootName, sb);
+        
+        if (bean instanceof Map) {
+            mapToXml((Map) bean, sb, depth);
+        } else {
+            mapToXml(MapUtils.beanToMap(bean), sb, depth);
+        }
+        
+        appendEnd(rootName, sb);
+        return sb.toString();
     }
     
     private static void mapToXml(Map<String, ?> map, StringBuilder sb, int depth) {
-    	if (map == null || (depth--) < 0) {
-    		return;
-    	}
-    	for (Map.Entry<String, ?> entry : map.entrySet()) {
-    		String key = entry.getKey();
-			Object value = entry.getValue();
-			if (ignoreNull && value == null) {
-				continue;
-			}
-			appendBegin(key, sb);
-			if (value != null) {
-				if (value instanceof CharSequence ||
-						ClassUtils.isPrimitiveWrapper(value.getClass())) {
-					escape(value.toString(), sb);
-				} else if (value instanceof Date) {
-					if (value instanceof java.sql.Timestamp)
-						sb.append(new SimpleDateFormat(timestampPattern).format(value));
-		            if (value instanceof java.sql.Time)
-		            	sb.append(value);
-		            else
-		            	sb.append(new SimpleDateFormat(datePattern).format(value));
-				} else {
-					if (value instanceof Map) {
-						mapToXml((Map) value, sb, depth);
-					} else {
-						mapToXml(MapUtils.beanToMap(value), sb, depth);
-					}
-				}
-			}
-			appendEnd(key, sb);
-		}
+        if (map == null || (depth--) < 0) {
+            return;
+        }
+        for (Map.Entry<String, ?> entry : map.entrySet()) {
+            String key = entry.getKey();
+            Object value = entry.getValue();
+            if (ignoreNull && value == null) {
+                continue;
+            }
+            appendBegin(key, sb);
+            if (value != null) {
+                if (value instanceof CharSequence ||
+                        ClassUtils.isPrimitiveWrapper(value.getClass())) {
+                    escape(value.toString(), sb);
+                } else if (value instanceof Date) {
+                    if (value instanceof java.sql.Timestamp)
+                        sb.append(new SimpleDateFormat(timestampPattern).format(value));
+                    if (value instanceof java.sql.Time)
+                        sb.append(value);
+                    else
+                        sb.append(new SimpleDateFormat(datePattern).format(value));
+                } else {
+                    if (value instanceof Map) {
+                        mapToXml((Map) value, sb, depth);
+                    } else {
+                        mapToXml(MapUtils.beanToMap(value), sb, depth);
+                    }
+                }
+            }
+            appendEnd(key, sb);
+        }
     }
     
     /**
@@ -158,10 +158,10 @@ public class XmlWriter {
     }
     
     private static void appendBegin(String s, StringBuilder sb) {
-    	sb.append("<").append(s).append(">");
+        sb.append("<").append(s).append(">");
     }
     
     private static void appendEnd(String s, StringBuilder sb) {
-    	sb.append("</").append(s).append(">");
+        sb.append("</").append(s).append(">");
     }
 }

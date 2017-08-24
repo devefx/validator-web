@@ -24,24 +24,24 @@ import org.devefx.validator.ValidatorUtils;
 
 public class Mapping {
 
-	private final Class<? extends Validation> validationClass;
-	
-	private ValidationContext.Accessor validationContext;
-	
-	public Mapping(Class<? extends Validation> validationClass) {
-		this.validationClass = validationClass;
-	}
-	
-	public Class<? extends Validation> getValidationClass() {
-		return validationClass;
-	}
-	
-	public ValidationContext.Accessor getValidationContext() {
-		if (validationContext == null) {
-			Validator validator = ValidatorUtils.getValidator();
-			ValidatorContext validatorContext = validator.getValidatorContext();
-			validationContext = validatorContext.getOrCreateValidationContext(validationClass);
-		}
-		return validationContext;
-	}
+    private final Class<? extends Validation> validationClass;
+    
+    private ValidationContext.Accessor validationContext;
+    
+    public Mapping(Class<? extends Validation> validationClass) {
+        this.validationClass = validationClass;
+    }
+    
+    public Class<? extends Validation> getValidationClass() {
+        return validationClass;
+    }
+    
+    public ValidationContext.Accessor getValidationContext() {
+        if (validationContext == null) {
+            Validator validator = ValidatorUtils.getValidator();
+            ValidatorContext validatorContext = validator.getValidatorContext();
+            validationContext = validatorContext.getOrCreateValidationContext(validationClass);
+        }
+        return validationContext;
+    }
 }

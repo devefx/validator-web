@@ -24,61 +24,61 @@ import org.devefx.validator.ValidationContext;
 
 public class ValidElement {
 
-	private final Class<? extends Validation> validationClass;
-	private final Class<?>[] groups;
-	private final Class<?> requestType;
-	private final boolean hasConstrained;
-	private ValidationContext.Accessor validationContext;
-	
-	public static ValidElement by(AnnotatedElement annotatedElement) {
-		Valid valid = annotatedElement.getAnnotation(Valid.class);
-		if (valid == null) {
-			return new ValidElement();
-		}
-		return new ValidElement(valid.value(), valid.groups(), valid.requestType());
-	}
-	
-	private ValidElement() {
-		this(null, null, null, false);
-	}
-	
-	private ValidElement(Class<? extends Validation> validationClass,
-			Class<?>[] groups,
-			Class<?> requestType) {
-		this(validationClass, groups, requestType, true);
-	}
-	
-	private ValidElement(Class<? extends Validation> validationClass,
-			Class<?>[] groups,
-			Class<?> requestType,
-			boolean hasConstrained) {
-		this.validationClass = validationClass;
-		this.groups = groups;
-		this.requestType = requestType;
-		this.hasConstrained = hasConstrained;
-	}
-	
-	public Class<?>[] getGroups() {
-		return groups;
-	}
-	
-	public Class<? extends Validation> getValidationClass() {
-		return validationClass;
-	}
-	
-	public Class<?> getRequestType() {
-		return requestType;
-	}
-	
-	public boolean isConstrained() {
-		return hasConstrained;
-	}
-	
-	public ValidationContext.Accessor getValidationContext() {
-		return validationContext;
-	}
-	
-	public void setValidationContext(ValidationContext.Accessor validationContext) {
-		this.validationContext = validationContext;
-	}
+    private final Class<? extends Validation> validationClass;
+    private final Class<?>[] groups;
+    private final Class<?> requestType;
+    private final boolean hasConstrained;
+    private ValidationContext.Accessor validationContext;
+    
+    public static ValidElement by(AnnotatedElement annotatedElement) {
+        Valid valid = annotatedElement.getAnnotation(Valid.class);
+        if (valid == null) {
+            return new ValidElement();
+        }
+        return new ValidElement(valid.value(), valid.groups(), valid.requestType());
+    }
+    
+    private ValidElement() {
+        this(null, null, null, false);
+    }
+    
+    private ValidElement(Class<? extends Validation> validationClass,
+            Class<?>[] groups,
+            Class<?> requestType) {
+        this(validationClass, groups, requestType, true);
+    }
+    
+    private ValidElement(Class<? extends Validation> validationClass,
+            Class<?>[] groups,
+            Class<?> requestType,
+            boolean hasConstrained) {
+        this.validationClass = validationClass;
+        this.groups = groups;
+        this.requestType = requestType;
+        this.hasConstrained = hasConstrained;
+    }
+    
+    public Class<?>[] getGroups() {
+        return groups;
+    }
+    
+    public Class<? extends Validation> getValidationClass() {
+        return validationClass;
+    }
+    
+    public Class<?> getRequestType() {
+        return requestType;
+    }
+    
+    public boolean isConstrained() {
+        return hasConstrained;
+    }
+    
+    public ValidationContext.Accessor getValidationContext() {
+        return validationContext;
+    }
+    
+    public void setValidationContext(ValidationContext.Accessor validationContext) {
+        this.validationContext = validationContext;
+    }
 }

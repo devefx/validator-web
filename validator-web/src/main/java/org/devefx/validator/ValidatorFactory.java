@@ -22,15 +22,15 @@ import org.devefx.validator.http.reader.HttpMessageReader;
 import org.devefx.validator.messageinterpolation.MessageInterpolator;
 
 public interface ValidatorFactory {
-	
-	MessageInterpolator getMessageInterpolator();
-	
-	ValidationFactory getValidationFactory();
-	
-	ValidatorConfig getValidatorConfig();
-	
-	List<HttpMessageReader<?>> getMessageReaders();
-	
-	Validator buildValidator();
+    
+    MessageInterpolator getMessageInterpolator();
+    
+    ValidationFactory getValidationFactory();
+    
+    ValidatorConfig getValidatorConfig();
+    
+    List<HttpMessageReader<?>> getMessageReaders();
+    
+    Validator buildValidator();
 
 }

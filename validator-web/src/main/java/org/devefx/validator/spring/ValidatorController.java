@@ -41,65 +41,65 @@ import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
 import org.springframework.web.servlet.mvc.AbstractController;
 
 public class ValidatorController extends AbstractController implements BeanNameAware, BeanFactoryAware, InitializingBean {
-	
-	private static final Log log = LogFactory.getLog(ValidatorController.class);
-	
-	private String name;
-	
-	private SpringContainer container;
-	
-	private ServletConfig servletConfig;
-	
-	private UrlProcessor processor;
-	
-	@Override
-	public void setBeanName(String name) {
-		this.name = name;
-	}
-	
-	@Override
-	public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
-		this.container = new SpringContainer(beanFactory);
-	}
-	
-	public void setupUrlMapping(SimpleUrlHandlerMapping urlHandlerMapping) {
-		Map<String, Object> urlMap = new HashMap<String, Object>();
-		for (String url : this.processor.getUrlMapping().keySet()) {
-			if (url.endsWith("/")) {
-				url = url + "**";
-			}
-			urlMap.put(url, this);
-		}
-		urlHandlerMapping.setUrlMap(urlMap);
-	}
-	
-	@Override
-	public void afterPropertiesSet() throws Exception {
-		ServletContext servletContext = getServletContext();
-		Assert.notNull(servletContext, "The servlet context has not been set on the controller");
-		
-		this.servletConfig = new FakeServletConfig(this.name, getServletContext());
-		
-		try {
-			StartupUtil.setupDefaultContainer(this.container, this.servletConfig);
-		} catch (Exception e) {
-			log.fatal("init failed", e);
-		}
-		
-		this.processor = this.container.getBean(UrlProcessor.class);
-	}
-	
-	@Override
-	protected ModelAndView handleRequestInternal(HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		try {
-			// set up the web context and delegate to the processor
-			WebContextThreadStack.engageThread(servletConfig, request, response);
-			this.processor.handle(request, response);
-		} finally {
-			WebContextThreadStack.disengageThread();
-		}
-		// return null to inform the dispatcher servlet the request has already been handled
-		return null;
-	}
+    
+    private static final Log log = LogFactory.getLog(ValidatorController.class);
+    
+    private String name;
+    
+    private SpringContainer container;
+    
+    private ServletConfig servletConfig;
+    
+    private UrlProcessor processor;
+    
+    @Override
+    public void setBeanName(String name) {
+        this.name = name;
+    }
+    
+    @Override
+    public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
+        this.container = new SpringContainer(beanFactory);
+    }
+    
+    public void setupUrlMapping(SimpleUrlHandlerMapping urlHandlerMapping) {
+        Map<String, Object> urlMap = new HashMap<String, Object>();
+        for (String url : this.processor.getUrlMapping().keySet()) {
+            if (url.endsWith("/")) {
+                url = url + "**";
+            }
+            urlMap.put(url, this);
+        }
+        urlHandlerMapping.setUrlMap(urlMap);
+    }
+    
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        ServletContext servletContext = getServletContext();
+        Assert.notNull(servletContext, "The servlet context has not been set on the controller");
+        
+        this.servletConfig = new FakeServletConfig(this.name, getServletContext());
+        
+        try {
+            StartupUtil.setupDefaultContainer(this.container, this.servletConfig);
+        } catch (Exception e) {
+            log.fatal("init failed", e);
+        }
+        
+        this.processor = this.container.getBean(UrlProcessor.class);
+    }
+    
+    @Override
+    protected ModelAndView handleRequestInternal(HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        try {
+            // set up the web context and delegate to the processor
+            WebContextThreadStack.engageThread(servletConfig, request, response);
+            this.processor.handle(request, response);
+        } finally {
+            WebContextThreadStack.disengageThread();
+        }
+        // return null to inform the dispatcher servlet the request has already been handled
+        return null;
+    }
 }

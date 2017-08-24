@@ -24,8 +24,8 @@ import org.devefx.validator.groups.Default;
 import org.devefx.validator.internal.resourceloading.ResourceBundleLocator;
 
 public interface ValidationContext {
-	
-	Set<Class<?>> DEFAULT_GROUPS = Collections.<Class<?>>singleton(Default.class);
+    
+    Set<Class<?>> DEFAULT_GROUPS = Collections.<Class<?>>singleton(Default.class);
 
     void setFailFast(boolean failFast);
 
@@ -42,21 +42,21 @@ public interface ValidationContext {
     void constraint(String name, ConstraintValidator constraintValidator, Class<?>... groups);
     
     interface Accessor extends ValidationContext {
-    	
-    	boolean isFailFast();
-    	
-    	boolean isThrowException();
-    	
-    	ResourceBundleLocator getResourceBundleLocator();
-    	
-    	ValidatorDelegate getValidatorDelegate();
-    	
-    	InvalidHandler getInvalidHandler();
-    	
-    	List<ConstraintDescriptor> getConstraintDescriptors();
-    	
-    	Validation getValidation();
-    	
-    	ValidatorContext getValidatorContext();
+        
+        boolean isFailFast();
+        
+        boolean isThrowException();
+        
+        ResourceBundleLocator getResourceBundleLocator();
+        
+        ValidatorDelegate getValidatorDelegate();
+        
+        InvalidHandler getInvalidHandler();
+        
+        List<ConstraintDescriptor> getConstraintDescriptors();
+        
+        Validation getValidation();
+        
+        ValidatorContext getValidatorContext();
     }
 }

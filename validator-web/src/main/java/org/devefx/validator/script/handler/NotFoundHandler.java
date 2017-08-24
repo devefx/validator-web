@@ -26,22 +26,22 @@ import org.apache.commons.logging.LogFactory;
 import org.devefx.validator.script.Handler;
 
 public class NotFoundHandler implements Handler {
-	
-	private static final Log log = LogFactory.getLog(NotFoundHandler.class);
+    
+    private static final Log log = LogFactory.getLog(NotFoundHandler.class);
 
-	@Override
-	public String getPath() {
-		throw new RuntimeException("not support path maping");
-	}
-	
-	@Override
-	public void handle(HttpServletRequest request, HttpServletResponse response)
-			throws IOException {
-		
-		if (log.isWarnEnabled()) {
-			log.warn("Page not found. pathInfo='" + request.getPathInfo()
-					+ "' requestUrl='" + request.getRequestURI() + "'");
-		}
-		response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-	}
+    @Override
+    public String getPath() {
+        throw new RuntimeException("not support path maping");
+    }
+    
+    @Override
+    public void handle(HttpServletRequest request, HttpServletResponse response)
+            throws IOException {
+        
+        if (log.isWarnEnabled()) {
+            log.warn("Page not found. pathInfo='" + request.getPathInfo()
+                    + "' requestUrl='" + request.getRequestURI() + "'");
+        }
+        response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+    }
 }

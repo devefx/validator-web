@@ -22,8 +22,8 @@ import org.devefx.validator.script.annotation.Script;
 @Script
 public class NotNull implements ConstraintValidator {
 
-	@Override
-	public boolean isValid(Object value) {
-		return value != null;
-	}
+    @Override
+    public boolean isValid(Object value) {
+        return value != null;
+    }
 }

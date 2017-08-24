@@ -22,17 +22,17 @@ import org.devefx.validator.internal.engine.scanner.TypeFilter;
 
 public class AnnotationTypeFilter implements TypeFilter {
 
-	private final Class<? extends Annotation> annotationType;
-	
-	public AnnotationTypeFilter(Class<? extends Annotation> annotationType) {
-		this.annotationType = annotationType;
-	}
-	
-	@Override
-	public boolean match(Class<?> type) {
-		if (type.getClass().getName().equals(Object.class.getName())) {
-			return false;
-		}
-		return type.isAnnotationPresent(this.annotationType);
-	}
+    private final Class<? extends Annotation> annotationType;
+    
+    public AnnotationTypeFilter(Class<? extends Annotation> annotationType) {
+        this.annotationType = annotationType;
+    }
+    
+    @Override
+    public boolean match(Class<?> type) {
+        if (type.getClass().getName().equals(Object.class.getName())) {
+            return false;
+        }
+        return type.isAnnotationPresent(this.annotationType);
+    }
 }

@@ -20,7 +20,7 @@ import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 
 public interface ServerContext {
-	
+    
     /**
      * Accessor for the servlet config.
      * @return Returns the config.
@@ -51,9 +51,9 @@ public interface ServerContext {
     * should be considered as the prime or preferred context path of the
     * application.
     *
-    * @return		a <code>String</code> specifying the
-    *			portion of the request URI that indicates the context
-    *			of the request
+    * @return a <code>String</code> specifying the
+    * portion of the request URI that indicates the context
+    * of the request
     *
     * @see javax.servlet.ServletContext#getContextPath()
     */

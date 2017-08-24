@@ -45,7 +45,7 @@ import static org.devefx.validator.internal.util.ConcurrentReferenceHashMap.Refe
  * @author Emmanuel Bernard
  * @author Hardy Ferentschik
  * @author Gunnar Morling
- * @author Kevin Pollet <kevin.pollet@serli.com> (C) 2011 SERLI
+ * @author Kevin Pollet &lt;kevin.pollet@serli.com&gt; (C) 2011 SERLI
  */
 public class ResourceBundleMessageInterpolator implements MessageInterpolator {
     private static final Log log = LogFactory.getLog(ResourceBundleMessageInterpolator.class);
@@ -196,24 +196,24 @@ public class ResourceBundleMessageInterpolator implements MessageInterpolator {
     
     @Override
     public String interpolateBundleMessage(String message, ResourceBundleLocator validationResourceBundleLocator) {
-    	String interpolatedMessage = message;
-    	try {
-    		interpolatedMessage = interpolateMessage(message, validationResourceBundleLocator, defaultLocale);
-		} catch (MessageDescriptorFormatException e) {
-			log.warn(e.getMessage());
-		}
-    	return interpolatedMessage;
+        String interpolatedMessage = message;
+        try {
+            interpolatedMessage = interpolateMessage(message, validationResourceBundleLocator, defaultLocale);
+        } catch (MessageDescriptorFormatException e) {
+            log.warn(e.getMessage());
+        }
+        return interpolatedMessage;
     }
     
     @Override
     public String interpolateBundleMessage(String message, ResourceBundleLocator validationResourceBundleLocator, Locale locale) {
-    	String interpolatedMessage = message;
-    	try {
-    		interpolatedMessage = interpolateMessage(message, validationResourceBundleLocator, locale);
-		} catch (ValidationException e) {
-			log.warn(e.getMessage());
-		}
-    	return interpolatedMessage;
+        String interpolatedMessage = message;
+        try {
+            interpolatedMessage = interpolateMessage(message, validationResourceBundleLocator, locale);
+        } catch (ValidationException e) {
+            log.warn(e.getMessage());
+        }
+        return interpolatedMessage;
     }
 
     /**
@@ -278,7 +278,7 @@ public class ResourceBundleMessageInterpolator implements MessageInterpolator {
     
     private String interpolateMessage(String message, ResourceBundleLocator validationResourceBundleLocator, Locale locale)
             throws MessageDescriptorFormatException {
-    	LocalizedMessage localisedMessage = new LocalizedMessage(message, locale);
+        LocalizedMessage localisedMessage = new LocalizedMessage(message, locale);
         String resolvedMessage = null;
 
         if (cachingEnabled) {
@@ -333,8 +333,8 @@ public class ResourceBundleMessageInterpolator implements MessageInterpolator {
                 resolvedMessage = cachedResolvedMessage;
             }
         }
-    	return resolvedMessage;
-	}
+        return resolvedMessage;
+    }
     
     
     private String replaceEscapedLiterals(String resolvedMessage) {

@@ -20,8 +20,8 @@ import java.util.Collection;
 
 public interface MappingManager {
 
-	Collection<String> getMappingNames();
-	
-	Mapping getMapping(String name);
-	
+    Collection<String> getMappingNames();
+    
+    Mapping getMapping(String name);
+    
 }

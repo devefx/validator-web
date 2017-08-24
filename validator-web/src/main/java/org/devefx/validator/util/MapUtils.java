@@ -5,13 +5,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MapUtils {
-	
-	public static Map<String, ?> beanToMap(Object model) {
-		return beanToMap(model, true);
-	}
-	
-	public static Map<String, ?> beanToMap(Object model, boolean ignoreNull) {
-		Map<String, Object> map = new HashMap<>();
+    
+    public static Map<String, ?> beanToMap(Object model) {
+        return beanToMap(model, true);
+    }
+    
+    public static Map<String, ?> beanToMap(Object model, boolean ignoreNull) {
+        Map<String, Object> map = new HashMap<>();
         for (Method method : model.getClass().getMethods()) {
             String attrName = null;
             String methodName = method.getName();
@@ -31,12 +31,12 @@ public class MapUtils {
                 try {
                     Object value = method.invoke(model);
                     if (!ignoreNull || value != null) {
-                    	char firstChar = attrName.charAt(0);
-                    	if (firstChar >= 'A' && firstChar <= 'Z') {
-                    		char[] arr = attrName.toCharArray();
-                    		arr[0] += ('a' - 'A');
-                    		attrName = new String(arr);
-                    	}
+                        char firstChar = attrName.charAt(0);
+                        if (firstChar >= 'A' && firstChar <= 'Z') {
+                            char[] arr = attrName.toCharArray();
+                            arr[0] += ('a' - 'A');
+                            attrName = new String(arr);
+                        }
                         map.put(attrName, value);
                     }
                 } catch (Exception e) {
@@ -45,5 +45,5 @@ public class MapUtils {
             }
         }
         return map;
-	}
+    }
 }

@@ -32,19 +32,19 @@ public class ResourceUtils {
     private static Charset charset;
 
     public static void setDefaultClassLoader(ClassLoader defaultClassLoader) {
-    	ResourceUtils.defaultClassLoader = defaultClassLoader;
+        ResourceUtils.defaultClassLoader = defaultClassLoader;
     }
 
     public static URL getResourceAsUrl(ClassLoader loader, String resource) throws IOException {
-    	URL url = null;
-    	if (loader != null) url = loader.getResource(resource);
-    	if (url == null) url = ClassLoader.getSystemResource(resource);
-    	if (url == null) throw new IOException("Could not find resource " + resource);
-    	return url;
+        URL url = null;
+        if (loader != null) url = loader.getResource(resource);
+        if (url == null) url = ClassLoader.getSystemResource(resource);
+        if (url == null) throw new IOException("Could not find resource " + resource);
+        return url;
     }
     
     public static URL getResourceAsUrl(String resource) throws IOException {
-    	return getResourceAsUrl(getClassLoader(), resource);
+        return getResourceAsUrl(getClassLoader(), resource);
     }
     
     public static InputStream getResourceAsStream(ClassLoader loader, String resource) throws IOException {
@@ -112,13 +112,13 @@ public class ResourceUtils {
     }
     
     public static void close(Closeable in) {
-    	if (in != null) {
-    		try {
-    			in.close();
-			} catch (Exception e) {
-				// ignore
-			}
-    	}
+        if (in != null) {
+            try {
+                in.close();
+            } catch (Exception e) {
+                // ignore
+            }
+        }
     }
     
     public static ClassLoader getClassLoader() {
@@ -132,6 +132,6 @@ public class ResourceUtils {
     }
 
     public static void setCharset(Charset charset) {
-    	ResourceUtils.charset = charset;
+        ResourceUtils.charset = charset;
     }
 }

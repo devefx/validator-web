@@ -17,24 +17,24 @@
 package org.devefx.validator.http.reader;
 
 public class HttpMessageNotReadableException extends RuntimeException {
-	private static final long serialVersionUID = -2181433737079212332L;
+    private static final long serialVersionUID = -2181433737079212332L;
 
-	/**
-	 * Create a new HttpMessageNotReadableException.
-	 *
-	 * @param msg the detail message
-	 */
-	public HttpMessageNotReadableException(String msg) {
-		super(msg);
-	}
+    /**
+     * Create a new HttpMessageNotReadableException.
+     *
+     * @param msg the detail message
+     */
+    public HttpMessageNotReadableException(String msg) {
+        super(msg);
+    }
 
-	/**
-	 * Create a new HttpMessageNotReadableException.
-	 *
-	 * @param msg the detail message
-	 * @param cause the root cause (if any)
-	 */
-	public HttpMessageNotReadableException(String msg, Throwable cause) {
-		super(msg, cause);
-	}
+    /**
+     * Create a new HttpMessageNotReadableException.
+     *
+     * @param msg the detail message
+     * @param cause the root cause (if any)
+     */
+    public HttpMessageNotReadableException(String msg, Throwable cause) {
+        super(msg, cause);
+    }
 }

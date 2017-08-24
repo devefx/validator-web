@@ -32,27 +32,27 @@ public class DefaultServerContext implements ServerContext {
      * The ServletContext associated with the current request
      */
     private ServletContext servletContext = null;
-	
-	@Override
-	public ServletConfig getServletConfig() {
-		return servletConfig;
-	}
-	
-	public void setServletConfig(ServletConfig servletConfig) {
-		this.servletConfig = servletConfig;
-	}
+    
+    @Override
+    public ServletConfig getServletConfig() {
+        return servletConfig;
+    }
+    
+    public void setServletConfig(ServletConfig servletConfig) {
+        this.servletConfig = servletConfig;
+    }
 
-	@Override
-	public ServletContext getServletContext() {
-		return servletContext;
-	}
-	
-	public void setServletContext(ServletContext servletContext) {
-		this.servletContext = servletContext;
-	}
+    @Override
+    public ServletContext getServletContext() {
+        return servletContext;
+    }
+    
+    public void setServletContext(ServletContext servletContext) {
+        this.servletContext = servletContext;
+    }
 
-	@Override
-	public String getContextPath() {
-		return servletContext.getContextPath();
-	}
+    @Override
+    public String getContextPath() {
+        return servletContext.getContextPath();
+    }
 }

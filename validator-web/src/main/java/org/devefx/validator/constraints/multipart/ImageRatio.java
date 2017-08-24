@@ -24,28 +24,28 @@ import org.devefx.validator.web.multipart.ImageMultipartFile;
 @Script
 public class ImageRatio implements ConstraintValidator {
 
-	@InitParam
-	private float ratio;
-	
-	public ImageRatio(float ratio) {
-		this.ratio = ratio;
-	}
-	
-	@Override
-	public boolean isValid(Object value) {
-		// null values are valid
-		if (value == null) {
-			return true;
-		}
-		// converter type
-		ImageMultipartFile image;
-		if (value instanceof ImageMultipartFile) {
-			image = (ImageMultipartFile) value;
-		} else {
-			throw new IllegalArgumentException("Unsupported of type [" + value.getClass().getName() + "]");
-		}
-		float width = image.getWidth();
-		float height = image.getHeight();
-		return this.ratio == (width / height);
-	}
+    @InitParam
+    private float ratio;
+    
+    public ImageRatio(float ratio) {
+        this.ratio = ratio;
+    }
+    
+    @Override
+    public boolean isValid(Object value) {
+        // null values are valid
+        if (value == null) {
+            return true;
+        }
+        // converter type
+        ImageMultipartFile image;
+        if (value instanceof ImageMultipartFile) {
+            image = (ImageMultipartFile) value;
+        } else {
+            throw new IllegalArgumentException("Unsupported of type [" + value.getClass().getName() + "]");
+        }
+        float width = image.getWidth();
+        float height = image.getHeight();
+        return this.ratio == (width / height);
+    }
 }

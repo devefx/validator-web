@@ -24,21 +24,21 @@ import org.devefx.validator.util.StringUtils;
 import org.devefx.validator.web.view.AbstractNestedView;
 
 public class NestedJsonView extends AbstractNestedView {
-	
-	public NestedJsonView() {
-		setContentType("application/json;charset=UTF-8");
-	}
-	
-	/**
-	 * Write the actual JSON content to the stream.
-	 * @param stream the output stream to use
-	 * @param value the value to be rendered, as returned from {@link #filterModel}
-	 * @throws IOException if writing failed
-	 */
-	protected void writeContent(OutputStream stream, Object value) throws IOException {
-		String jsonStr = JsonWriter.toJson(value);
-		if (StringUtils.hasText(jsonStr)) {
-			stream.write(jsonStr.getBytes(getCharset()));
-		}
-	}
+    
+    public NestedJsonView() {
+        setContentType("application/json;charset=UTF-8");
+    }
+    
+    /**
+     * Write the actual JSON content to the stream.
+     * @param stream the output stream to use
+     * @param value the value to be rendered, as returned from {@link #filterModel}
+     * @throws IOException if writing failed
+     */
+    protected void writeContent(OutputStream stream, Object value) throws IOException {
+        String jsonStr = JsonWriter.toJson(value);
+        if (StringUtils.hasText(jsonStr)) {
+            stream.write(jsonStr.getBytes(getCharset()));
+        }
+    }
 }

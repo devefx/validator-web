@@ -31,7 +31,7 @@ public abstract class JavaScriptHandler extends CachingHandler {
     protected String suffix = "";
     
     public JavaScriptHandler() {
-    	setContentType("application/json;charset=UTF-8");
+    	setContentType("application/javascript;charset=UTF-8");
 	}
     
     @Inject(required=false)

@@ -37,6 +37,7 @@ import org.devefx.validator.internal.metadata.ConstraintMetaData;
 import org.devefx.validator.internal.metadata.ConstraintMetaDataManager;
 import org.devefx.validator.messageinterpolation.MessageInterpolator;
 import org.devefx.validator.script.mapping.Mapping;
+import org.devefx.validator.util.StringUtils;
 
 public class GeneratedValidationJavaScriptHandler extends BaseValidationHandler {
 
@@ -145,11 +146,18 @@ public class GeneratedValidationJavaScriptHandler extends BaseValidationHandler 
         
         StringBuilder buffer = new StringBuilder();
         
+        String scirptName = metadata.getScriptID();
+        if (metadata.isScriptRemote()) {
+        	scirptName = REMOTE_MAPPING;
+        } else if (!StringUtils.hasText(scirptName)) {
+        	scirptName = type.getSimpleName();
+        }
+        
         buffer
             .append("new ")
             .append(VALIDATOR_NAMESPACE)
             .append('.')
-            .append(metadata.isScriptRemote() ? REMOTE_MAPPING : type.getSimpleName())
+            .append(scirptName)
             .append("(")
             .append(this.generateConstraintValidatorParams(vars, validator, metadata))
             .append(")");

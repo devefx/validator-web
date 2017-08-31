@@ -73,10 +73,9 @@
 								// and clean up afterwards; thanks to no-block-scope, hidden can be referenced
 								hidden.remove();
 							}
-							if (result !== undefined) {
-								return result;
+							if (result !== true) {
+								return result || false;
 							}
-							return false;
 						}
 						// jquery ajaxform plugin
 						var ajaxsubmit = validator.settings.ajaxsubmit;

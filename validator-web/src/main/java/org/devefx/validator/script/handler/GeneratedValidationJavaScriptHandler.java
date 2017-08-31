@@ -123,11 +123,17 @@ public class GeneratedValidationJavaScriptHandler extends BaseValidationHandler 
             
             ConstraintValidator validator = descriptor.getConstraintValidator();
             
-            buffer
-                .append("      context.constraint(\"" + name + "\", \"" + message + "\", ")
-                .append(this.generateConstraintValidator(vars, validator))
-                .append(this.generateGroups(descriptor.getGroups()))
-                .append(");\n");
+            Class<?> type = validator.getClass();
+            
+            ConstraintMetaData metadata = vars.cmdManager.getConstraintMetaData(type);
+            
+            if (metadata.hasScriptAnnotation()) {
+            	buffer
+	                .append("      context.constraint(\"" + name + "\", \"" + message + "\", ")
+	                .append(this.generateConstraintValidator(vars, validator))
+	                .append(this.generateGroups(descriptor.getGroups()))
+	                .append(");\n");
+            }
         }
         return buffer.toString();
     }

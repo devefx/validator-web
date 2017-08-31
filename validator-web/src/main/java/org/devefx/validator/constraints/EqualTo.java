@@ -16,12 +16,10 @@
 
 package org.devefx.validator.constraints;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.devefx.validator.ConstraintValidator;
-import org.devefx.validator.WebContext;
 import org.devefx.validator.constraints.annotation.InitParam;
-import org.devefx.validator.internal.util.WebContextThreadStack;
+import org.devefx.validator.internal.util.BeanReader;
+import org.devefx.validator.internal.util.ThreadContext;
 
 public class EqualTo implements ConstraintValidator {
     
@@ -43,16 +41,14 @@ public class EqualTo implements ConstraintValidator {
         if (value == null) {
             return true;
         }
-        
-        WebContext context = WebContextThreadStack.get();
-        HttpServletRequest request = context.getHttpServletRequest();
-        
-        String diffValue = request.getParameter(name);
+        BeanReader beanReader = new BeanReader(ThreadContext.getModel());
+        Object diffValue = beanReader.getProperty(this.name);
         if (diffValue == null) {
             return false;
         }
-        return ignoreCase ? diffValue.equalsIgnoreCase(value.toString())
-                : diffValue.equals(value);
+        String diffString = diffValue.toString();
+        return ignoreCase ? diffString.equalsIgnoreCase(value.toString())
+                : diffString.equals(value);
     }
 
 }

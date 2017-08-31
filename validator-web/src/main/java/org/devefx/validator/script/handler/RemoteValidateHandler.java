@@ -34,6 +34,10 @@ public class RemoteValidateHandler extends BaseValidationHandler {
     public static final String PARAMETER_ID = "id";
     public static final String PARAMETER_VALUE = "value";
     
+    public RemoteValidateHandler() {
+    	setContentType("application/json;charset=UTF-8");
+	}
+    
     @Value("${RemoteValidateHandler.path}")
     @Override
     public void setPath(String path) {

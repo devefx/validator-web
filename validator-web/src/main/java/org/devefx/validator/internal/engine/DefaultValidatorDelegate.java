@@ -22,11 +22,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
-import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.devefx.validator.ConstraintDescriptor;
 import org.devefx.validator.ConstraintValidator;
 import org.devefx.validator.ConstraintViolation;
@@ -38,12 +34,10 @@ import org.devefx.validator.groups.Default;
 import org.devefx.validator.internal.engine.groups.Group;
 import org.devefx.validator.internal.engine.groups.ValidationOrder;
 import org.devefx.validator.internal.engine.groups.ValidationOrderGenerator;
+import org.devefx.validator.internal.util.BeanReader;
 import org.devefx.validator.util.Assert;
-import org.devefx.validator.util.MultiValueMap;
 
 public class DefaultValidatorDelegate implements ValidatorDelegate {
-    
-    private static final Log log = LogFactory.getLog(DefaultValidatorDelegate.class);
 
     /**
      * The default group array used in case any of the validate methods is called without a group.
@@ -80,11 +74,12 @@ public class DefaultValidatorDelegate implements ValidatorDelegate {
     protected void validateConstraintsForCurrentGroup(ValidationContext.Accessor context, ValueContext valueContext,
             List<ConstraintViolation> failingConstraintViolations) {
 
+    	BeanReader beanReader = new BeanReader(valueContext.getCurrentBean());
+    	
         for (ConstraintDescriptor descriptor : context.getConstraintDescriptors()) {
             if (isValidationRequired(valueContext, descriptor)) {
                 if (valueContext.getCurrentBean() != null) {
-                    Object valueToValidate = getBeanProperty(
-                            valueContext.getCurrentBean(),
+                    Object valueToValidate = beanReader.getProperty(
                             descriptor.getName());
                     valueContext.setCurrentValidatedValue(valueToValidate);
                 }
@@ -113,32 +108,6 @@ public class DefaultValidatorDelegate implements ValidatorDelegate {
         if (!isValid) {
             ValidatorContext validatorContext = context.getValidatorContext();
             return validatorContext.createConstraintViolation(context, valueContext, descriptor);
-        }
-        return null;
-    }
-    
-    @SuppressWarnings({ "unchecked" })
-    protected Object getBeanProperty(Object bean, String name) {
-        if (bean instanceof Map) {
-            if (bean instanceof MultiValueMap) {
-                MultiValueMap<String, ?> valueMap = (MultiValueMap<String, ?>) bean;
-                List<?> values = valueMap.get(name);
-                if (values == null || values.isEmpty()) {
-                    return null;
-                } else if (values.size() == 1) {
-                    return values.get(0);
-                }
-                return values;
-            }
-            return ((Map<String, ?>)bean).get(name);
-        }
-        try {
-            return PropertyUtils.getProperty(bean, name);
-        } catch (Exception e) {
-            if (log.isWarnEnabled()) {
-                log.warn("Property '" + name + "' does not exist for object of " +
-                        "type " + bean.getClass().getName() + ".");
-            }
         }
         return null;
     }

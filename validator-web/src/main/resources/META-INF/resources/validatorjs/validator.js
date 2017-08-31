@@ -81,7 +81,7 @@
 						// jquery ajaxform plugin
 						var ajaxsubmit = validator.settings.ajaxsubmit;
 						if (ajaxsubmit) {
-							var options = $(ajaxsubmit);
+							var options = $.extend({}, ajaxsubmit);
 							options.data = $.extend(options.data || {}, {
 								_validator_ajaxsubmit: 'true'
 							});
@@ -89,11 +89,14 @@
 								if (res && res.status == 101) {
 									for (var name in res.contents) {
 										validator.invalid[name] = true;
-										validator.showErrors(res.contents);
+										if (typeof(ajaxsubmit.invalid) == 'function') {
+											ajaxsubmit.invalid(name);
+										}
 									}
+									validator.showErrors(res.contents);
 									return;
 								}
-								ajaxsubmit.success && ajaxsubmit.success(res);
+								typeof(ajaxsubmit.success) == 'function' && ajaxsubmit.success(res);
 							};
 							$(validator.currentForm).ajaxSubmit(options);
 							return false;

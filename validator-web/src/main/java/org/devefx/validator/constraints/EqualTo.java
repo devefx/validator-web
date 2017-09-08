@@ -20,7 +20,9 @@ import org.devefx.validator.ConstraintValidator;
 import org.devefx.validator.constraints.annotation.InitParam;
 import org.devefx.validator.internal.util.BeanReader;
 import org.devefx.validator.internal.util.ThreadContext;
+import org.devefx.validator.script.annotation.Script;
 
+@Script
 public class EqualTo implements ConstraintValidator {
     
     @InitParam

@@ -45,4 +45,25 @@ public @interface Valid {
      */
     Class<?>[] groups() default { };
     
+    
+    Group[] groupsFormRequest() default { };
+    
+    public @interface Group {
+        
+        String name();
+        
+        boolean required() default true;
+        
+        GroupMapping[] mappings();
+        
+        Class<?> defaultGroup() default Default.class;
+        
+        public @interface GroupMapping {
+            
+            String name();
+            
+            Class<?> group();
+        }
+    }
+    
 }

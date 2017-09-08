@@ -18,6 +18,7 @@ package org.devefx.validator.script.handler;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -35,8 +36,8 @@ public class RemoteValidateHandler extends BaseValidationHandler {
     public static final String PARAMETER_VALUE = "value";
     
     public RemoteValidateHandler() {
-    	setContentType("application/json;charset=UTF-8");
-	}
+        setContentType("application/json;charset=UTF-8");
+    }
     
     @Value("${RemoteValidateHandler.path}")
     @Override
@@ -62,7 +63,7 @@ public class RemoteValidateHandler extends BaseValidationHandler {
         String content = null;
         
         String scriptName = super.generateJavaScript(request.getContextPath(),
-                request.getServletPath(), request.getPathInfo());
+                request.getServletPath(), request.getPathInfo(), getLocale(request));
         
         if (scriptName != null) {
             try {
@@ -85,7 +86,7 @@ public class RemoteValidateHandler extends BaseValidationHandler {
     
     @Override
     protected String generateValidationScript(String contextPath,
-            String servletPath, String scriptName) {
+            String servletPath, String scriptName, Locale locale) {
         // return the script name
         return scriptName;
     }

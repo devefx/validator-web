@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.devefx.validator.ConstraintViolation;
+import org.devefx.validator.GroupMatchException;
 import org.devefx.validator.InvalidHandler;
 import org.devefx.validator.ValidationContext;
 import org.devefx.validator.ValidationException;
@@ -47,6 +48,8 @@ public class ValidatorImpl implements Validator {
      */
     public static final String VALIDATOR_AJAXSUBMIT = "_validator_ajaxsubmit";
     
+    public static final Class<?>[] EMPTY_GROUPS = new Class<?>[0];
+    
     private final InvalidHandler defaultInvalidHandler = new DefaultInvalidHandler();
     private final RequestExtractor requestExtractor;
     private final Map<AnnotatedElement, ValidElement> validElementCache;
@@ -64,23 +67,36 @@ public class ValidatorImpl implements Validator {
     }
     
     @Override
-    public boolean validate(AnnotatedElement validElement,
+    public boolean validate(AnnotatedElement annotatedElement,
+            HttpServletRequest request, HttpServletResponse response) {
+        Assert.notNull(annotatedElement, "annotatedElement must not be null.");
+        ValidElement validElement = getOrCreateValidElement(annotatedElement);
+        return validate(validElement, request, response);
+    }
+    
+    @Override
+    public boolean validate(ValidElement validElement,
             HttpServletRequest request, HttpServletResponse response) {
         Assert.notNull(validElement, "validElement must not be null.");
         try {
             ThreadContext.bind(this);
             
-            ValidElement element = getOrCreateValidElement(validElement);
-            if (!element.isConstrained()) {
+            if (!validElement.isConstrained()) {
                 return true;
             }
             
-            ValidationContext.Accessor validationContext = validatorContext.getOrCreateValidationContext(element.getValidationClass());
+            ValidationContext.Accessor validationContext = validatorContext.getOrCreateValidationContext(validElement.getValidationClass());
             ValueContext valueContext = createValueContext(
                     request,
-                    element.getRequestType());
+                    validElement.getRequestType());
             
-            return validateInContext(validationContext, valueContext, element.getGroups(), request, response);
+            Class<?>[] groups = validElement.getGroups(
+                    valueContext.getCurrentBean());
+            
+            return validateInContext(validationContext, valueContext, groups, request, response);
+        } catch (GroupMatchException e) {
+            groupNotMatchProcessing(e, request, response);
+            return false;
         } finally {
             ThreadContext.unbindValidator();
         }
@@ -114,6 +130,15 @@ public class ValidatorImpl implements Validator {
             } catch (Exception e) {
                 throw new ValidationException("Unable to render:" + e.getMessage(), e);
             }
+        }
+    }
+    
+    private void groupNotMatchProcessing(GroupMatchException exception, 
+            HttpServletRequest request, HttpServletResponse response) {
+        try {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, exception.getMessage());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
     

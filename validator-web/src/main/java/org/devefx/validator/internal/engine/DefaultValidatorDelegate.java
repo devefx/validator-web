@@ -74,8 +74,8 @@ public class DefaultValidatorDelegate implements ValidatorDelegate {
     protected void validateConstraintsForCurrentGroup(ValidationContext.Accessor context, ValueContext valueContext,
             List<ConstraintViolation> failingConstraintViolations) {
 
-    	BeanReader beanReader = new BeanReader(valueContext.getCurrentBean());
-    	
+        BeanReader beanReader = new BeanReader(valueContext.getCurrentBean());
+        
         for (ConstraintDescriptor descriptor : context.getConstraintDescriptors()) {
             if (isValidationRequired(valueContext, descriptor)) {
                 if (valueContext.getCurrentBean() != null) {

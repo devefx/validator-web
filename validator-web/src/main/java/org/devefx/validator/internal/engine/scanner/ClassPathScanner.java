@@ -87,7 +87,7 @@ public class ClassPathScanner {
                     logger.trace("Scanning " + resource);
                 }
                 if ("file".equals(resource.getProtocol())) {
-                	findClasses(candidates, classLoader, basePackage, resource.getFile());
+                    findClasses(candidates, classLoader, basePackage, resource.getFile());
                 }
             }
         } catch (IOException e) {
@@ -108,7 +108,7 @@ public class ClassPathScanner {
             } else {
                 String className = packageName.concat(".") + file.getName().replace(CLASS_SUFFIX, "");
                 try {
-                	Class<?> c = ClassUtils.forName(className, classLoader);
+                    Class<?> c = ClassUtils.forName(className, classLoader);
                     classes.add(c);
                 } catch (ClassNotFoundException e) {
                     // ignore

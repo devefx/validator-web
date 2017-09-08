@@ -17,7 +17,9 @@
 package org.devefx.validator.constraints;
 
 import org.devefx.validator.ConstraintValidator;
+import org.devefx.validator.script.annotation.Script;
 
+@Script
 public class Null implements ConstraintValidator {
 
     @Override

@@ -17,6 +17,7 @@
 package org.devefx.validator.script.handler;
 
 import java.io.IOException;
+import java.util.Locale;
 import java.util.regex.Pattern;
 
 import org.apache.commons.logging.Log;
@@ -38,7 +39,7 @@ public abstract class BaseValidationHandler extends JavaScriptHandler {
     
     @Override
     protected String generateJavaScript(String contextPath, String servletPath,
-            String pathInfo) throws IOException {
+            String pathInfo, Locale locale) throws IOException {
         
         String scriptName = pathInfo;
         
@@ -72,9 +73,9 @@ public abstract class BaseValidationHandler extends JavaScriptHandler {
         }
         
         // Generate script
-        return generateValidationScript(contextPath, servletPath, scriptName);
+        return generateValidationScript(contextPath, servletPath, scriptName, locale);
     }
     
-    protected abstract String generateValidationScript(String contextPath, String servletPath, String scriptName);
+    protected abstract String generateValidationScript(String contextPath, String servletPath, String scriptName, Locale locale);
     
 }

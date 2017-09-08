@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
 import java.net.URL;
+import java.util.Locale;
 
 import org.devefx.validator.util.ResourceUtils;
 
@@ -45,7 +46,7 @@ public class FileJavaScriptHandler extends JavaScriptHandler {
     
     @Override
     protected String generateJavaScript(String contextPath, String servletPath,
-            String pathInfo) throws IOException {
+            String pathInfo, Locale locale) throws IOException {
         
         String javascript = ResourceUtils.getResourceAsString(resource);
         

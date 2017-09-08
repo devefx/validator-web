@@ -23,8 +23,11 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.devefx.validator.ConstraintDescriptor;
 import org.devefx.validator.ConstraintValidator;
@@ -37,6 +40,7 @@ import org.devefx.validator.internal.metadata.ConstraintMetaData;
 import org.devefx.validator.internal.metadata.ConstraintMetaDataManager;
 import org.devefx.validator.messageinterpolation.MessageInterpolator;
 import org.devefx.validator.script.mapping.Mapping;
+import org.devefx.validator.util.LocaleUtils;
 import org.devefx.validator.util.StringUtils;
 
 public class GeneratedValidationJavaScriptHandler extends BaseValidationHandler {
@@ -65,6 +69,17 @@ public class GeneratedValidationJavaScriptHandler extends BaseValidationHandler 
         super.setSuffix(suffix);
     }
     
+    @Override
+    protected Locale getLocale(HttpServletRequest request) {
+        String locale = request.getParameter("locale");
+        if (StringUtils.hasText(locale)) {
+            try {
+                return LocaleUtils.toLocale(locale);
+            } catch (IllegalArgumentException e) { }
+        }
+        return request.getLocale();
+    }
+    
     @Inject
     public void setRemoteHandler(RemoteValidateHandler remoteHandler) {
         this.remoteHandler = remoteHandler;
@@ -72,7 +87,7 @@ public class GeneratedValidationJavaScriptHandler extends BaseValidationHandler 
     
     @Override
     protected String generateValidationScript(String contextPath,
-            String servletPath, String scriptName) {
+            String servletPath, String scriptName, Locale locale) {
         
         Mapping mapping = mappingManager.getMapping(scriptName);
         if (mapping == null) {
@@ -98,7 +113,7 @@ public class GeneratedValidationJavaScriptHandler extends BaseValidationHandler 
             .append("    '" + scriptName + "': function (context) {\n")
             .append("      context.setFailFast(" + context.isFailFast() + ");\n")
             .append("      context.setThrowException(" + context.isThrowException() + ");\n")
-            .append(this.generateConstraintDescriptor(vars, context))
+            .append(this.generateConstraintDescriptor(vars, context, locale))
             .append("    }\n")
             .append("  });\n")
             .append("}($.validator.constraints));");
@@ -106,7 +121,7 @@ public class GeneratedValidationJavaScriptHandler extends BaseValidationHandler 
         return buffer.toString();
     }
 
-    protected String generateConstraintDescriptor(Vars vars, ValidationContext.Accessor context) {
+    protected String generateConstraintDescriptor(Vars vars, ValidationContext.Accessor context, Locale locale) {
         StringBuilder buffer = new StringBuilder();
         
         for (ConstraintDescriptor descriptor : context.getConstraintDescriptors()) {
@@ -115,7 +130,8 @@ public class GeneratedValidationJavaScriptHandler extends BaseValidationHandler 
             
             String message = vars.messageInterpolator.interpolateBundleMessage(
                     descriptor.getMessageTemplate(),
-                    context.getResourceBundleLocator()
+                    context.getResourceBundleLocator(),
+                    locale
                 );
             
             if (message != null) {
@@ -129,11 +145,11 @@ public class GeneratedValidationJavaScriptHandler extends BaseValidationHandler 
             ConstraintMetaData metadata = vars.cmdManager.getConstraintMetaData(type);
             
             if (metadata.hasScriptAnnotation()) {
-            	buffer
-	                .append("      context.constraint(\"" + name + "\", \"" + message + "\", ")
-	                .append(this.generateConstraintValidator(vars, validator))
-	                .append(this.generateGroups(descriptor.getGroups()))
-	                .append(");\n");
+                buffer
+                    .append("      context.constraint(\"" + name + "\", \"" + message + "\", ")
+                    .append(this.generateConstraintValidator(vars, validator))
+                    .append(this.generateGroups(descriptor.getGroups()))
+                    .append(");\n");
             }
         }
         return buffer.toString();
@@ -148,9 +164,9 @@ public class GeneratedValidationJavaScriptHandler extends BaseValidationHandler 
         
         String scirptName = metadata.getScriptID();
         if (metadata.isScriptRemote()) {
-        	scirptName = REMOTE_MAPPING;
+            scirptName = REMOTE_MAPPING;
         } else if (!StringUtils.hasText(scirptName)) {
-        	scirptName = type.getSimpleName();
+            scirptName = type.getSimpleName();
         }
         
         buffer

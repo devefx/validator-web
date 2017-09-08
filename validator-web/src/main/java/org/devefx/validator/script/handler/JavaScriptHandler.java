@@ -17,6 +17,7 @@
 package org.devefx.validator.script.handler;
 
 import java.io.IOException;
+import java.util.Locale;
 
 import org.devefx.validator.beans.factory.annotation.Inject;
 import org.devefx.validator.beans.factory.annotation.Value;
@@ -31,8 +32,8 @@ public abstract class JavaScriptHandler extends CachingHandler {
     protected String suffix = "";
     
     public JavaScriptHandler() {
-    	setContentType("application/javascript;charset=UTF-8");
-	}
+        setContentType("application/javascript;charset=UTF-8");
+    }
     
     @Inject(required=false)
     public void setCompressor(Compressor compressor) {
@@ -60,9 +61,9 @@ public abstract class JavaScriptHandler extends CachingHandler {
     
     @Override
     public String generateCachableContent(String contextPath,
-            String servletPath, String pathInfo) throws IOException {
+            String servletPath, String pathInfo, Locale locale) throws IOException {
         
-        String javascript = generateJavaScript(contextPath, servletPath, pathInfo);
+        String javascript = generateJavaScript(contextPath, servletPath, pathInfo, locale);
         
         if (debug || compressor == null || javascript == null) {
             return javascript;
@@ -78,5 +79,5 @@ public abstract class JavaScriptHandler extends CachingHandler {
         }
     }
     
-    protected abstract String generateJavaScript(String contextPath, String servletPath, String pathInfo) throws IOException;
+    protected abstract String generateJavaScript(String contextPath, String servletPath, String pathInfo, Locale locale) throws IOException;
 }

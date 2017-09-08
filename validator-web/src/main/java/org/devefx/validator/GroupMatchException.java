@@ -16,18 +16,22 @@
 
 package org.devefx.validator;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+public class GroupMatchException extends Exception {
+    private static final long serialVersionUID = 4755377265153360032L;
 
-import org.devefx.validator.internal.engine.ValidElement;
-
-import java.lang.reflect.AnnotatedElement;
-
-public interface Validator {
+    private String name;
     
-    ValidatorContext getValidatorContext();
+    public GroupMatchException(String name) {
+         super("No group named '" + name + "' is matched");
+         this.name = name;
+    }
     
-    boolean validate(AnnotatedElement annotatedElement, HttpServletRequest request, HttpServletResponse response);
+    public GroupMatchException(String name, String message) {
+        super("No group named '" + name + "' is matched: " + message);
+        this.name = name;
+    }
     
-    boolean validate(ValidElement validElement, HttpServletRequest request, HttpServletResponse response);
+    public String getName() {
+        return name;
+    }
 }

@@ -64,23 +64,23 @@ public class BeanReader {
     
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public void setProperty(String name, Object value) {
-    	if (bean instanceof Map) {
-    		if (bean instanceof MultiValueMap) {
-    			MultiValueMap valueMap = (MultiValueMap) bean;
-    			valueMap.set(name, value);
-    			return;
-    		}
-    		Map map = (Map) bean;
-    		map.put(name, value);
-    		return;
-    	}
-    	try {
-    		PropertyUtils.setProperty(bean, name, value);
-		} catch (Exception e) {
-			if (log.isWarnEnabled()) {
+        if (bean instanceof Map) {
+            if (bean instanceof MultiValueMap) {
+                MultiValueMap valueMap = (MultiValueMap) bean;
+                valueMap.set(name, value);
+                return;
+            }
+            Map map = (Map) bean;
+            map.put(name, value);
+            return;
+        }
+        try {
+            PropertyUtils.setProperty(bean, name, value);
+        } catch (Exception e) {
+            if (log.isWarnEnabled()) {
                 log.warn("Property '" + name + "' can't setter for object of " +
                         "type " + bean.getClass().getName() + ".");
             }
-		}
+        }
     }
 }

@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,6 +30,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.devefx.validator.beans.factory.annotation.Value;
 import org.devefx.validator.http.HttpConstants;
+import org.devefx.validator.internal.engine.messageinterpolation.LocalizedMessage;
 import org.devefx.validator.script.Handler;
 
 public abstract class CachingHandler implements Handler {
@@ -50,7 +52,7 @@ public abstract class CachingHandler implements Handler {
     private String path;
     
     /** We cache the script output for speed */
-    private final Map<String, CachedResource> resourceCache = new HashMap<String, CachedResource>();
+    private final Map<LocalizedMessage, CachedResource> resourceCache = new HashMap<LocalizedMessage, CachedResource>();
     
     /**
      * @param ignoreLastModified The ignoreLastModified to set.
@@ -116,7 +118,11 @@ public abstract class CachingHandler implements Handler {
         CachedResource resource;
         synchronized (resourceCache) {
             String url = getCachingKey(request);
-            resource = resourceCache.get(url);
+            
+            Locale locale = getLocale(request);
+            
+            LocalizedMessage localizedMessage = new LocalizedMessage(url, locale);
+            resource = resourceCache.get(localizedMessage);
             
             if (resource == null || lastModified > resource.lastModifiedTime) {
                 if (log.isDebugEnabled()) {
@@ -127,9 +133,9 @@ public abstract class CachingHandler implements Handler {
                     }
                 }
                 resource = new CachedResource();
-                resource.contents = generateCachableContent(request.getContextPath(), request.getServletPath(), request.getPathInfo());
+                resource.contents = generateCachableContent(request.getContextPath(), request.getServletPath(), request.getPathInfo(), locale);
                 resource.lastModifiedTime = lastModified;
-                resourceCache.put(url, resource);
+                resourceCache.put(localizedMessage, resource);
             }
         }
         
@@ -146,6 +152,10 @@ public abstract class CachingHandler implements Handler {
         } else {
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
+    }
+    
+    protected Locale getLocale(HttpServletRequest request) {
+        return Locale.getDefault();
     }
     
     protected void addCacheHeaders(HttpServletResponse response) {
@@ -192,10 +202,11 @@ public abstract class CachingHandler implements Handler {
      * @param contextPath
      * @param servletPath
      * @param pathInfo
+     * @param locale
      * @return The string to output for this resource
      * @throws IOException
      */
-    public abstract String generateCachableContent(String contextPath, String servletPath, String pathInfo) throws IOException;
+    public abstract String generateCachableContent(String contextPath, String servletPath, String pathInfo, Locale locale) throws IOException;
     
     /**
      * Do we need to send the content for this file

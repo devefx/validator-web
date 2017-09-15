@@ -245,7 +245,7 @@ $.validator.format = function(source, params) {
 		});
 	});
 
-	var patt = new RegExp("\\$\\{([^{}]+)\\}", "g");
+	var patt = new RegExp("\\${(.+?)}", "g");
 	var result, str = source;
 	while ((result = patt.exec(source))) {
 		var expression = result[1],
@@ -1145,7 +1145,7 @@ $.validator.constraints = {
 			} else if (domain == "yahoo.com" || domain == "yahoo.com.cn" || domain == "yahoo.cn") {
 				valid = valid || (/^[a-z][a-z0-9._]{2,30}[a-z0-9]$/i.test(name) && !/_{2,}/.test(name) && name.match(/\./g).length < 2);
 			} else {
-				valid = valid || /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(name);
+				valid = valid || /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(value);
 			}
 			return valid;
 		};

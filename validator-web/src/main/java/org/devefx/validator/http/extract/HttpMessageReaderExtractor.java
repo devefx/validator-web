@@ -68,7 +68,7 @@ public class HttpMessageReaderExtractor implements RequestExtractor {
             }
         }
         throw new RuntimeException(
-                "Could not extract response: no suitable HttpMessageReader found for response type [" +
+                "Could not extract request: no suitable HttpMessageReader found for request type [" +
                         requiredClass + "] and content type [" + contentType + "]");
     }
     

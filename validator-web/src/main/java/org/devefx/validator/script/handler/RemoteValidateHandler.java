@@ -27,13 +27,18 @@ import org.devefx.validator.ConstraintDescriptor;
 import org.devefx.validator.ConstraintValidator;
 import org.devefx.validator.ValidationContext;
 import org.devefx.validator.beans.factory.annotation.Value;
+import org.devefx.validator.http.reader.FormHttpMessageReader;
+import org.devefx.validator.internal.util.ThreadContext;
 import org.devefx.validator.script.NoFoundException;
 import org.devefx.validator.script.mapping.Mapping;
+import org.devefx.validator.util.MultiValueMap;
 
 public class RemoteValidateHandler extends BaseValidationHandler {
     
     public static final String PARAMETER_ID = "id";
     public static final String PARAMETER_VALUE = "value";
+    
+    private FormHttpMessageReader reader = new FormHttpMessageReader();
     
     public RemoteValidateHandler() {
         setContentType("application/json;charset=UTF-8");
@@ -100,20 +105,32 @@ public class RemoteValidateHandler extends BaseValidationHandler {
             throw new NoFoundException("not found mapping: " + name);
         }
         
-        String id = request.getParameter(PARAMETER_ID);
+        MultiValueMap<String, ?> valueMap;
+        try {
+        	valueMap = reader.read(null, request);
+		} catch (Exception e) {
+			log.error("Could not extract request.", e);
+			return false;
+		}
         
-        ConstraintValidator validator = lookupConstraintValidator(mapping.getValidationContext(), id);
+        String id = (String) valueMap.getFirst(PARAMETER_ID);
+    	
+    	ConstraintValidator validator = lookupConstraintValidator(
+    			mapping.getValidationContext(), id);
         
         if (validator == null) {
             throw new NoFoundException("not found constraint: " + id);
         }
         
         try {
-            String value = request.getParameter(PARAMETER_VALUE);
-            return validator.isValid(value);
-        } catch (RuntimeException e) {
-            return false;
-        }
+        	ThreadContext.bindModel(valueMap);
+        	Object value = valueMap.getFirst(PARAMETER_VALUE);
+        	return validator.isValid(value);
+		} catch (Exception e) {
+			return false;
+		} finally {
+			ThreadContext.unbindModel();
+		}
     }
     
     private ConstraintValidator lookupConstraintValidator(ValidationContext.Accessor context, String id) {

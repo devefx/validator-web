@@ -957,7 +957,7 @@ $.extend($.validator, {
 				previous[url] = {
 					old: null,
 					valid: false
-				}
+				};
 			}
 			return previous[url];
 		},
@@ -1335,6 +1335,7 @@ $.validator.constraints = {
 				return false;
 
 			var previous = validator.previousValue(element, url),
+				depends = $(element).attr("depends"),
 				data;
 			
 			if (previous.old === value) {
@@ -1344,6 +1345,14 @@ $.validator.constraints = {
 			validator.startRequest(element);
 			data = {};
 			data["value"] = value;
+			if (depends) {
+				$.each(eval(depends), function (i, name) {
+					var elements = validator.findByName(name);
+					if (elements.length) {
+						data[name] = validator.elementValue(elements[0]);
+					}
+				});
+			}
 			$.ajax({
 				mode: "abort",
 				port: "validate" + element.name,

@@ -38,7 +38,7 @@ import org.devefx.validator.internal.util.BeanReader;
 import org.devefx.validator.util.Assert;
 
 public class DefaultValidatorDelegate implements ValidatorDelegate {
-	
+
     /**
      * The default group array used in case any of the validate methods is called without a group.
      */
@@ -76,7 +76,7 @@ public class DefaultValidatorDelegate implements ValidatorDelegate {
 
         BeanReader beanReader = null;
         if (valueContext.getCurrentBean() != null) {
-        	beanReader = new BeanReader(valueContext.getCurrentBean());
+            beanReader = new BeanReader(valueContext.getCurrentBean());
         }
         
         for (ConstraintDescriptor descriptor : context.getConstraintDescriptors()) {

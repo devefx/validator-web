@@ -19,12 +19,15 @@ package org.devefx.validator.internal.engine.scanner;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
+import java.net.JarURLConnection;
 import java.net.URL;
 import java.util.Enumeration;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -88,6 +91,8 @@ public class ClassPathScanner {
                 }
                 if ("file".equals(resource.getProtocol())) {
                     findClasses(candidates, classLoader, basePackage, resource.getFile());
+                } else if ("jar".equals(resource.getProtocol())) {
+                    findClasses(candidates, classLoader, packageSearchPath, (JarURLConnection) resource.openConnection());
                 }
             }
         } catch (IOException e) {
@@ -112,6 +117,29 @@ public class ClassPathScanner {
                     classes.add(c);
                 } catch (ClassNotFoundException e) {
                     // ignore
+                }
+            }
+        }
+    }
+
+    protected void findClasses(Set<Class<?>> classes, ClassLoader classLoader,
+            String packageName, JarURLConnection connection) throws IOException {
+        JarFile jarFile = connection.getJarFile();
+        if (jarFile == null) {
+            return;
+        }
+        Enumeration<JarEntry> entries = jarFile.entries();
+        while (entries.hasMoreElements()) {
+            JarEntry entry = entries.nextElement();
+            String name = entry.getName();
+            if (name.endsWith(CLASS_SUFFIX) && name.startsWith(packageName)) {
+                String className = name.replace('/', '.').replace(CLASS_SUFFIX, "");
+                try {
+                    Class<?> c = ClassUtils.forName(className, classLoader);
+                    classes.add(c);
+                } catch (ClassNotFoundException e) {
+                    // ignore
+                    e.printStackTrace();
                 }
             }
         }

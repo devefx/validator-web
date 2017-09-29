@@ -18,6 +18,7 @@ package org.devefx.validator.util;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.Collection;
 
 public class ObjectUtils {
     
@@ -68,6 +69,33 @@ public class ObjectUtils {
      */
     public static boolean isEmpty(Object[] array) {
         return (array == null || array.length == 0);
+    }
+    
+    /**
+     * Return {@code true} if the supplied Collection is {@code null} or empty.
+     * Otherwise, return {@code false}.
+     * @param collection the Collection to check
+     * @return whether the given Collection is empty
+     */
+    public static boolean isEmpty(Collection<?> collection) {
+        return (collection == null || collection.isEmpty());
+    }
+    
+    /**
+     * Check whether the given Array contains the given element instance.
+     * @param array the Array to check
+     * @param element the element to look for
+     * @return {@code true} if found, {@code false} else
+     */
+    public static boolean contains(Object[] array, Object element) {
+        if (array != null) {
+            for (Object object : array) {
+                if (object == element) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
     
     /**

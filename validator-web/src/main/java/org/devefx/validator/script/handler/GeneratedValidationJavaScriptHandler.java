@@ -34,6 +34,7 @@ import org.devefx.validator.ConstraintValidator;
 import org.devefx.validator.ValidationContext;
 import org.devefx.validator.ValidatorContext;
 import org.devefx.validator.ValidatorFactory;
+import org.devefx.validator.WebContext;
 import org.devefx.validator.beans.factory.annotation.Inject;
 import org.devefx.validator.beans.factory.annotation.Value;
 import org.devefx.validator.internal.metadata.ConstraintMetaData;
@@ -71,7 +72,7 @@ public class GeneratedValidationJavaScriptHandler extends BaseValidationHandler 
     
     @Override
     protected Locale getLocale(HttpServletRequest request) {
-        String locale = request.getParameter("locale");
+        String locale = request.getParameter(WebContext.PARAMETER_LOCALE);
         if (StringUtils.hasText(locale)) {
             try {
                 return LocaleUtils.toLocale(locale);

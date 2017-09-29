@@ -34,7 +34,7 @@ public abstract class ThreadContext {
     public static final String VALIDATOR_KEY = ThreadContext.class.getName() + "_VALIDATOR_KEY";
     
     public static final String MODEL_KEY = ThreadContext.class.getName() + "_MODEL_KEY";
-
+    
     private static final ThreadLocal<Map<Object, Object>> resources = new InheritableThreadLocalMap<>();
     
     /**

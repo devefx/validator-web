@@ -39,6 +39,7 @@ import org.devefx.validator.http.extract.HttpMessageReaderExtractor;
 import org.devefx.validator.http.extract.RequestExtractor;
 import org.devefx.validator.internal.util.ThreadContext;
 import org.devefx.validator.util.Assert;
+import org.devefx.validator.util.ObjectUtils;
 import org.devefx.validator.web.View;
 
 public class ValidatorImpl implements Validator {
@@ -93,7 +94,7 @@ public class ValidatorImpl implements Validator {
             Class<?>[] groups = validElement.getGroups(
                     valueContext.getCurrentBean());
             
-            return validateInContext(validationContext, valueContext, groups, request, response);
+            return validateInContext(validationContext, valueContext, groups, validElement.preventDefault(), request, response);
         } catch (GroupMatchException e) {
             groupNotMatchProcessing(e, request, response);
             return false;
@@ -103,16 +104,21 @@ public class ValidatorImpl implements Validator {
     }
     
     private boolean validateInContext(ValidationContext.Accessor context, ValueContext valueContext, Class<?>[] groups,
-            HttpServletRequest request, HttpServletResponse response) {
+            boolean preventDefault, HttpServletRequest request, HttpServletResponse response) {
+        
         ValidatorDelegate validatorDelegate = context.getValidatorDelegate();
+        List<ConstraintViolation> violations = validatorDelegate.validate(valueContext, context, groups);
         
-        List<ConstraintViolation> constraintViolations = validatorDelegate.validate(valueContext, context, groups);
-        if (constraintViolations == null || constraintViolations.isEmpty()) {
-            return true;
+        if (preventDefault) {
+            if (!ObjectUtils.isEmpty(violations)) {
+                validateInvalidProcessing(context, violations, request, response);
+                return false;
+            }
+        } else {
+            request.setAttribute(ValidStatus.VALID_RESULT_KEY,
+                    new ValidStatus(groups, violations));
         }
-        
-        validateInvalidProcessing(context, constraintViolations, request, response);
-        return false;
+        return true;
     }
     
     private void validateInvalidProcessing(ValidationContext.Accessor context,

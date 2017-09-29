@@ -103,6 +103,10 @@ public class ValidElement {
         return annotation.requestType();
     }
     
+    public boolean preventDefault() {
+        return annotation.preventDefault();
+    }
+    
     public boolean isConstrained() {
         return annotation != null;
     }

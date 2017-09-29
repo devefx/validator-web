@@ -17,8 +17,11 @@
 package org.devefx.validator;
 
 import java.util.Collections;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.devefx.validator.internal.engine.ConstraintViolationImpl;
 import org.devefx.validator.internal.engine.ValidationContextAccessor;
@@ -26,8 +29,11 @@ import org.devefx.validator.internal.metadata.ConstraintMetaData;
 import org.devefx.validator.internal.metadata.ConstraintMetaDataManager;
 import org.devefx.validator.internal.resourceloading.PlatformResourceBundleLocator;
 import org.devefx.validator.internal.resourceloading.ResourceBundleLocator;
+import org.devefx.validator.internal.util.WebContextThreadStack;
 import org.devefx.validator.messageinterpolation.MessageInterpolatorContext;
 import org.devefx.validator.util.Assert;
+import org.devefx.validator.util.LocaleUtils;
+import org.devefx.validator.util.StringUtils;
 
 public class ValidatorContext {
 
@@ -94,7 +100,8 @@ public class ValidatorContext {
             return this.validatorFactory.getMessageInterpolator().interpolate(
                     messageTemplate, 
                     context,
-                    validationResourceBundleLocator);
+                    validationResourceBundleLocator,
+                    getLocale());
         } catch (ValidationException ve) {
             throw ve;
         } catch (Exception e) {
@@ -156,5 +163,20 @@ public class ValidatorContext {
             resourceBundleLocatorCache.put(classPackage, resourceBundleLocator);
         }
         return resourceBundleLocator;
+    }
+    
+    private Locale getLocale() {
+        WebContext context = WebContextThreadStack.get();
+        if (context == null) {
+            return Locale.getDefault();
+        }
+        HttpServletRequest request = context.getHttpServletRequest();
+        String locale = request.getParameter(WebContext.PARAMETER_LOCALE);
+        if (StringUtils.hasText(locale)) {
+            try {
+                return LocaleUtils.toLocale(locale);
+            } catch (IllegalArgumentException e) { }
+        }
+        return request.getLocale();
     }
 }

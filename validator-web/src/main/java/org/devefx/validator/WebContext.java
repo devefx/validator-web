@@ -21,6 +21,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public interface WebContext {
+    
+    String PARAMETER_LOCALE = "locale";
 
     /**
      * Returns the current session associated with this request, or if the

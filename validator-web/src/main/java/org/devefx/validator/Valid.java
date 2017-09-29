@@ -41,6 +41,11 @@ public @interface Valid {
     Class<?> requestType() default MultiValueMap.class;
     
     /**
+     * if the violation of constraints will prevent the default operation and execute invalid processing
+     */
+    boolean preventDefault() default true;
+    
+    /**
      * the group or list of groups targeted for validation (defaults to {@link Default})
      */
     Class<?>[] groups() default { };

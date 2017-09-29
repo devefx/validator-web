@@ -26,7 +26,7 @@ mvn clean install -Dmaven.test.skip
 <dependency>
     <groupId>org.devefx</groupId>
     <artifactId>validator-web</artifactId>
-    <version>1.0.0-alphal</version>
+    <version>1.0.0-release</version>
 </dependency>
 ```
 

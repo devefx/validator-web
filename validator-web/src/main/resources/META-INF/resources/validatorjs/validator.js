@@ -980,7 +980,7 @@ $.extend($.validator, {
 /** extensions */
 function SimpleDateFormat(pattern) {
     this.pattern = pattern;
-    this.regex = new RegExp("^" + pattern.replace("yyyy", "\\d{4}").replace("MM", "(0\\d|1[12])").replace("dd", "([0-2]\\d|3[0-1])")
+    this.regex = new RegExp("^" + pattern.replace("yyyy", "\\d{4}").replace("MM", "(0\\d|1[0-2])").replace("dd", "([0-2]\\d|3[0-1])")
             .replace("HH", "([0-1]\\d|2[0-3])").replace("hh", "(0\\d|1[0-2])").replace("mm", "[0-5]\\d").replace("ss", "[0-5]\\d") + "$");
     this.position = {
         year: pattern.indexOf("yyyy"), month: pattern.indexOf("MM"), day: pattern.indexOf("dd"),
@@ -1175,7 +1175,7 @@ $.validator.constraints = {
                 return true;
             }
             try {
-                var date = this.sdf.parse(value);
+                var date = sdf.parse(value);
                 return date.getTime() < new Date().getTime();
             } catch (e) {
                 return false;

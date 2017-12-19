@@ -35,7 +35,7 @@ public class StringUtils {
     public static final char DEFAULT_DELIMITER_CHAR = ',';
 
     /**
-     * Constant representing the default quote character (double quote), equal to '&quot;'</code>
+     * Constant representing the default quote character (double quote), equal to <code>'&quot;'</code>
      */
     public static final char DEFAULT_QUOTE_CHAR = '"';
 
@@ -117,14 +117,13 @@ public class StringUtils {
      * <p>The given delimiters string is supposed to consist of any number of
      * delimiter characters. Each of those characters can be used to separate
      * tokens. A delimiter is always a single character; for multi-character
-     * delimiters, consider using {@code delimitedListToStringArray}
+     * delimiters
      * @param str the String to tokenize
      * @param delimiters the delimiter characters, assembled as String
      * (each of those characters is individually considered as delimiter).
      * @return an array of the tokens
      * @see java.util.StringTokenizer
      * @see String#trim()
-     * @see #delimitedListToStringArray
      */
     public static String[] tokenizeToStringArray(String str, String delimiters) {
         return tokenizeToStringArray(str, delimiters, true, true);
@@ -147,7 +146,6 @@ public class StringUtils {
      * was {@code null})
      * @see java.util.StringTokenizer
      * @see String#trim()
-     * @see #delimitedListToStringArray
      */
     public static String[] tokenizeToStringArray(
             String str, String delimiters, boolean trimTokens, boolean ignoreEmptyTokens) {
@@ -185,14 +183,14 @@ public class StringUtils {
     
     /**
      * Returns a 'cleaned' representation of the specified argument.  'Cleaned' is defined as the following:
-     * <p/>
+     * <p></p>
      * <ol>
      * <li>If the specified <code>String</code> is <code>null</code>, return <code>null</code></li>
      * <li>If not <code>null</code>, {@link String#trim() trim()} it.</li>
      * <li>If the trimmed string is equal to the empty String (i.e. &quot;&quot;), return <code>null</code></li>
      * <li>If the trimmed string is not the empty string, return the trimmed version</li>.
      * </ol>
-     * <p/>
+     * <p></p>
      * Therefore this method always ensures that any given string has trimmed text, and if it doesn't, <code>null</code>
      * is returned.
      *
@@ -231,12 +229,12 @@ public class StringUtils {
     /**
      * Splits the specified delimited String into tokens, supporting quoted tokens so that quoted strings themselves
      * won't be tokenized.
-     * <p/>
+     * <p>
      * This method's implementation is very loosely based (with significant modifications) on
      * <a href="http://blogs.bytecode.com.au/glen">Glen Smith</a>'s open-source
      * <a href="http://opencsv.svn.sourceforge.net/viewvc/opencsv/trunk/src/au/com/bytecode/opencsv/CSVReader.java?&view=markup">CSVReader.java</a>
      * file.
-     * <p/>
+     * </p>
      * That file is Apache 2.0 licensed as well, making Glen's code a great starting point for us to modify to
      * our needs.
      *

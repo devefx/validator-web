@@ -23,6 +23,8 @@ import org.devefx.validator.ConstraintValidator;
 import org.devefx.validator.constraints.annotation.InitParam;
 import org.devefx.validator.script.annotation.Script;
 
+import static org.devefx.validator.util.ObjectUtils.isEmpty;
+
 @Script
 public class Min implements ConstraintValidator {
 
@@ -36,7 +38,7 @@ public class Min implements ConstraintValidator {
     @Override
     public boolean isValid(Object value) {
         // null values are valid
-        if ( value == null ) {
+        if (isEmpty(value)) {
             return true;
         }
         

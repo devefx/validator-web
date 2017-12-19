@@ -22,6 +22,8 @@ import java.util.regex.Pattern;
 import org.devefx.validator.ConstraintValidator;
 import org.devefx.validator.script.annotation.Script;
 
+import static org.devefx.validator.util.ObjectUtils.isEmpty;
+
 @Script
 public class Mobile implements ConstraintValidator {
 
@@ -29,10 +31,10 @@ public class Mobile implements ConstraintValidator {
     
     @Override
     public boolean isValid(Object value) {
-        if (value == null) {
+        if (isEmpty(value)) {
             return true;
         }
-        String mobile = value.toString();
+        final String mobile = value.toString();
         Matcher matcher = mobilePattern.matcher(mobile);
         return matcher.matches();
     }

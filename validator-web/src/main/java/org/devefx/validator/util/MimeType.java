@@ -22,7 +22,6 @@ import java.util.BitSet;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TreeSet;
@@ -373,7 +372,6 @@ public class MimeType implements Comparable<MimeType>, Serializable {
     /**
      * Compares this {@code MediaType} to another alphabetically.
      * @param other media type to compare to
-     * @see MimeTypeUtils#sortBySpecificity(List)
      */
     @Override
     public int compareTo(MimeType other) {

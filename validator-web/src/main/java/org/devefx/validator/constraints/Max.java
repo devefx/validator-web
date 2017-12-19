@@ -23,6 +23,8 @@ import org.devefx.validator.script.annotation.Script;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
+import static org.devefx.validator.util.ObjectUtils.isEmpty;
+
 @Script
 public class Max implements ConstraintValidator {
 
@@ -36,7 +38,7 @@ public class Max implements ConstraintValidator {
     @Override
     public boolean isValid(Object value) {
         // null values are valid
-        if (value == null) {
+        if (isEmpty(value)) {
             return true;
         }
 

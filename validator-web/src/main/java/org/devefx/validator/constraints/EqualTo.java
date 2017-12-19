@@ -43,12 +43,12 @@ public class EqualTo implements ConstraintValidator {
         if (value == null) {
             return true;
         }
-        BeanReader beanReader = new BeanReader(ThreadContext.getModel());
-        Object diffValue = beanReader.getProperty(this.name);
+        final BeanReader beanReader = new BeanReader(ThreadContext.getModel());
+        final Object diffValue = beanReader.getProperty(this.name);
         if (diffValue == null) {
             return false;
         }
-        String diffString = diffValue.toString();
+        final String diffString = diffValue.toString();
         return ignoreCase ? diffString.equalsIgnoreCase(value.toString())
                 : diffString.equals(value);
     }

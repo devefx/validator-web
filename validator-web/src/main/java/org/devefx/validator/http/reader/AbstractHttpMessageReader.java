@@ -103,7 +103,7 @@ public abstract class AbstractHttpMessageReader<T> implements HttpMessageReader<
     }
     
     /**
-     * This implementation simple delegates to {@link #readInternal(Class, HttpInputMessage)}.
+     * This implementation simple delegates to {@link #readInternal(Class, HttpServletRequest)}.
      * Future implementations might add some default behavior, however.
      */
     @Override

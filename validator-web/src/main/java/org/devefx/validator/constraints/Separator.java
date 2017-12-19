@@ -22,6 +22,8 @@ import org.devefx.validator.script.annotation.Script;
 import org.devefx.validator.util.Assert;
 import org.devefx.validator.util.StringUtils;
 
+import static org.devefx.validator.util.ObjectUtils.isEmpty;
+
 @Script
 public class Separator implements ConstraintValidator {
 
@@ -46,7 +48,7 @@ public class Separator implements ConstraintValidator {
     
     @Override
     public boolean isValid(Object value) {
-        if (value == null) {
+        if (isEmpty(value)) {
             return true;
         }
         String stringValue = value.toString();

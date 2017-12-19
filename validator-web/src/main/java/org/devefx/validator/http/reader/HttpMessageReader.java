@@ -44,7 +44,7 @@ public interface HttpMessageReader<T> {
      * Read an object of the given type form the given input message, and returns it.
      * @param clazz the type of object to return. This type must have previously been passed to the
      * {@link #canRead canRead} method of this interface, which must have returned {@code true}.
-     * @param inputMessage the HTTP input message to read from
+     * @param request the HTTP request object
      * @return the converted object
      * @throws IOException in case of I/O errors
      * @throws HttpMessageNotReadableException in case of conversion errors

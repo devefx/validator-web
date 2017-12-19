@@ -19,13 +19,15 @@ package org.devefx.validator.constraints;
 import org.devefx.validator.ConstraintValidator;
 import org.devefx.validator.script.annotation.Script;
 
+import static org.devefx.validator.util.ObjectUtils.isEmpty;
+
 @Script
 public class AssertTrue implements ConstraintValidator {
 
     @Override
     public boolean isValid(Object value) {
         //null values are valid
-        if (value == null) {
+        if (isEmpty(value)) {
             return true;
         }
         // converter type

@@ -178,7 +178,7 @@ public abstract class CachingHandler implements Handler {
 
     /**
      * Add headers to prevent browsers and proxies from caching this reply.
-     * @param resp The response to add headers to
+     * @param response The response to add headers to
      */
     protected void addNoCacheHeaders(HttpServletResponse response) {
         // Set standard HTTP/1.1 no-cache headers.

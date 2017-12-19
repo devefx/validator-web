@@ -166,12 +166,13 @@ public class ValidatorContext {
     }
     
     private Locale getLocale() {
-        WebContext context = WebContextThreadStack.get();
+        final WebContext context = WebContextThreadStack.get();
         if (context == null) {
             return Locale.getDefault();
         }
-        HttpServletRequest request = context.getHttpServletRequest();
-        String locale = request.getParameter(WebContext.PARAMETER_LOCALE);
+        final HttpServletRequest request = context.getHttpServletRequest();
+        final ValidatorConfig validatorConfig = this.validatorFactory.getValidatorConfig();
+        final String locale = request.getParameter(validatorConfig.getLanguageParameterName());
         if (StringUtils.hasText(locale)) {
             try {
                 return LocaleUtils.toLocale(locale);

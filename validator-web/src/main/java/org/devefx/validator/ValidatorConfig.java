@@ -22,9 +22,13 @@ public class ValidatorConfig {
     
     public static final boolean DEFAULT_THROW_EXCEPTION = false;
     
+    public static final String DEFAULT_LANGUAGE_PARAMETER_NAME = "_language";
+    
     private boolean failFast = DEFAULT_FAIL_FAST;
     
     private boolean throwException = DEFAULT_THROW_EXCEPTION;
+    
+    private String languageParameterName = DEFAULT_LANGUAGE_PARAMETER_NAME;
     
     private ValidatorDelegate validatorDelegate;
     
@@ -60,5 +64,13 @@ public class ValidatorConfig {
     
     public void setInvalidHandler(InvalidHandler invalidHandler) {
         this.invalidHandler = invalidHandler;
+    }
+    
+    public String getLanguageParameterName() {
+        return languageParameterName;
+    }
+    
+    public void setLanguageParameterName(String languageParameterName) {
+        this.languageParameterName = languageParameterName;
     }
 }

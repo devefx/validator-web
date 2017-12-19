@@ -272,6 +272,7 @@ $.extend($.validator, {
         onsubmit: true,
         ajaxsubmit: {},
         ignore: ":hidden",
+        languageParameterName: "_language",
 
         onfocusin: function(element) {
             this.lastActive = element;
@@ -370,6 +371,7 @@ $.extend($.validator, {
             this.uncheckedErrorList = [];
             this.context = new $.validationContext();
             this.initContext();
+            this.initLanguage();
             this.checkElements();
 
             function delegate(event) {
@@ -425,7 +427,24 @@ $.extend($.validator, {
                 }
             }
         },
-
+        
+        initLanguage: function () {
+            if (this.settings.language &&
+                this.settings.languageParameterName) {
+                // find language element
+                var language = this.findByName(this.settings.languageParameterName);
+                if (language.length) {
+                    language.val(this.settings.language);
+                } else {
+                    // create language element
+                    language = $('<input type="hidden">')
+                        .attr("name", this.settings.languageParameterName)
+                        .val(this.settings.language);
+                    $(this.currentForm).append(language);
+                }
+            }
+        },
+        
         checkElements: function () {
             var validator = this;
             $.each(this.context.constraints, function (n, i) {
@@ -1110,6 +1129,9 @@ $.validator.constraints = {
                 return true;
             }
             var bigNum = Number(value);
+            if (isNaN(value)) {
+                return false;
+            }
             var integerPartLength = bigNum.precision() - bigNum.scale();
             var fractionPartLength = bigNum.scale() < 0 ? 0 : bigNum.scale();
             return (this.maxIntegerLength >= integerPartLength && this.maxFractionLength >= fractionPartLength);

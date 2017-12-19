@@ -4,7 +4,7 @@
     <groupId>org.devefx</groupId>
     <artifactId>validator-web</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.0-release</version>
+    <version>1.0.1-release</version>
     <name>validator-web</name>
     <description>Jave Web Validator Framework</description>
     <url>https://github.com/devefx/validator-web</url>
@@ -120,6 +120,17 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+    <profiles>
+        <profile>
+            <id>disable-javadoc-doclint</id>
+            <activation>
+                <jdk>[1.8,)</jdk>
+            </activation>
+            <properties>
+                <javadoc.opts>-Xdoclint:none</javadoc.opts>
+            </properties>
+        </profile>
+    </profiles>
     <build>
         <plugins>
             <plugin>
@@ -150,12 +161,17 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.9</version>
                 <executions>
                     <execution>
-                        <id>attach-javadoc</id>
+                        <id>attach-javadocs</id>
+                        <phase>package</phase>
                         <goals>
                             <goal>jar</goal>
                         </goals>
+                        <configuration>
+                            <additionalparam>${javadoc.opts}</additionalparam>
+                        </configuration>
                     </execution>
                 </executions>
                 <configuration>

@@ -26,7 +26,7 @@ mvn clean install -Dmaven.test.skip
 <dependency>
     <groupId>org.devefx</groupId>
     <artifactId>validator-web</artifactId>
-    <version>1.0.0-release</version>
+    <version>1.0.1-release</version>
 </dependency>
 ```
 
@@ -136,11 +136,13 @@ public class LoginServlet extends AbstractValidatorHttpServlet {
 <!-- 核心库 -->
 <script type="text/javascript" src="/va/validator.js"></script>
 <!-- 验证器 -->
-<script type="text/javascript" src="/va/validation-js/login.js"></script>
+<script type="text/javascript" src="/va/validation-js/login.js?locale=cn"></script>
 <script type="text/javascript">
     $(function() {
-    	$("form").validate();
-    });
+        $("form").validate({
+            language: 'cn'
+        });
+    });
 </script>
 ```
 

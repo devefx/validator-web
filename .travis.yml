@@ -1,0 +1,7 @@
+language: java
+
+jdk:
+  - oraclejdk8
+  
+install:
+  - cd validator-web && mvn install -DskipTests=true -Dmaven.javadoc.skip=true -Dgpg.skip=true

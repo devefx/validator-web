@@ -4,7 +4,7 @@
     <groupId>org.devefx</groupId>
     <artifactId>validator-web</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.1-release</version>
+    <version>1.0.2-release</version>
     <name>validator-web</name>
     <description>Jave Web Validator Framework</description>
     <url>https://github.com/devefx/validator-web</url>

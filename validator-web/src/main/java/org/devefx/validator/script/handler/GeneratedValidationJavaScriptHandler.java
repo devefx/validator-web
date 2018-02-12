@@ -229,11 +229,15 @@ public class GeneratedValidationJavaScriptHandler extends BaseValidationHandler 
         if (value == null)
             return "null";
         
-        if (value instanceof String)
-            return "\"" + value + "\"";
+        if (value instanceof String) {
+            String strValue = ((String) value).replaceAll("\\\\", "\\\\\\\\");
+            return "\"" + strValue + "\"";
+        }
         
-        if (value instanceof Character)
-            return "\'" + value + "\'";
+        if (value instanceof Character) {
+            String strValue = ((String) value).replaceAll("\\\\", "\\\\\\\\");
+            return "\'" + strValue + "\'";
+        }
         
         if (value instanceof Double) {
             if(((Double)value).isInfinite() || ((Double)value).isNaN())
